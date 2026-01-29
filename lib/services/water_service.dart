@@ -17,6 +17,7 @@ class WaterService {
       await _supabase.from('water_logs').insert({
         'user_id': userId,
         'amount_ml': amountMl,
+        'date': DateTime.now().toIso8601String().split('T')[0], // YYYY-MM-DD format
       });
     } on PostgrestException {
       rethrow;

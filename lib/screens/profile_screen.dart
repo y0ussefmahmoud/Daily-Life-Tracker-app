@@ -40,54 +40,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
         return Scaffold(
           backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-          body: CustomScrollView(
-            slivers: [
-              // Custom AppBar
-              SliverAppBar(
-                floating: true,
-                pinned: true,
-                backgroundColor: isDark 
-                    ? AppColors.backgroundDark.withOpacity(0.8) 
-                    : AppColors.backgroundLight.withOpacity(0.8),
-                elevation: 0,
-                leading: Container(
-                  margin: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.9),
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
+          body: SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                // Custom AppBar
+                SliverAppBar(
+                  floating: true,
+                  pinned: true,
+                  backgroundColor: isDark 
+                      ? AppColors.backgroundDark.withOpacity(0.8) 
+                      : AppColors.backgroundLight.withOpacity(0.8),
+                  elevation: 0,
+                  leading: Container(
+                    margin: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.9),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: IconButton(
+                      icon: const Icon(Icons.arrow_forward),
+                      onPressed: () => Navigator.pop(context),
+                    ),
                   ),
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_forward),
-                    onPressed: () => Navigator.pop(context),
+                  centerTitle: true,
+                  title: Text(
+                    AppStrings.profile,
+                    style: TextStyle(
+                      fontSize: AppTypography.title,
+                      fontWeight: AppTypography.bold,
+                      color: isDark ? Colors.white : AppColors.textPrimary,
+                    ),
+                  ),
+                  actions: const [
+                    SizedBox(width: 48), // For symmetry
+                  ],
+                  bottom: PreferredSize(
+                    preferredSize: const Size.fromHeight(1),
+                    child: Container(
+                      height: 1,
+                      color: AppColors.primaryColor.withOpacity(0.1),
+                    ),
                   ),
                 ),
-                centerTitle: true,
-                title: Text(
-                  AppStrings.profile,
-                  style: TextStyle(
-                    fontSize: AppTypography.title,
-                    fontWeight: AppTypography.bold,
-                    color: isDark ? Colors.white : AppColors.textPrimary,
-                  ),
-                ),
-                actions: const [
-                  SizedBox(width: 48), // For symmetry
-                ],
-                bottom: PreferredSize(
-                  preferredSize: const Size.fromHeight(1),
-                  child: Container(
-                    height: 1,
-                    color: AppColors.primaryColor.withOpacity(0.1),
-                  ),
-                ),
-              ),
 
               // Profile Header
               SliverToBoxAdapter(
@@ -415,8 +416,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
+              // Bottom padding to prevent overflow
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 100), // Extra bottom padding
+              ),
             ],
           ),
+        ),
         );
       },
     );
