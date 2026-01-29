@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Achievements &amp; Badges Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&amp;family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4463ee",
+                        "secondary": "#4CC9F0",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101422",
+                    },
+                    fontFamily: {
+                        "display": ["Tajawal", "Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+        .badge-glow {
+            box-shadow: 0 0 20px rgba(68, 99, 238, 0.2);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#0e101b] dark:text-white min-h-screen">
+<!-- Top Navigation Bar -->
+<div class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md flex items-center p-4 justify-between border-b border-gray-200 dark:border-gray-800">
+<div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow-sm">
+<span class="material-symbols-outlined text-primary">arrow_forward</span>
+</div>
+<h2 class="text-lg font-bold leading-tight flex-1 text-center font-display">الأوسمة والإنجازات</h2>
+<div class="size-10 flex items-center justify-center">
+<span class="material-symbols-outlined text-gray-500">settings</span>
+</div>
+</div>
+<div class="max-w-md mx-auto pb-24">
+<!-- Level Hero Card -->
+<div class="p-4">
+<div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary to-indigo-700 p-6 text-white shadow-xl shadow-primary/20">
+<!-- Abstract Background Pattern -->
+<div class="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-3xl" data-alt="abstract glowing blue sphere background"></div>
+<div class="relative z-10 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium uppercase tracking-wider text-white/80">المستوى الحالي</span>
+<h3 class="text-2xl font-bold font-display">المستوى ٥: المحارب المنضبط</h3>
+</div>
+<div class="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
+<span class="material-symbols-outlined text-3xl">military_tech</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<p class="text-3xl font-bold">٤٥٠ <span class="text-sm font-normal text-white/80 italic">نقطة XP</span></p>
+<p class="text-sm font-medium text-white/90">١٥٠ نقطة متبقية للمستوى القادم</p>
+</div>
+<div class="h-3 w-full rounded-full bg-white/30 overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 75%;"></div>
+</div>
+</div>
+<button class="mt-2 w-full flex items-center justify-center gap-2 rounded-full bg-white py-3 text-primary font-bold shadow-lg">
+<span>عرض خارطة الطريق</span>
+<span class="material-symbols-outlined text-sm">trending_up</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Section Header: Achievements -->
+<div class="flex items-center justify-between px-4 pt-4">
+<h3 class="text-lg font-bold font-display">أوسمتك المحققة</h3>
+<span class="text-primary text-sm font-bold">عرض الكل</span>
+</div>
+<!-- Achievement Badge Grid -->
+<div class="grid grid-cols-3 gap-4 p-4">
+<!-- Earned Badge 1 -->
+<div class="flex flex-col items-center gap-2 text-center group">
+<div class="relative aspect-square w-full rounded-full bg-gradient-to-t from-blue-100 to-blue-50 dark:from-blue-900/30 dark:to-blue-800/20 flex items-center justify-center p-4 badge-glow border-2 border-primary/20">
+<div class="w-full h-full bg-cover bg-center rounded-full" data-alt="prayer achievement badge icon with blue gradient" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBdRo4pBkKH1GvDsMWL705zso4HYhFd0DPM7c562Iih2YDyFIB_pUivxCMpqmz5HLU7N4L84CwqEeHoLseLrK6HzCruAuAl4Kl78IUrhEqi4i3mZyiD2V2aBXMsZb9xPoFL-NUbYLGVZeR8gq3R2l2GXOFk0AqHstsV66QM5MmB6Bm4RrQCJy9hqpwTfztZ7lu5jk5CDVyuT9zvRYwx8U5Rj9nOHCX33Bx-4w2eRHMrqQQMvWcW1-acuc15oaktzWOf0bB8c5sOJ7fp')"></div>
+<div class="absolute -bottom-1 -right-1 bg-green-500 text-white rounded-full p-0.5 border-2 border-white dark:border-gray-900">
+<span class="material-symbols-outlined text-[14px] leading-none block font-bold">check</span>
+</div>
+</div>
+<p class="text-xs font-bold font-display leading-tight">المصلي الخاشع</p>
+<span class="text-[10px] text-primary bg-primary/10 px-2 py-0.5 rounded-full font-medium">٧ أيام متتالية</span>
+</div>
+<!-- Earned Badge 2 -->
+<div class="flex flex-col items-center gap-2 text-center">
+<div class="relative aspect-square w-full rounded-full bg-gradient-to-t from-cyan-100 to-cyan-50 dark:from-cyan-900/30 dark:to-cyan-800/20 flex items-center justify-center p-4 badge-glow border-2 border-secondary/20">
+<div class="w-full h-full bg-cover bg-center rounded-full" data-alt="project target achievement icon with cyan glow" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCmr5FyHVIpYWNd1arvDQH-0jHkFVZAAdedDxfFTgBzzAH4I1mlC0U2cdJ69fZdTIsLTeX50xCrpI5CopOomWKqhAdMC7JvujGGeyAG7jubXRIUb2CeDPUOfE4I8zEUhc1lcKzEdErVvuEf9-wV3s5OPSHjt_3WDqwv9jaZlCOA7-O6vZRxO7F_vAZePq7OMNcLcSf5L5PoSAizIhFP5ems0egIaIv98z45FVC6tXGLsnzsIWq4NSz-UDsq5QsevXKl82_N3Xy4ucFb')"></div>
+<div class="absolute -bottom-1 -right-1 bg-green-500 text-white rounded-full p-0.5 border-2 border-white dark:border-gray-900">
+<span class="material-symbols-outlined text-[14px] leading-none block font-bold">check</span>
+</div>
+</div>
+<p class="text-xs font-bold font-display leading-tight">قناص المشاريع</p>
+<span class="text-[10px] text-secondary bg-secondary/10 px-2 py-0.5 rounded-full font-medium">٣ مشاريع</span>
+</div>
+<!-- Earned Badge 3 -->
+<div class="flex flex-col items-center gap-2 text-center">
+<div class="relative aspect-square w-full rounded-full bg-gradient-to-t from-green-100 to-green-50 dark:from-green-900/30 dark:to-green-800/20 flex items-center justify-center p-4 badge-glow border-2 border-green-500/20">
+<div class="w-full h-full bg-cover bg-center rounded-full" data-alt="eco-friendly achievement icon showing water drop" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDVKDt6XOZpzxf5WmUM_G0gcu1NZfj2-hd89NxZrgb9LsUDmd-W3xSY0ncuaPpoRr6OGemrKpEHqeg0kehFNCp3P393BSDHeHUMpuqxdnsF6yQ-lBseL616lz2maDKtJsPSHEI53Iznd0Kp1C4fTtgrcSplzgHjyynnzeI0Z8bHIu2aZ4KA9E4mT3XSOmrfPPnVAvem_A1NIOSmBhV7dGsN_0mJplzLUdCJxy02ovx8GYQKUmfI_Z6klMDgDvFtXHefqU1fXvKPjX9C')"></div>
+<div class="absolute -bottom-1 -right-1 bg-green-500 text-white rounded-full p-0.5 border-2 border-white dark:border-gray-900">
+<span class="material-symbols-outlined text-[14px] leading-none block font-bold">check</span>
+</div>
+</div>
+<p class="text-xs font-bold font-display leading-tight">صديق البيئة</p>
+<span class="text-[10px] text-green-600 bg-green-100 px-2 py-0.5 rounded-full font-medium">هدف شرب الماء</span>
+</div>
+<!-- Locked Badge 1 -->
+<div class="flex flex-col items-center gap-2 text-center opacity-60 grayscale">
+<div class="relative aspect-square w-full rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center p-4 border-2 border-transparent">
+<div class="w-full h-full bg-cover bg-center rounded-full" data-alt="locked achievement icon for late night work" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBPk2FgsjFg96PrvwkDC8ZygBucu4a2v1kYLxg5Z3tZoHbdys0MDeW0e5KCvFyrgXYxYmfoF61ahjZlAjwBjkyW3CNHqlIVJu5BWUy2sLYyz8uZLd35LMlFzVeVSXnWB6atS7p7lWBVTbWc5fp8VqCnOMRWFYUtaRV8pVZVIZS-EuK-ePOfZBi1XCQPNr4LCF36yxJpIP5kOI0J2AN2P95MNgNtibM9hYxGdYP4qAjCyjt72ZNgI-GX4b1-lckOqqtKD4m812t8Xa1O')"></div>
+<div class="absolute inset-0 bg-black/5 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-gray-500">lock</span>
+</div>
+</div>
+<p class="text-xs font-bold font-display leading-tight">ساهر الليل</p>
+<span class="text-[10px] text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full font-medium">قريباً</span>
+</div>
+<!-- Locked Badge 2 -->
+<div class="flex flex-col items-center gap-2 text-center opacity-60 grayscale">
+<div class="relative aspect-square w-full rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center p-4 border-2 border-transparent">
+<div class="w-full h-full bg-cover bg-center rounded-full" data-alt="locked achievement icon for monthly hero" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAiMb_G4TsUJ1QxVVQPO9BHT4ryL2PPc7lEw5eGeAOn73Qt-YE9VCjzCO16cP9-9fDALOxG6U8hnzZOjQsQY3Vk4jCvSOrmUgXxqIAqVNaQkciHcx5zVVbi-zAdwdk7GPbxqg3-vNrrQQPcQonMds4c5MGL-uxa_g61SGDmH7VZr1Ygdi2_M408JoJabCpf5xD4Kcjqe6ym23HagHsbAVp2UPPs31LJUAaD7HnVh5_RpcQx0GrRHdzidVKft79gdW5PcOoiG_gfABZ3')"></div>
+<div class="absolute inset-0 bg-black/5 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-gray-500">lock</span>
+</div>
+</div>
+<p class="text-xs font-bold font-display leading-tight">بطل الشهر</p>
+<span class="text-[10px] text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full font-medium">٣٠ يوم متتالي</span>
+</div>
+<!-- Locked Badge 3 -->
+<div class="flex flex-col items-center gap-2 text-center opacity-60 grayscale">
+<div class="relative aspect-square w-full rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center p-4 border-2 border-transparent">
+<div class="w-full h-full bg-cover bg-center rounded-full" data-alt="locked achievement icon for health goals" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAvussTw336gCz-gUohusIXhY68p4GHgFay5iD7Co8E3hTkAamldoUPg8lIW9wtLEt87iapa52jqYpgt_G5eJHhz2MgjrHfxSbxPx-eEC5GlEq3NaKMtJb58VSVH3k8XTgUqNqimeRiByPbYtSKw32rDHAqFD336vFdV8eHDKh4OkeUZgKJQKxHAeduJ6SmP6c-jRD7meOrfVrOZOxpSjbpzBoOvlNhRriRq3JRsZGhxo9NF8hdNxhl2tkdNXjCMh6A5D4qooOmjTHe')"></div>
+<div class="absolute inset-0 bg-black/5 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-gray-500">lock</span>
+</div>
+</div>
+<p class="text-xs font-bold font-display leading-tight">وحش النادي</p>
+<span class="text-[10px] text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full font-medium">١٠ تدريبات</span>
+</div>
+</div>
+<!-- Weekly Leaderboard Snippet -->
+<div class="p-4">
+<div class="rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
+<div class="p-4 flex justify-between items-center border-b border-gray-50 dark:border-gray-800">
+<h3 class="font-bold font-display">قائمة المتصدرين الأسبوعية</h3>
+<span class="material-symbols-outlined text-gray-400">chevron_left</span>
+</div>
+<div class="flex flex-col">
+<!-- Rank 1 -->
+<div class="flex items-center gap-4 p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<span class="text-lg font-bold text-yellow-500 w-6">١</span>
+<div class="size-10 rounded-full bg-gray-100 dark:bg-gray-800 bg-cover" data-alt="user avatar for rank 1" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuASRzSxXVNPGwh_32KQjaWmKjUFzgYPDc4JNPFhEvpnP99WEe7LreJjehZ9OM7_um2A4lY_vYkRDuGmzWl_XNFDaMWSlKybJMZTNiUJL_IEhEOYFGruiPOpA-gZCWivUDpvZTzoNnRzBaUeZGdfYNq5SIvyBzBkdg8m5vsHqqgURIVSYU_gQzr2RXz413Mp_-F2-iZW4dfQ8xQZRp3SWDQvIKTxy0wNwR0nHqhNBE8EKFCStZjeKteRPlNOc9Wd_9tSaZTIpmqSXN6F')"></div>
+<div class="flex-1">
+<p class="font-bold text-sm">أحمد العتيبي</p>
+<p class="text-xs text-gray-500">١,٢٥٠ XP</p>
+</div>
+<span class="material-symbols-outlined text-yellow-500">workspace_premium</span>
+</div>
+<!-- Rank 2 -->
+<div class="flex items-center gap-4 p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors border-t border-gray-50 dark:border-gray-800">
+<span class="text-lg font-bold text-gray-400 w-6">٢</span>
+<div class="size-10 rounded-full bg-gray-100 dark:bg-gray-800 bg-cover" data-alt="user avatar for rank 2" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBhNfTYAVcR3MC-SyPN7QOUbVLYUFLE8TTyNmLUgYmwdRqD5ptct4dNnia794In5kll4rCXRugEH2kMT0cfqVq6L2ojWDfbxCsSauDGBQV48Ju5OtBsjd8aUk4y30qfs8WMwzIqyc6fWuBu6UnSyceCw639vJurQQkDKrH4npAqVbhUl1v_fYKRcFUmGwgfV9WU9j_yCn8puUVDn8clpPQlPqW0yz07oq7_Al3I7RQG2sJMoFq7uomRd79Yvm-WwkJ65AZqaD_1gWeQ')"></div>
+<div class="flex-1">
+<p class="font-bold text-sm">محمد خالد</p>
+<p class="text-xs text-gray-500">٩٨٠ XP</p>
+</div>
+</div>
+<!-- Rank 3 (Current User Highlighted) -->
+<div class="flex items-center gap-4 p-4 bg-primary/5 border-t border-primary/10">
+<span class="text-lg font-bold text-primary w-6">٣</span>
+<div class="relative">
+<div class="size-10 rounded-full bg-primary/20 bg-cover border-2 border-primary" data-alt="user avatar for yusuf rank 3" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDjJQ3AqjqVo_vmuqygiUF9-SbTK4a2CGy2D94gtKqq_vvikxAfq6grOLv0IOVya0-RX6QSUb6JnxGrUbZIEWJe5OlqCBLUHpP-pdmUuvmDG1hwreY44oTzXQYt-kydJgAlXFXcatfMy7yUL7IglJqjrN-m3clU_EHVHQXEio50ChebhvH-yeNeXEMgdIcv6x8j1LLYZB8qmQ8LQozBQu8Ro_0AmHqx7Ey4tGthNc0NuEiszCU8hZuKnWh2AHHSKHqF71NzvV_lWgCv')"></div>
+<div class="absolute -top-1 -right-1 size-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></div>
+</div>
+<div class="flex-1">
+<p class="font-bold text-sm text-primary">يوسف (أنت)</p>
+<p class="text-xs text-primary/70">٤٥٠ XP</p>
+</div>
+<div class="bg-primary/10 text-primary text-[10px] px-2 py-1 rounded-full font-bold">تقدم سريع!</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar (iOS style) -->
+<div class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg border-t border-gray-200 dark:border-gray-800 px-6 py-3 flex justify-between items-center z-50">
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium">الرئيسية</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="text-[10px] font-medium">مهامي</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[28px] fill-1">military_tech</span>
+<span class="text-[10px] font-bold">الإنجازات</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-medium">الأصدقاء</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">الملف</span>
+</div>
+</div>
+</body></html>

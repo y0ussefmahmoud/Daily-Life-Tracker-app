@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile &amp; Settings Screen</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&amp;family=Tajawal:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4444ee",
+                        "background-light": "#f8f9fa",
+                        "background-dark": "#101022",
+                    },
+                    fontFamily: {
+                        "display": ["Tajawal", "Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Tajawal', 'Manrope', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-toggle {
+            appearance: none;
+            width: 50px;
+            height: 28px;
+            background: #e2e8f0;
+            border-radius: 14px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .ios-toggle:checked {
+            background: #4444ee;
+        }
+        .ios-toggle::before {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            right: 2px;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .ios-toggle:checked::before {
+            transform: translateX(-22px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#0e0e1b] dark:text-white min-h-screen">
+<div class="max-w-md mx-auto min-h-screen flex flex-col pb-10">
+<!-- TopAppBar -->
+<div class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md flex items-center p-4 pb-2 justify-between">
+<div class="w-12 flex items-center justify-start">
+<span class="material-symbols-outlined text-[#0e0e1b] dark:text-white">arrow_forward</span>
+</div>
+<h2 class="text-[#0e0e1b] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">الملف الشخصي والإعدادات</h2>
+<div class="w-12"></div>
+</div>
+<!-- ProfileHeader -->
+<div class="flex p-4 mt-2">
+<div class="flex w-full flex-col gap-4 items-center">
+<div class="flex gap-4 flex-col items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full border-4 border-white dark:border-primary/20 shadow-lg min-h-32 w-32" data-alt="Modern stylish portrait of a young man" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_9m-YaKTvp-kLeh9PZWDKXLbc73kGZkzwyLoGyHXPHKkWoVvKSc6hm0hQYHyMFyjIM1EH-fxPN1NxV09-G0p3vJlno14368KLAUGrSvPrJ8tkLwamLovovNWfunjGf0PviQjpJZBtRy6695Mwc00DNegZ_VGsbk55a-clhveZ66l9wJjEe7u5sVAkhB-Ao67m6m3TlVnq1csvUdI6a_gDUuhfI9zdfQmriqKNumtWsORBAQad95E5XQfIUi6gXG1wy2XjOeEyb5Lm");'>
+</div>
+<div class="flex flex-col items-center justify-center">
+<p class="text-[#0e0e1b] dark:text-white text-[24px] font-bold leading-tight tracking-[-0.015em] text-center">يوسف</p>
+<p class="text-[#4d4d99] dark:text-primary/70 text-base font-medium leading-normal text-center mt-1">مطور واجهات | أسعى للتطوير</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats -->
+<div class="flex flex-wrap gap-3 p-4">
+<div class="flex min-w-[100px] flex-1 flex-col gap-1 rounded-xl p-4 bg-white dark:bg-white/5 border border-primary/10 shadow-sm">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-xl">workspace_premium</span>
+<p class="text-[#4d4d99] dark:text-primary/70 text-xs font-medium">أوسمة</p>
+</div>
+<p class="text-[#0e0e1b] dark:text-white tracking-light text-xl font-bold">5</p>
+</div>
+<div class="flex min-w-[100px] flex-1 flex-col gap-1 rounded-xl p-4 bg-white dark:bg-white/5 border border-primary/10 shadow-sm">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-xl">local_fire_department</span>
+<p class="text-[#4d4d99] dark:text-primary/70 text-xs font-medium">سلسلة إنجاز</p>
+</div>
+<p class="text-[#0e0e1b] dark:text-white tracking-light text-xl font-bold">12 يوم</p>
+</div>
+<div class="flex min-w-[100px] flex-1 flex-col gap-1 rounded-xl p-4 bg-white dark:bg-white/5 border border-primary/10 shadow-sm">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-xl">military_tech</span>
+<p class="text-[#4d4d99] dark:text-primary/70 text-xs font-medium">نقاط</p>
+</div>
+<p class="text-[#0e0e1b] dark:text-white tracking-light text-xl font-bold">450</p>
+</div>
+</div>
+<!-- Section: My Account -->
+<h3 class="text-[#4d4d99] dark:text-primary/60 text-xs font-bold uppercase leading-tight tracking-widest px-6 pb-2 pt-6">حسابي</h3>
+<div class="bg-white dark:bg-white/5 mx-4 rounded-xl overflow-hidden border border-primary/5">
+<!-- ListItem: Edit Profile -->
+<div class="flex items-center gap-4 px-4 min-h-[56px] justify-between border-b border-primary/5">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-9">
+<span class="material-symbols-outlined">person</span>
+</div>
+<p class="text-[#0e0e1b] dark:text-white text-base font-medium flex-1">تعديل الملف الشخصي</p>
+</div>
+<span class="material-symbols-outlined text-gray-400">chevron_left</span>
+</div>
+<!-- ListItem: Privacy -->
+<div class="flex items-center gap-4 px-4 min-h-[56px] justify-between">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-9">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<p class="text-[#0e0e1b] dark:text-white text-base font-medium flex-1">الخصوصية</p>
+</div>
+<span class="material-symbols-outlined text-gray-400">chevron_left</span>
+</div>
+</div>
+<!-- Section: Notifications -->
+<h3 class="text-[#4d4d99] dark:text-primary/60 text-xs font-bold uppercase leading-tight tracking-widest px-6 pb-2 pt-6">التنبيهات</h3>
+<div class="bg-white dark:bg-white/5 mx-4 rounded-xl overflow-hidden border border-primary/5">
+<!-- Toggle: Prayer Times -->
+<div class="flex items-center gap-4 px-4 min-h-[56px] justify-between border-b border-primary/5">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-9">
+<span class="material-symbols-outlined">bedtime</span>
+</div>
+<p class="text-[#0e0e1b] dark:text-white text-base font-medium flex-1">تنبيهات أوقات الصلاة</p>
+</div>
+<input checked="" class="ios-toggle" type="checkbox"/>
+</div>
+<!-- Toggle: Projects -->
+<div class="flex items-center gap-4 px-4 min-h-[56px] justify-between border-b border-primary/5">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-9">
+<span class="material-symbols-outlined">assignment</span>
+</div>
+<p class="text-[#0e0e1b] dark:text-white text-base font-medium flex-1">تذكير المشاريع</p>
+</div>
+<input checked="" class="ios-toggle" type="checkbox"/>
+</div>
+<!-- ListItem: Water Tracker -->
+<div class="flex items-center gap-4 px-4 min-h-[56px] justify-between">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-9">
+<span class="material-symbols-outlined">water_drop</span>
+</div>
+<p class="text-[#0e0e1b] dark:text-white text-base font-medium flex-1">تنبيهات تتبع المياه</p>
+</div>
+<span class="material-symbols-outlined text-gray-400">chevron_left</span>
+</div>
+</div>
+<!-- Section: Appearance -->
+<h3 class="text-[#4d4d99] dark:text-primary/60 text-xs font-bold uppercase leading-tight tracking-widest px-6 pb-2 pt-6">المظهر</h3>
+<div class="bg-white dark:bg-white/5 mx-4 rounded-xl overflow-hidden border border-primary/5">
+<!-- Toggle: Dark Mode -->
+<div class="flex items-center gap-4 px-4 min-h-[56px] justify-between border-b border-primary/5">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-9">
+<span class="material-symbols-outlined">dark_mode</span>
+</div>
+<p class="text-[#0e0e1b] dark:text-white text-base font-medium flex-1">الوضع الليلي</p>
+</div>
+<input class="ios-toggle" type="checkbox"/>
+</div>
+<!-- ListItem: Theme -->
+<div class="flex items-center gap-4 px-4 min-h-[56px] justify-between">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-9">
+<span class="material-symbols-outlined">palette</span>
+</div>
+<p class="text-[#0e0e1b] dark:text-white text-base font-medium flex-1">تغيير السمة</p>
+</div>
+<span class="material-symbols-outlined text-gray-400">chevron_left</span>
+</div>
+</div>
+<!-- Section: Support -->
+<h3 class="text-[#4d4d99] dark:text-primary/60 text-xs font-bold uppercase leading-tight tracking-widest px-6 pb-2 pt-6">الدعم</h3>
+<div class="bg-white dark:bg-white/5 mx-4 rounded-xl overflow-hidden border border-primary/5">
+<!-- ListItem: About -->
+<div class="flex items-center gap-4 px-4 min-h-[56px] justify-between border-b border-primary/5">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-9">
+<span class="material-symbols-outlined">info</span>
+</div>
+<p class="text-[#0e0e1b] dark:text-white text-base font-medium flex-1">عن التطبيق</p>
+</div>
+<span class="material-symbols-outlined text-gray-400">chevron_left</span>
+</div>
+<!-- ListItem: Contact -->
+<div class="flex items-center gap-4 px-4 min-h-[56px] justify-between">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-9">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<p class="text-[#0e0e1b] dark:text-white text-base font-medium flex-1">تواصل معنا</p>
+</div>
+<span class="material-symbols-outlined text-gray-400">chevron_left</span>
+</div>
+</div>
+<!-- Sign Out Button -->
+<div class="p-4 mt-8">
+<button class="w-full flex items-center justify-center gap-2 bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 py-4 rounded-xl text-red-500 font-bold hover:bg-red-100 transition-colors">
+<span class="material-symbols-outlined">logout</span>
+<span>تسجيل الخروج</span>
+</button>
+</div>
+<!-- App Version Footer -->
+<div class="text-center pb-8">
+<p class="text-gray-400 text-xs font-medium">النسخة 2.4.0</p>
+</div>
+</div>
+</body></html>

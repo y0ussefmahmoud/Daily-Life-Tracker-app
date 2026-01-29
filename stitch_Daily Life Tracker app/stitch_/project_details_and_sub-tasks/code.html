@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>تفاصيل المشروع - Daily Life Tracker</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&amp;family=Tajawal:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4461ee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101322",
+                    },
+                    fontFamily: {
+                        "display": ["Tajawal", "Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Tajawal', 'Manrope', sans-serif;
+        }
+        .progress-circle {
+            background: conic-gradient(#4461ee 65% 0%, #e7e9f3 65% 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-[#0e101b] dark:text-white">
+<!-- Top Navigation Bar -->
+<div class="fixed top-0 left-0 right-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+<div class="flex items-center p-4 justify-between max-w-md mx-auto">
+<div class="flex items-center gap-2">
+<div class="text-[#0e101b] dark:text-white flex size-10 shrink-0 items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined">arrow_forward_ios</span>
+</div>
+</div>
+<h2 class="text-[#0e101b] dark:text-white text-lg font-bold leading-tight flex-1 text-center">تفاصيل المشروع</h2>
+<div class="flex w-10 items-center justify-end">
+<button class="flex cursor-pointer items-center justify-center rounded-lg h-10 w-10 bg-transparent text-[#0e101b] dark:text-white">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Main Content Container -->
+<main class="max-w-md mx-auto pt-20 pb-24 px-4 space-y-6">
+<!-- Header Section: Project Title & Progress -->
+<div class="flex items-center justify-between bg-white dark:bg-gray-900 p-5 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="flex flex-col gap-2">
+<h1 class="text-2xl font-bold tracking-tight">Y0 AI Assistant</h1>
+<div class="flex gap-2 flex-wrap">
+<div class="flex h-7 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/10 px-3">
+<p class="text-primary text-xs font-bold">Flutter</p>
+</div>
+<div class="flex h-7 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/10 px-3">
+<p class="text-primary text-xs font-bold">Firebase</p>
+</div>
+</div>
+</div>
+<div class="relative flex items-center justify-center size-20">
+<div class="progress-circle size-full rounded-full flex items-center justify-center">
+<div class="size-[85%] bg-white dark:bg-gray-900 rounded-full flex items-center justify-center">
+<span class="text-primary font-bold text-lg">65%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Weekly Focus Card -->
+<div class="bg-primary/5 dark:bg-primary/10 p-4 rounded-xl border border-primary/10">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-xl">bolt</span>
+<p class="text-primary text-base font-bold">التركيز الأسبوعي</p>
+</div>
+<p class="text-[#4d5a99] dark:text-gray-300 text-sm leading-relaxed">
+                التركيز هذا الأسبوع على الانتهاء من ربط الخدمات السحابية وتحسين استجابة الواجهة البرمجية (API).
+            </p>
+</div>
+<!-- Sub-tasks Section -->
+<div class="space-y-6">
+<!-- In Progress Section -->
+<div>
+<div class="flex items-center justify-between mb-3 px-1">
+<h3 class="text-[#0e101b] dark:text-white text-lg font-bold">قيد التنفيذ</h3>
+<span class="text-xs font-medium text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">1 مهمة</span>
+</div>
+<!-- Task Item: Unchecked -->
+<div class="flex items-center gap-4 bg-white dark:bg-gray-900 p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
+<div class="flex items-center justify-center size-6 rounded border-2 border-primary cursor-pointer">
+<!-- Unchecked icon could go here if needed -->
+</div>
+<div class="flex-1">
+<p class="text-[#0e101b] dark:text-white text-base font-medium">ربط API</p>
+</div>
+<div class="flex h-6 items-center px-2 rounded bg-red-100 text-red-600">
+<span class="text-[10px] font-bold uppercase tracking-wider">عالي</span>
+</div>
+</div>
+</div>
+<!-- Done Section -->
+<div>
+<div class="flex items-center justify-between mb-3 px-1">
+<h3 class="text-[#0e101b] dark:text-white text-lg font-bold">مكتمل</h3>
+<span class="text-xs font-medium text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">2 مهمة</span>
+</div>
+<div class="space-y-3">
+<!-- Task Item: Checked -->
+<div class="flex items-center gap-4 bg-gray-50 dark:bg-gray-800/50 p-4 rounded-xl border border-gray-100 dark:border-gray-800 opacity-75">
+<div class="flex items-center justify-center size-6 rounded bg-primary text-white">
+<span class="material-symbols-outlined text-sm font-bold">check</span>
+</div>
+<div class="flex-1">
+<p class="text-gray-500 dark:text-gray-400 text-base font-medium line-through">تصميم واجهة المستخدم</p>
+</div>
+<div class="flex h-6 items-center px-2 rounded bg-yellow-100 text-yellow-600">
+<span class="text-[10px] font-bold uppercase tracking-wider">متوسط</span>
+</div>
+</div>
+<!-- Task Item: Checked -->
+<div class="flex items-center gap-4 bg-gray-50 dark:bg-gray-800/50 p-4 rounded-xl border border-gray-100 dark:border-gray-800 opacity-75">
+<div class="flex items-center justify-center size-6 rounded bg-primary text-white">
+<span class="material-symbols-outlined text-sm font-bold">check</span>
+</div>
+<div class="flex-1">
+<p class="text-gray-500 dark:text-gray-400 text-base font-medium line-through">إعداد قاعدة البيانات</p>
+</div>
+<div class="flex h-6 items-center px-2 rounded bg-red-100 text-red-600">
+<span class="text-[10px] font-bold uppercase tracking-wider">عالي</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<div class="fixed bottom-8 left-6">
+<button class="flex items-center justify-center size-14 rounded-full bg-primary text-white shadow-lg shadow-primary/40 hover:scale-105 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+<!-- Bottom Navigation Spacer for iOS -->
+<div class="h-8 w-full bg-transparent"></div>
+</body></html>

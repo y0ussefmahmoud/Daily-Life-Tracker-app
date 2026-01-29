@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html class="dark" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daily Life Tracker - اليوم</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&amp;family=Noto+Sans+Arabic:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4463ee",
+                        "accent-purple": "#3A0CA3",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121212",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "Noto Sans Arabic", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', 'Noto Sans Arabic', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ring-gradient {
+            background: conic-gradient(#4463ee 65%, #333d66 0);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-white min-h-screen pb-24">
+<!-- Top App Bar -->
+<div class="sticky top-0 z-50 flex items-center bg-background-light dark:bg-background-dark/95 backdrop-blur-md p-4 pb-2 justify-between">
+<div class="flex size-12 shrink-0 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/30" data-alt="User profile avatar of a young man" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC9mT5ggCBlAlYGeFRpWzhDUzHgsi1fq0uwU22Rq2Rt74ThNd1yMsp8VwVqRPrNypwu_hv_VW1YUScQ4YfP4m6iYrLbDu_d5O-tmfe642rFVVmaZg78Tfp5PSfaiPHunxQQR-9zO1AcbaEXZmTvCTtQmA1Iw9IziXoqQg7ANCi5ybacOQ1_KBKohbOQnRDzI7B1GnZ1NSlWVVZ65SRJqSjf3kpy9tWvqqhLk7yDqUWY7taqojU7YnL2L7Y11zfBV2e8wgqQkpjYEUhc");'>
+</div>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center">اليوم</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex size-10 items-center justify-center rounded-full bg-white/5 text-white hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+<!-- Profile Header & Greeting -->
+<div class="flex p-4 @container">
+<div class="flex w-full flex-col gap-4 items-start">
+<div class="flex gap-4 flex-col items-start">
+<div class="flex flex-col justify-center">
+<p class="text-white text-2xl font-bold leading-tight">السلام عليكم، أحمد</p>
+<p class="text-[#929cc8] text-sm mt-1">١٥ رمضان ١٤٤٥ هـ • الرياض</p>
+<div class="mt-3 py-2 px-3 rounded-lg bg-primary/10 border border-primary/20">
+<p class="text-primary text-sm font-medium italic">"استعن بالله ولا تعجز"</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Productivity Ring Widget -->
+<div class="px-4 py-2">
+<div class="bg-gradient-to-br from-[#1e1e1e] to-[#121212] p-6 rounded-xl border border-white/5 flex items-center justify-between shadow-xl">
+<div class="flex flex-col gap-1">
+<h3 class="text-white text-lg font-bold">إنجاز اليوم</h3>
+<p class="text-[#929cc8] text-sm">أتممت ٨ من أصل ١٢ مهمة</p>
+<div class="mt-4 flex gap-2">
+<span class="px-2 py-1 rounded bg-green-500/20 text-green-400 text-xs font-bold">+١٢٪ عن الأمس</span>
+</div>
+</div>
+<div class="relative flex items-center justify-center size-24">
+<div class="size-24 rounded-full ring-gradient"></div>
+<div class="absolute size-20 rounded-full bg-[#1e1e1e] flex flex-col items-center justify-center">
+<span class="text-white text-xl font-bold">٦٥٪</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Tabs for Time Blocks -->
+<div class="mt-4">
+<div class="flex border-b border-white/10 px-4 gap-8">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-primary text-white pb-[13px] pt-4" href="#">
+<p class="text-white text-sm font-bold">الصباح</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#929cc8] pb-[13px] pt-4" href="#">
+<p class="text-[#929cc8] text-sm font-bold">العمل</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#929cc8] pb-[13px] pt-4" href="#">
+<p class="text-[#929cc8] text-sm font-bold">المساء</p>
+</a>
+</div>
+</div>
+<!-- Tasks List -->
+<div class="p-4 space-y-3">
+<!-- Task 1: Prayer -->
+<div class="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors group">
+<div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/20 text-primary">
+<span class="material-symbols-outlined">mosque</span>
+</div>
+<div class="flex flex-1 flex-col">
+<p class="text-white font-bold text-base">صلاة الفجر في المسجد</p>
+<p class="text-[#929cc8] text-xs">٠٤:٤٥ ص • حي الصحافة</p>
+</div>
+<div class="flex items-center justify-center size-6 rounded border-2 border-primary bg-primary text-white">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+</div>
+<!-- Task 2: Habit -->
+<div class="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
+<div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-orange-500/20 text-orange-400">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<div class="flex flex-1 flex-col">
+<p class="text-white font-bold text-base">ورد القرآن الكريم</p>
+<p class="text-[#929cc8] text-xs">صفحتين من سورة البقرة</p>
+</div>
+<div class="flex items-center justify-center size-6 rounded border-2 border-primary bg-primary text-white">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+</div>
+<!-- Task 3: Unfinished -->
+<div class="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
+<div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-purple-500/20 text-purple-400">
+<span class="material-symbols-outlined">exercise</span>
+</div>
+<div class="flex flex-1 flex-col">
+<p class="text-white font-bold text-base">تمارين التمدد الصباحية</p>
+<p class="text-[#929cc8] text-xs">١٥ دقيقة • المنزل</p>
+</div>
+<div class="flex items-center justify-center size-6 rounded border-2 border-white/20">
+</div>
+</div>
+</div>
+<!-- Water Tracker Widget -->
+<div class="px-4 pb-4">
+<div class="bg-gradient-to-r from-primary/20 to-accent-purple/20 p-4 rounded-xl border border-primary/30">
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-blue-400">water_drop</span>
+<h3 class="text-white font-bold">متابعة شرب الماء</h3>
+</div>
+<p class="text-white font-bold">١.٥ لتر / ٢.٥ لتر</p>
+</div>
+<div class="flex gap-2">
+<!-- Water Cups -->
+<div class="h-10 flex-1 rounded-lg bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-white text-sm">check</span>
+</div>
+<div class="h-10 flex-1 rounded-lg bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-white text-sm">check</span>
+</div>
+<div class="h-10 flex-1 rounded-lg bg-primary/40 border border-primary/40 flex items-center justify-center"></div>
+<div class="h-10 flex-1 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center"></div>
+<div class="h-10 flex-1 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center"></div>
+<button class="h-10 size-10 rounded-lg bg-primary text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar (iOS Style) -->
+<div class="fixed bottom-0 left-0 right-0 bg-background-dark/80 backdrop-blur-xl border-t border-white/10 px-6 py-3 pb-8">
+<div class="flex justify-between items-center max-w-md mx-auto">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-[10px] font-bold">اليوم</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#929cc8]" href="#">
+<span class="material-symbols-outlined">format_list_bulleted</span>
+<span class="text-[10px] font-bold">المشاريع</span>
+</a>
+<a class="flex -mt-8 size-14 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/40" href="#">
+<span class="material-symbols-outlined text-3xl">add</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#929cc8]" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-bold">المجتمع</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#929cc8]" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold">الإعدادات</span>
+</a>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>إضافة جديد - Daily Life Tracker</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Noto+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4461ee",
+                        "background-light": "#f8f9fa",
+                        "background-dark": "#101322",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "Noto Sans Arabic", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', 'Noto Sans Arabic', sans-serif;
+        }
+        .ios-toggle:checked + .ios-toggle-label {
+            background-color: #4461ee;
+        }
+        .ios-toggle:checked + .ios-toggle-label::after {
+            transform: translateX(-1.25rem);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-[#0e101b] dark:text-white">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 py-4 flex items-center justify-between">
+<div class="flex items-center justify-center size-10 rounded-full bg-white dark:bg-gray-800 shadow-sm">
+<span class="material-symbols-outlined text-[#0e101b] dark:text-white">arrow_forward</span>
+</div>
+<h1 class="text-lg font-bold leading-tight tracking-tight">إضافة جديد</h1>
+<div class="size-10"></div> <!-- Spacer for symmetry -->
+</header>
+<main class="max-w-md mx-auto pb-32">
+<!-- Headline -->
+<div class="px-4 pt-6 pb-4">
+<h2 class="text-2xl font-extrabold tracking-tight text-[#0e101b] dark:text-white">ماذا ستنجز اليوم يا بطل؟</h2>
+<p class="text-[#4d5a99] dark:text-gray-400 text-sm mt-1">خطط ليومك لتصل لأهدافك بشكل أسرع.</p>
+</div>
+<!-- Mode Toggle (Segmented Control) -->
+<div class="px-4 py-3">
+<div class="flex h-12 items-center justify-center rounded-xl bg-gray-200/50 dark:bg-gray-800 p-1">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-700 has-[:checked]:shadow-sm transition-all duration-200">
+<span class="text-sm font-bold text-[#0e101b] dark:text-white">إضافة مهمة</span>
+<input checked="" class="hidden" name="mode-switch" type="radio" value="task"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-700 has-[:checked]:shadow-sm transition-all duration-200">
+<span class="text-sm font-medium text-[#4d5a99] dark:text-gray-400">إضافة مشروع</span>
+<input class="hidden" name="mode-switch" type="radio" value="project"/>
+</label>
+</div>
+</div>
+<!-- Task Form Section -->
+<div class="space-y-6 mt-4" id="task-form">
+<!-- Task Name Field -->
+<div class="px-4">
+<label class="block">
+<span class="text-[#0e101b] dark:text-white text-base font-bold mb-2 block">اسم المهمة</span>
+<input class="w-full h-14 px-4 rounded-xl border border-[#d0d3e7] dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-[#4d5a99]/50" placeholder="مثال: قراءة ورد القرآن" type="text"/>
+</label>
+</div>
+<!-- Category Selector -->
+<div class="space-y-3">
+<h3 class="px-4 text-[#0e101b] dark:text-white text-base font-bold">التصنيف</h3>
+<div class="flex gap-3 overflow-x-auto px-4 pb-2 no-scrollbar">
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-primary text-white font-medium whitespace-nowrap shadow-md shadow-primary/20">
+<span class="material-symbols-outlined text-sm">work</span>
+                        عمل
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white dark:bg-gray-800 border border-[#d0d3e7] dark:border-gray-700 text-[#0e101b] dark:text-white font-medium whitespace-nowrap">
+<span class="material-symbols-outlined text-sm">menu_book</span>
+                        صلاة
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white dark:bg-gray-800 border border-[#d0d3e7] dark:border-gray-700 text-[#0e101b] dark:text-white font-medium whitespace-nowrap">
+<span class="material-symbols-outlined text-sm">fitness_center</span>
+                        صحة
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white dark:bg-gray-800 border border-[#d0d3e7] dark:border-gray-700 text-[#0e101b] dark:text-white font-medium whitespace-nowrap">
+<span class="material-symbols-outlined text-sm">person</span>
+                        شخصي
+                    </button>
+</div>
+</div>
+<!-- Reminder and Repeat -->
+<div class="px-4 grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<span class="text-[#0e101b] dark:text-white text-base font-bold block">وقت التذكير</span>
+<div class="flex items-center h-14 px-4 rounded-xl border border-[#d0d3e7] dark:border-gray-700 bg-white dark:bg-gray-800">
+<span class="material-symbols-outlined text-primary ml-2">schedule</span>
+<span class="font-medium">08:00 م</span>
+</div>
+</div>
+<div class="space-y-2">
+<span class="text-[#0e101b] dark:text-white text-base font-bold block">تكرار</span>
+<div class="flex items-center justify-between h-14 px-4 rounded-xl border border-[#d0d3e7] dark:border-gray-700 bg-white dark:bg-gray-800">
+<span class="font-medium">يومياً</span>
+<div class="relative inline-block w-10 h-6">
+<input checked="" class="ios-toggle hidden" id="repeat-toggle" type="checkbox"/>
+<label class="ios-toggle-label block bg-gray-300 dark:bg-gray-600 w-10 h-6 rounded-full cursor-pointer transition-colors duration-200 after:content-[''] after:absolute after:top-0.5 after:right-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all" for="repeat-toggle"></label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Project Form Section (Visual sample, hidden logic would normally apply) -->
+<div class="hidden space-y-6 mt-6 px-4" id="project-form">
+<label class="block">
+<span class="text-[#0e101b] dark:text-white text-base font-bold mb-2 block">اسم المشروع</span>
+<input class="w-full h-14 px-4 rounded-xl border border-[#d0d3e7] dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-primary outline-none" placeholder="تطبيق تتبع المهام" type="text"/>
+</label>
+<div class="space-y-2">
+<span class="text-[#0e101b] dark:text-white text-base font-bold block">التقنيات المستخدمة</span>
+<div class="flex flex-wrap gap-2 min-h-14 p-2 rounded-xl border border-[#d0d3e7] dark:border-gray-700 bg-white dark:bg-gray-800">
+<span class="flex items-center gap-1 bg-primary/10 text-primary px-3 py-1 rounded-lg text-sm font-bold">
+                        Flutter <span class="material-symbols-outlined text-xs">close</span>
+</span>
+<span class="flex items-center gap-1 bg-primary/10 text-primary px-3 py-1 rounded-lg text-sm font-bold">
+                        Firebase <span class="material-symbols-outlined text-xs">close</span>
+</span>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-sm p-1" placeholder="أضف تقنية..." type="text"/>
+</div>
+</div>
+<label class="block">
+<span class="text-[#0e101b] dark:text-white text-base font-bold mb-2 block">موعد التسليم</span>
+<div class="flex items-center h-14 px-4 rounded-xl border border-[#d0d3e7] dark:border-gray-700 bg-white dark:bg-gray-800">
+<span class="material-symbols-outlined text-primary ml-2">calendar_month</span>
+<span class="font-medium text-[#0e101b] dark:text-white">25 أكتوبر 2023</span>
+</div>
+</label>
+</div>
+<!-- Illustration / Background element -->
+<div class="mt-12 px-4 flex justify-center">
+<div class="w-full max-w-[200px] h-[150px] bg-gradient-to-br from-primary/5 to-primary/20 rounded-3xl relative overflow-hidden flex items-center justify-center border border-primary/10">
+<span class="material-symbols-outlined text-6xl text-primary/40">rocket_launch</span>
+<div class="absolute -bottom-4 -right-4 w-16 h-16 bg-primary/10 rounded-full"></div>
+<div class="absolute -top-4 -left-4 w-24 h-24 bg-primary/5 rounded-full"></div>
+</div>
+</div>
+</main>
+<!-- Fixed Save Button -->
+<footer class="fixed bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-background-light dark:from-background-dark via-background-light/90 dark:via-background-dark/90 to-transparent">
+<button class="w-full max-w-md mx-auto h-16 bg-primary text-white rounded-2xl font-bold text-lg shadow-xl shadow-primary/30 flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+<span>حفظ المهمة</span>
+<span class="material-symbols-outlined">check_circle</span>
+</button>
+</footer>
+</body></html>

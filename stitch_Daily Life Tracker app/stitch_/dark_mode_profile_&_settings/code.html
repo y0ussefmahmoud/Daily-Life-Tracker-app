@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="dark" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dark Mode Profile &amp; Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&amp;family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4461ee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121212",
+                        "secondary-dark": "#1f1f1f",
+                        "accent-blue": "#4cc9f0",
+                        "accent-purple": "#3a0ca3",
+                        "logout-red": "#ef233c"
+                    },
+                    fontFamily: {
+                        "display": ["Tajawal", "Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+        .neon-glow {
+            filter: drop-shadow(0 0 4px #4cc9f0);
+        }
+        .ios-switch:checked + .switch-bg {
+            background-color: #4461ee;
+        }
+        .ios-switch:checked + .switch-bg .switch-dot {
+            transform: translateX(-1.25rem);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark text-white font-display">
+<div class="max-w-md mx-auto min-h-screen bg-background-dark relative pb-24">
+<!-- TopAppBar -->
+<div class="sticky top-0 z-50 flex items-center bg-background-dark/80 backdrop-blur-md p-4 justify-between border-b border-white/5">
+<div class="text-white flex size-10 items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center">الملف الشخصي</h2>
+<div class="flex w-10 items-center justify-end">
+<button class="flex cursor-pointer items-center justify-center rounded-lg h-10 bg-transparent text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+<!-- ProfileHeader with Gradient -->
+<div class="p-4">
+<div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-accent-purple via-[#240b63] to-background-dark p-6 border border-white/10 shadow-xl">
+<div class="flex flex-col items-center gap-4 relative z-10">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-24 w-24 border-4 border-white/10" data-alt="User profile picture of a professional person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC2Z7-0DAaPstsKE70VN-jPK4yFLqZVSEt2tjiriYx0Adw6o2UJHgmRUKmRLDuq1cwEnLGRYryIVC9ZstnpKhmxv7zTWYnlwQiRmILw35UdgRk0Sqi1qJfN1Fd5JKlUu4kguTCjXeo4J50v0ER6GFSbtChboPlA2lOXKyulTe2bxJpEghE6AqLPutN54BiKUUEB8queSqdQeD0QSCmYhGnq1DLKIbA62ZzBxbbf0k3Sr61hSS4-e8Fa_tYNDSvJTrIutCyCQ7OplhbZ");'>
+</div>
+<div class="absolute bottom-0 right-0 bg-primary p-1 rounded-full border-2 border-background-dark">
+<span class="material-symbols-outlined text-[16px] text-white">verified</span>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center">
+<p class="text-white text-2xl font-bold leading-tight tracking-tight">أحمد محمد</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="text-accent-blue text-sm font-medium">عضو برو</span>
+<span class="text-white/40 text-sm">•</span>
+<p class="text-white/60 text-sm font-normal">@ahmed_mo</p>
+</div>
+</div>
+</div>
+<!-- Subtle decorative circle -->
+<div class="absolute -top-10 -left-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
+</div>
+</div>
+<!-- ProfileStats with Glowing Icons -->
+<div class="flex flex-wrap gap-3 px-4 py-2">
+<div class="flex min-w-[100px] flex-1 flex-col gap-2 rounded-xl border border-white/5 bg-secondary-dark/50 p-4 items-center text-center">
+<span class="material-symbols-outlined text-accent-blue neon-glow mb-1">military_tech</span>
+<p class="text-white tracking-light text-2xl font-bold leading-tight">١٢</p>
+<p class="text-white/60 text-xs font-normal leading-normal">الميداليات</p>
+</div>
+<div class="flex min-w-[100px] flex-1 flex-col gap-2 rounded-xl border border-white/5 bg-secondary-dark/50 p-4 items-center text-center">
+<span class="material-symbols-outlined text-accent-blue neon-glow mb-1">local_fire_department</span>
+<p class="text-white tracking-light text-2xl font-bold leading-tight">٤٥</p>
+<p class="text-white/60 text-xs font-normal leading-normal">الأيام المتتالية</p>
+</div>
+<div class="flex min-w-[100px] flex-1 flex-col gap-2 rounded-xl border border-white/5 bg-secondary-dark/50 p-4 items-center text-center">
+<span class="material-symbols-outlined text-accent-blue neon-glow mb-1">monetization_on</span>
+<p class="text-white tracking-light text-2xl font-bold leading-tight">١,٢٨٠</p>
+<p class="text-white/60 text-xs font-normal leading-normal">النقاط</p>
+</div>
+</div>
+<!-- SectionHeader -->
+<h3 class="text-white/50 text-sm font-bold uppercase tracking-widest px-6 pb-2 pt-8">إعدادات الحساب</h3>
+<!-- Settings List Items -->
+<div class="px-4">
+<div class="bg-secondary-dark/40 rounded-xl border border-white/5 overflow-hidden">
+<!-- ListItem 1 -->
+<div class="flex items-center gap-4 px-4 min-h-[60px] justify-between cursor-pointer hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-4">
+<div class="text-accent-blue flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">person</span>
+</div>
+<p class="text-white text-base font-medium flex-1 truncate">تعديل الملف الشخصي</p>
+</div>
+<span class="material-symbols-outlined text-white/30 text-xl">chevron_left</span>
+</div>
+<div class="h-[1px] bg-white/5 mx-4"></div>
+<!-- ListItem 2 (With Toggle) -->
+<div class="flex items-center gap-4 px-4 min-h-[60px] justify-between">
+<div class="flex items-center gap-4">
+<div class="text-accent-blue flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">notifications_active</span>
+</div>
+<p class="text-white text-base font-medium flex-1 truncate">إشعارات التطبيق</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only ios-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-white/10 rounded-full switch-bg transition-colors duration-200">
+<div class="absolute right-[2px] top-[2px] bg-white border border-gray-300 rounded-full h-5 w-5 transition-transform duration-200 switch-dot"></div>
+</div>
+</label>
+</div>
+<div class="h-[1px] bg-white/5 mx-4"></div>
+<!-- ListItem 3 -->
+<div class="flex items-center gap-4 px-4 min-h-[60px] justify-between cursor-pointer hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-4">
+<div class="text-accent-blue flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">security</span>
+</div>
+<p class="text-white text-base font-medium flex-1 truncate">الأمان وكلمة المرور</p>
+</div>
+<span class="material-symbols-outlined text-white/30 text-xl">chevron_left</span>
+</div>
+</div>
+</div>
+<!-- SectionHeader 2 -->
+<h3 class="text-white/50 text-sm font-bold uppercase tracking-widest px-6 pb-2 pt-8">التفضيلات</h3>
+<div class="px-4">
+<div class="bg-secondary-dark/40 rounded-xl border border-white/5 overflow-hidden">
+<!-- ListItem 4 -->
+<div class="flex items-center gap-4 px-4 min-h-[60px] justify-between cursor-pointer hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-4">
+<div class="text-accent-blue flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">language</span>
+</div>
+<p class="text-white text-base font-medium flex-1 truncate">اللغة</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-white/40 text-sm">العربية</span>
+<span class="material-symbols-outlined text-white/30 text-xl">chevron_left</span>
+</div>
+</div>
+<div class="h-[1px] bg-white/5 mx-4"></div>
+<!-- ListItem 5 (Dark Mode toggle - always on for this variant) -->
+<div class="flex items-center gap-4 px-4 min-h-[60px] justify-between">
+<div class="flex items-center gap-4">
+<div class="text-accent-blue flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">dark_mode</span>
+</div>
+<p class="text-white text-base font-medium flex-1 truncate">الوضع الليلي</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only ios-switch" type="checkbox"/>
+<div class="w-11 h-6 bg-primary rounded-full switch-bg">
+<div class="absolute right-[22px] top-[2px] bg-white rounded-full h-5 w-5"></div>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Logout Button (Ghost Style with Red Border) -->
+<div class="p-6 mt-4">
+<button class="w-full h-14 border-2 border-logout-red/40 hover:bg-logout-red/5 text-logout-red font-bold rounded-xl flex items-center justify-center gap-2 transition-all">
+<span class="material-symbols-outlined">logout</span>
+                تسجيل الخروج
+            </button>
+</div>
+<!-- Bottom Tab Bar -->
+<div class="fixed bottom-0 left-0 right-0 bg-background-dark/80 backdrop-blur-xl border-t border-white/5 px-6 py-3 flex justify-between items-center z-50">
+<div class="flex flex-col items-center gap-1 text-white/40">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px]">الرئيسية</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-white/40">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-[10px]">التتبع</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-white/40">
+<div class="bg-primary size-12 rounded-full flex items-center justify-center -mt-8 shadow-lg shadow-primary/20 border-4 border-background-dark">
+<span class="material-symbols-outlined text-white">add</span>
+</div>
+<span class="text-[10px] mt-1">إضافة</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-white/40">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px]">إحصائيات</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold">الملف</span>
+</div>
+</div>
+</div>
+</body></html>

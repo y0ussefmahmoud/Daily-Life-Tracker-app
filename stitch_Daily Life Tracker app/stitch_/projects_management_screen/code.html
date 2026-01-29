@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Projects Management Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4461ee",
+                        "background-light": "#f8f9fc",
+                        "background-dark": "#101322",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', 'Noto Sans Arabic', sans-serif;
+        }
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-[#0e101b] font-display">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+<div class="flex items-center p-4 justify-between max-w-md mx-auto">
+<h1 class="text-[#0e101b] dark:text-white text-xl font-bold leading-tight tracking-tight">مشاريعي</h1>
+<button class="flex items-center gap-1 bg-primary text-white px-4 py-2 rounded-full font-bold text-sm shadow-md active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-sm">add</span>
+<span>مشروع</span>
+</button>
+</div>
+</header>
+<main class="max-w-md mx-auto pb-24">
+<!-- Motivational Quote -->
+<div class="px-4 pt-6">
+<div class="bg-primary/10 border border-primary/20 p-4 rounded-xl">
+<p class="text-primary text-sm font-medium italic">"إن الله يحب إذا عمل أحدكم عملاً أن يتقنه"</p>
+</div>
+</div>
+<!-- Section: Active Projects -->
+<div class="px-4 pt-8 pb-3 flex items-center justify-between">
+<h2 class="text-[#0e101b] dark:text-white text-[20px] font-bold">قيد التنفيذ</h2>
+<span class="bg-primary/20 text-primary text-xs font-bold px-2 py-1 rounded-full">2 نشط</span>
+</div>
+<!-- Project Card 1 -->
+<div class="px-4 mb-4">
+<div class="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="flex p-4 gap-4">
+<div class="relative flex-shrink-0 w-16 h-16">
+<!-- Circular Progress Visual -->
+<svg class="w-16 h-16">
+<circle class="text-gray-200 dark:text-gray-700 stroke-current" cx="32" cy="32" fill="transparent" r="28" stroke-width="4"></circle>
+<circle class="text-primary stroke-current progress-ring__circle" cx="32" cy="32" fill="transparent" r="28" stroke-linecap="round" stroke-width="4" style="stroke-dasharray: 175.93; stroke-dashoffset: 61.57;"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="text-xs font-bold text-[#0e101b] dark:text-white">65%</span>
+</div>
+</div>
+<div class="flex-grow flex flex-col justify-center">
+<h3 class="text-[#0e101b] dark:text-white text-lg font-bold">Y0 AI Assistant</h3>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded">Flutter</span>
+<span class="bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-300 text-[10px] font-bold px-2 py-0.5 rounded">Firebase</span>
+</div>
+</div>
+<div class="flex items-start">
+<button class="text-gray-400 hover:text-gray-600">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<div class="px-4 pb-4 border-t border-gray-50 dark:border-gray-800 pt-3 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>25 ساعة/أسبوع</span>
+</div>
+<div class="flex items-center gap-1 text-primary font-medium">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>تقدم ممتاز</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Project Card 2 -->
+<div class="px-4 mb-4">
+<div class="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="flex p-4 gap-4">
+<div class="relative flex-shrink-0 w-16 h-16">
+<svg class="w-16 h-16">
+<circle class="text-gray-200 dark:text-gray-700 stroke-current" cx="32" cy="32" fill="transparent" r="28" stroke-width="4"></circle>
+<circle class="text-primary stroke-current progress-ring__circle" cx="32" cy="32" fill="transparent" r="28" stroke-linecap="round" stroke-width="4" style="stroke-dasharray: 175.93; stroke-dashoffset: 105.55;"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="text-xs font-bold text-[#0e101b] dark:text-white">40%</span>
+</div>
+</div>
+<div class="flex-grow flex flex-col justify-center">
+<h3 class="text-[#0e101b] dark:text-white text-lg font-bold">healthcare_flutter</h3>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded">HealthTech</span>
+</div>
+</div>
+<div class="flex items-start">
+<button class="text-gray-400">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<div class="px-4 pb-4 border-t border-gray-50 dark:border-gray-800 pt-3 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">event</span>
+<span>الموعد النهائي: 20 يناير</span>
+</div>
+<div class="flex items-center gap-1 text-orange-500">
+<span class="material-symbols-outlined text-sm">warning</span>
+<span>تحتاج تركيزاً</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Paused Projects -->
+<div class="px-4 pt-8 pb-3">
+<h2 class="text-[#0e101b]/50 dark:text-white/50 text-[18px] font-bold">متوقف مؤقتاً</h2>
+</div>
+<div class="px-4 mb-4">
+<div class="bg-white/60 dark:bg-gray-900/40 rounded-xl p-4 flex items-center justify-between border border-dashed border-gray-300 dark:border-gray-700">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-400">
+<span class="material-symbols-outlined">pause_circle</span>
+</div>
+<div>
+<h3 class="text-gray-500 dark:text-gray-400 font-bold text-sm">تطوير الموقع القديم</h3>
+<p class="text-gray-400 text-[10px]">توقف منذ 12 يوماً</p>
+</div>
+</div>
+<button class="text-primary text-xs font-bold">استئناف</button>
+</div>
+</div>
+<!-- Success Nudge -->
+<div class="flex flex-col gap-3 p-4 mt-4">
+<div class="flex gap-6 justify-between">
+<p class="text-[#0e101b] dark:text-white text-base font-medium leading-normal">إجمالي إنجاز الشهر</p>
+<p class="text-[#0e101b] dark:text-white text-sm font-normal leading-normal">52%</p>
+</div>
+<div class="rounded bg-gray-200 dark:bg-gray-700 overflow-hidden">
+<div class="h-2 rounded bg-primary" style="width: 52%;"></div>
+</div>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">استمر، النجاح بتوفيق الله وبركة الوقت في التبكير.</p>
+</div>
+</main>
+<!-- Navigation Tab Bar (iOS Style) -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-gray-950/90 backdrop-blur-lg border-t border-gray-100 dark:border-gray-800 px-6 py-2 flex justify-between items-center max-w-md mx-auto">
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px]">الرئيسية</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">folder</span>
+<span class="text-[10px] font-bold">مشاريعي</span>
+</button>
+<div class="relative -top-5">
+<button class="bg-primary text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center border-4 border-background-light dark:border-background-dark">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-[10px]">الدروس</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px]">حسابي</span>
+</button>
+</nav>
+</body></html>
