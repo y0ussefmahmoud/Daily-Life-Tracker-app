@@ -53,6 +53,19 @@ String handleSupabaseError(dynamic error) {
     return '${AppStrings.error}: ${error.message}';
   }
 
+  // Handle FormatException
+  if (error is FormatException) {
+    return '${AppStrings.error}: تنسيق البيانات غير صحيح';
+  }
+
+  // Handle HttpException
+  if (error is HttpException) {
+    if (error.message.contains('Connection refused')) {
+      return AppStrings.errorServerUnreachable;
+    }
+    return '${AppStrings.error}: ${error.message}';
+  }
+
   // Handle custom Exception messages from SupabaseService
   if (error is Exception) {
     final errorString = error.toString();
@@ -128,26 +141,33 @@ class ErrorStateWidget extends StatelessWidget {
   final String message;
   final VoidCallback? onRetry;
   final IconData icon;
+  final String? subtitle;
 
   const ErrorStateWidget({
     Key? key,
     required this.message,
     this.onRetry,
     this.icon = Icons.error_outline,
+    this.subtitle,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 64,
-              color: Theme.of(context).colorScheme.error.withOpacity(0.5),
+            AnimatedContainer(
+              duration: AppConstants.mediumAnimation,
+              child: Icon(
+                icon,
+                size: 64,
+                color: theme.colorScheme.error.withOpacity(0.7),
+              ),
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
@@ -155,30 +175,46 @@ class ErrorStateWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               style: GoogleFonts.tajawal(
                 fontSize: AppTypography.body,
-                color: Theme.of(context).textTheme.bodyMedium?.color,
+                color: theme.textTheme.bodyMedium?.color,
+                fontWeight: AppTypography.medium,
               ),
             ),
+            if (subtitle != null) ...[
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                subtitle!,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.tajawal(
+                  fontSize: AppTypography.caption,
+                  color: theme.textTheme.bodySmall?.color,
+                ),
+              ),
+            ],
             if (onRetry != null) ...[
               const SizedBox(height: AppSpacing.lg),
-              ElevatedButton.icon(
-                onPressed: onRetry,
-                icon: const Icon(Icons.refresh),
-                label: Text(
-                  AppStrings.errorRetry,
-                  style: GoogleFonts.tajawal(
-                    fontSize: AppTypography.body,
-                    fontWeight: AppTypography.medium,
+              AnimatedContainer(
+                duration: AppConstants.shortAnimation,
+                child: ElevatedButton.icon(
+                  onPressed: onRetry,
+                  icon: const Icon(Icons.refresh),
+                  label: Text(
+                    AppStrings.errorRetry,
+                    style: GoogleFonts.tajawal(
+                      fontSize: AppTypography.body,
+                      fontWeight: AppTypography.medium,
+                    ),
                   ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primaryColor,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.lg,
-                    vertical: AppSpacing.md,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primaryColor,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.lg,
+                      vertical: AppSpacing.md,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+                    ),
+                    elevation: 2,
                   ),
                 ),
               ),

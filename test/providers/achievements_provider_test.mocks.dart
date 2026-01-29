@@ -31,54 +31,29 @@ import 'package:mockito/src/dummies.dart' as _i9;
 
 class _FakeUserLevelModel_0 extends _i1.SmartFake
     implements _i2.UserLevelModel {
-  _FakeUserLevelModel_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeUserLevelModel_0(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeIconData_1 extends _i1.SmartFake implements _i3.IconData {
-  _FakeIconData_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeIconData_1(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeColor_2 extends _i1.SmartFake implements _i4.Color {
-  _FakeColor_2(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeColor_2(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeBadgeModel_3 extends _i1.SmartFake implements _i5.BadgeModel {
-  _FakeBadgeModel_3(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeBadgeModel_3(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeLeaderboardUserModel_4 extends _i1.SmartFake
     implements _i6.LeaderboardUserModel {
-  _FakeLeaderboardUserModel_4(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeLeaderboardUserModel_4(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 /// A class which mocks [AchievementsService].
@@ -91,86 +66,73 @@ class MockAchievementsService extends _i1.Mock
   }
 
   @override
-  _i8.Future<List<_i5.BadgeModel>> fetchUserBadges() => (super.noSuchMethod(
-        Invocation.method(
-          #fetchUserBadges,
-          [],
-        ),
-        returnValue: _i8.Future<List<_i5.BadgeModel>>.value(<_i5.BadgeModel>[]),
-      ) as _i8.Future<List<_i5.BadgeModel>>);
-
-  @override
-  _i8.Future<_i2.UserLevelModel> fetchUserLevel() => (super.noSuchMethod(
-        Invocation.method(
-          #fetchUserLevel,
-          [],
-        ),
-        returnValue: _i8.Future<_i2.UserLevelModel>.value(_FakeUserLevelModel_0(
-          this,
-          Invocation.method(
-            #fetchUserLevel,
-            [],
-          ),
-        )),
-      ) as _i8.Future<_i2.UserLevelModel>);
-
-  @override
-  _i8.Future<void> updateBadgeProgress(
-    String? badgeId,
-    double? progress,
-  ) =>
+  _i8.Future<List<_i5.BadgeModel>> fetchUserBadges() =>
       (super.noSuchMethod(
-        Invocation.method(
-          #updateBadgeProgress,
-          [
-            badgeId,
-            progress,
-          ],
-        ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+            Invocation.method(#fetchUserBadges, []),
+            returnValue: _i8.Future<List<_i5.BadgeModel>>.value(
+              <_i5.BadgeModel>[],
+            ),
+          )
+          as _i8.Future<List<_i5.BadgeModel>>);
 
   @override
-  _i8.Future<void> earnBadge(String? badgeId) => (super.noSuchMethod(
-        Invocation.method(
-          #earnBadge,
-          [badgeId],
-        ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+  _i8.Future<_i2.UserLevelModel> fetchUserLevel() =>
+      (super.noSuchMethod(
+            Invocation.method(#fetchUserLevel, []),
+            returnValue: _i8.Future<_i2.UserLevelModel>.value(
+              _FakeUserLevelModel_0(
+                this,
+                Invocation.method(#fetchUserLevel, []),
+              ),
+            ),
+          )
+          as _i8.Future<_i2.UserLevelModel>);
 
   @override
-  _i8.Future<void> addXP(int? amount) => (super.noSuchMethod(
-        Invocation.method(
-          #addXP,
-          [amount],
-        ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+  _i8.Future<void> updateBadgeProgress(String? badgeId, double? progress) =>
+      (super.noSuchMethod(
+            Invocation.method(#updateBadgeProgress, [badgeId, progress]),
+            returnValue: _i8.Future<void>.value(),
+            returnValueForMissingStub: _i8.Future<void>.value(),
+          )
+          as _i8.Future<void>);
+
+  @override
+  _i8.Future<void> earnBadge(String? badgeId) =>
+      (super.noSuchMethod(
+            Invocation.method(#earnBadge, [badgeId]),
+            returnValue: _i8.Future<void>.value(),
+            returnValueForMissingStub: _i8.Future<void>.value(),
+          )
+          as _i8.Future<void>);
+
+  @override
+  _i8.Future<void> addXP(int? amount) =>
+      (super.noSuchMethod(
+            Invocation.method(#addXP, [amount]),
+            returnValue: _i8.Future<void>.value(),
+            returnValueForMissingStub: _i8.Future<void>.value(),
+          )
+          as _i8.Future<void>);
 
   @override
   _i8.Future<List<_i6.LeaderboardUserModel>> fetchLeaderboard() =>
       (super.noSuchMethod(
-        Invocation.method(
-          #fetchLeaderboard,
-          [],
-        ),
-        returnValue: _i8.Future<List<_i6.LeaderboardUserModel>>.value(
-            <_i6.LeaderboardUserModel>[]),
-      ) as _i8.Future<List<_i6.LeaderboardUserModel>>);
+            Invocation.method(#fetchLeaderboard, []),
+            returnValue: _i8.Future<List<_i6.LeaderboardUserModel>>.value(
+              <_i6.LeaderboardUserModel>[],
+            ),
+          )
+          as _i8.Future<List<_i6.LeaderboardUserModel>>);
 
   @override
-  _i8.Future<void> checkBadgeProgress() => (super.noSuchMethod(
-        Invocation.method(
-          #checkBadgeProgress,
-          [],
-        ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+  _i8.Future<void> checkBadgeProgress() =>
+      (super.noSuchMethod(
+            Invocation.method(#checkBadgeProgress, []),
+            returnValue: _i8.Future<void>.value(),
+            returnValueForMissingStub: _i8.Future<void>.value(),
+          )
+          as _i8.Future<void>);
 }
 
 /// A class which mocks [UserLevelModel].
@@ -182,61 +144,57 @@ class MockUserLevelModel extends _i1.Mock implements _i2.UserLevelModel {
   }
 
   @override
-  int get currentLevel => (super.noSuchMethod(
-        Invocation.getter(#currentLevel),
-        returnValue: 0,
-      ) as int);
+  int get currentLevel =>
+      (super.noSuchMethod(Invocation.getter(#currentLevel), returnValue: 0)
+          as int);
 
   @override
-  String get levelTitle => (super.noSuchMethod(
-        Invocation.getter(#levelTitle),
-        returnValue: _i9.dummyValue<String>(
-          this,
-          Invocation.getter(#levelTitle),
-        ),
-      ) as String);
+  String get levelTitle =>
+      (super.noSuchMethod(
+            Invocation.getter(#levelTitle),
+            returnValue: _i9.dummyValue<String>(
+              this,
+              Invocation.getter(#levelTitle),
+            ),
+          )
+          as String);
 
   @override
-  int get currentXP => (super.noSuchMethod(
-        Invocation.getter(#currentXP),
-        returnValue: 0,
-      ) as int);
+  int get currentXP =>
+      (super.noSuchMethod(Invocation.getter(#currentXP), returnValue: 0)
+          as int);
 
   @override
-  int get xpForNextLevel => (super.noSuchMethod(
-        Invocation.getter(#xpForNextLevel),
-        returnValue: 0,
-      ) as int);
+  int get xpForNextLevel =>
+      (super.noSuchMethod(Invocation.getter(#xpForNextLevel), returnValue: 0)
+          as int);
 
   @override
-  int get totalXP => (super.noSuchMethod(
-        Invocation.getter(#totalXP),
-        returnValue: 0,
-      ) as int);
+  int get totalXP =>
+      (super.noSuchMethod(Invocation.getter(#totalXP), returnValue: 0) as int);
 
   @override
-  double get xpProgress => (super.noSuchMethod(
-        Invocation.getter(#xpProgress),
-        returnValue: 0.0,
-      ) as double);
+  double get xpProgress =>
+      (super.noSuchMethod(Invocation.getter(#xpProgress), returnValue: 0.0)
+          as double);
 
   @override
-  int get xpRemaining => (super.noSuchMethod(
-        Invocation.getter(#xpRemaining),
-        returnValue: 0,
-      ) as int);
+  int get xpRemaining =>
+      (super.noSuchMethod(Invocation.getter(#xpRemaining), returnValue: 0)
+          as int);
 
   @override
-  int get progressPercentage => (super.noSuchMethod(
-        Invocation.getter(#progressPercentage),
-        returnValue: 0,
-      ) as int);
+  int get progressPercentage =>
+      (super.noSuchMethod(
+            Invocation.getter(#progressPercentage),
+            returnValue: 0,
+          )
+          as int);
 
   @override
-  bool get isMaxLevel => (super.noSuchMethod(
-        Invocation.getter(#isMaxLevel),
-        returnValue: false,
-      ) as bool);
+  bool get isMaxLevel =>
+      (super.noSuchMethod(Invocation.getter(#isMaxLevel), returnValue: false)
+          as bool);
 
   @override
   _i2.UserLevelModel copyWith({
@@ -247,41 +205,33 @@ class MockUserLevelModel extends _i1.Mock implements _i2.UserLevelModel {
     int? totalXP,
   }) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #copyWith,
-          [],
-          {
-            #currentLevel: currentLevel,
-            #levelTitle: levelTitle,
-            #currentXP: currentXP,
-            #xpForNextLevel: xpForNextLevel,
-            #totalXP: totalXP,
-          },
-        ),
-        returnValue: _FakeUserLevelModel_0(
-          this,
-          Invocation.method(
-            #copyWith,
-            [],
-            {
+            Invocation.method(#copyWith, [], {
               #currentLevel: currentLevel,
               #levelTitle: levelTitle,
               #currentXP: currentXP,
               #xpForNextLevel: xpForNextLevel,
               #totalXP: totalXP,
-            },
-          ),
-        ),
-      ) as _i2.UserLevelModel);
+            }),
+            returnValue: _FakeUserLevelModel_0(
+              this,
+              Invocation.method(#copyWith, [], {
+                #currentLevel: currentLevel,
+                #levelTitle: levelTitle,
+                #currentXP: currentXP,
+                #xpForNextLevel: xpForNextLevel,
+                #totalXP: totalXP,
+              }),
+            ),
+          )
+          as _i2.UserLevelModel);
 
   @override
-  Map<String, dynamic> toJson() => (super.noSuchMethod(
-        Invocation.method(
-          #toJson,
-          [],
-        ),
-        returnValue: <String, dynamic>{},
-      ) as Map<String, dynamic>);
+  Map<String, dynamic> toJson() =>
+      (super.noSuchMethod(
+            Invocation.method(#toJson, []),
+            returnValue: <String, dynamic>{},
+          )
+          as Map<String, dynamic>);
 }
 
 /// A class which mocks [BadgeModel].
@@ -293,76 +243,79 @@ class MockBadgeModel extends _i1.Mock implements _i5.BadgeModel {
   }
 
   @override
-  String get id => (super.noSuchMethod(
-        Invocation.getter(#id),
-        returnValue: _i9.dummyValue<String>(
-          this,
-          Invocation.getter(#id),
-        ),
-      ) as String);
+  String get id =>
+      (super.noSuchMethod(
+            Invocation.getter(#id),
+            returnValue: _i9.dummyValue<String>(this, Invocation.getter(#id)),
+          )
+          as String);
 
   @override
-  String get title => (super.noSuchMethod(
-        Invocation.getter(#title),
-        returnValue: _i9.dummyValue<String>(
-          this,
-          Invocation.getter(#title),
-        ),
-      ) as String);
+  String get title =>
+      (super.noSuchMethod(
+            Invocation.getter(#title),
+            returnValue: _i9.dummyValue<String>(
+              this,
+              Invocation.getter(#title),
+            ),
+          )
+          as String);
 
   @override
-  String get description => (super.noSuchMethod(
-        Invocation.getter(#description),
-        returnValue: _i9.dummyValue<String>(
-          this,
-          Invocation.getter(#description),
-        ),
-      ) as String);
+  String get description =>
+      (super.noSuchMethod(
+            Invocation.getter(#description),
+            returnValue: _i9.dummyValue<String>(
+              this,
+              Invocation.getter(#description),
+            ),
+          )
+          as String);
 
   @override
-  _i3.IconData get icon => (super.noSuchMethod(
-        Invocation.getter(#icon),
-        returnValue: _FakeIconData_1(
-          this,
-          Invocation.getter(#icon),
-        ),
-      ) as _i3.IconData);
+  _i3.IconData get icon =>
+      (super.noSuchMethod(
+            Invocation.getter(#icon),
+            returnValue: _FakeIconData_1(this, Invocation.getter(#icon)),
+          )
+          as _i3.IconData);
 
   @override
-  bool get isEarned => (super.noSuchMethod(
-        Invocation.getter(#isEarned),
-        returnValue: false,
-      ) as bool);
+  bool get isEarned =>
+      (super.noSuchMethod(Invocation.getter(#isEarned), returnValue: false)
+          as bool);
 
   @override
-  double get progress => (super.noSuchMethod(
-        Invocation.getter(#progress),
-        returnValue: 0.0,
-      ) as double);
+  double get progress =>
+      (super.noSuchMethod(Invocation.getter(#progress), returnValue: 0.0)
+          as double);
 
   @override
-  _i5.BadgeCategory get category => (super.noSuchMethod(
-        Invocation.getter(#category),
-        returnValue: _i5.BadgeCategory.prayer,
-      ) as _i5.BadgeCategory);
+  _i5.BadgeCategory get category =>
+      (super.noSuchMethod(
+            Invocation.getter(#category),
+            returnValue: _i5.BadgeCategory.prayer,
+          )
+          as _i5.BadgeCategory);
 
   @override
-  _i4.Color get color => (super.noSuchMethod(
-        Invocation.getter(#color),
-        returnValue: _FakeColor_2(
-          this,
-          Invocation.getter(#color),
-        ),
-      ) as _i4.Color);
+  _i4.Color get color =>
+      (super.noSuchMethod(
+            Invocation.getter(#color),
+            returnValue: _FakeColor_2(this, Invocation.getter(#color)),
+          )
+          as _i4.Color);
 
   @override
-  String get categoryText => (super.noSuchMethod(
-        Invocation.getter(#categoryText),
-        returnValue: _i9.dummyValue<String>(
-          this,
-          Invocation.getter(#categoryText),
-        ),
-      ) as String);
+  String get categoryText =>
+      (super.noSuchMethod(
+            Invocation.getter(#categoryText),
+            returnValue: _i9.dummyValue<String>(
+              this,
+              Invocation.getter(#categoryText),
+            ),
+          )
+          as String);
 
   @override
   _i5.BadgeModel copyWith({
@@ -379,29 +332,7 @@ class MockBadgeModel extends _i1.Mock implements _i5.BadgeModel {
     _i4.Color? color,
   }) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #copyWith,
-          [],
-          {
-            #userId: userId,
-            #id: id,
-            #title: title,
-            #description: description,
-            #iconUrl: iconUrl,
-            #icon: icon,
-            #isEarned: isEarned,
-            #progress: progress,
-            #earnedDate: earnedDate,
-            #category: category,
-            #color: color,
-          },
-        ),
-        returnValue: _FakeBadgeModel_3(
-          this,
-          Invocation.method(
-            #copyWith,
-            [],
-            {
+            Invocation.method(#copyWith, [], {
               #userId: userId,
               #id: id,
               #title: title,
@@ -413,43 +344,52 @@ class MockBadgeModel extends _i1.Mock implements _i5.BadgeModel {
               #earnedDate: earnedDate,
               #category: category,
               #color: color,
-            },
-          ),
-        ),
-      ) as _i5.BadgeModel);
+            }),
+            returnValue: _FakeBadgeModel_3(
+              this,
+              Invocation.method(#copyWith, [], {
+                #userId: userId,
+                #id: id,
+                #title: title,
+                #description: description,
+                #iconUrl: iconUrl,
+                #icon: icon,
+                #isEarned: isEarned,
+                #progress: progress,
+                #earnedDate: earnedDate,
+                #category: category,
+                #color: color,
+              }),
+            ),
+          )
+          as _i5.BadgeModel);
 
   @override
-  Map<String, dynamic> toJson() => (super.noSuchMethod(
-        Invocation.method(
-          #toJson,
-          [],
-        ),
-        returnValue: <String, dynamic>{},
-      ) as Map<String, dynamic>);
+  Map<String, dynamic> toJson() =>
+      (super.noSuchMethod(
+            Invocation.method(#toJson, []),
+            returnValue: <String, dynamic>{},
+          )
+          as Map<String, dynamic>);
 
   @override
-  List<_i4.Color> getGradientColors() => (super.noSuchMethod(
-        Invocation.method(
-          #getGradientColors,
-          [],
-        ),
-        returnValue: <_i4.Color>[],
-      ) as List<_i4.Color>);
+  List<_i4.Color> getGradientColors() =>
+      (super.noSuchMethod(
+            Invocation.method(#getGradientColors, []),
+            returnValue: <_i4.Color>[],
+          )
+          as List<_i4.Color>);
 
   @override
-  _i4.Color getBadgeColor() => (super.noSuchMethod(
-        Invocation.method(
-          #getBadgeColor,
-          [],
-        ),
-        returnValue: _FakeColor_2(
-          this,
-          Invocation.method(
-            #getBadgeColor,
-            [],
-          ),
-        ),
-      ) as _i4.Color);
+  _i4.Color getBadgeColor() =>
+      (super.noSuchMethod(
+            Invocation.method(#getBadgeColor, []),
+            returnValue: _FakeColor_2(
+              this,
+              Invocation.method(#getBadgeColor, []),
+            ),
+          )
+          as _i4.Color);
 }
 
 /// A class which mocks [LeaderboardUserModel].
@@ -462,46 +402,41 @@ class MockLeaderboardUserModel extends _i1.Mock
   }
 
   @override
-  int get rank => (super.noSuchMethod(
-        Invocation.getter(#rank),
-        returnValue: 0,
-      ) as int);
+  int get rank =>
+      (super.noSuchMethod(Invocation.getter(#rank), returnValue: 0) as int);
 
   @override
-  String get name => (super.noSuchMethod(
-        Invocation.getter(#name),
-        returnValue: _i9.dummyValue<String>(
-          this,
-          Invocation.getter(#name),
-        ),
-      ) as String);
+  String get name =>
+      (super.noSuchMethod(
+            Invocation.getter(#name),
+            returnValue: _i9.dummyValue<String>(this, Invocation.getter(#name)),
+          )
+          as String);
 
   @override
-  int get xp => (super.noSuchMethod(
-        Invocation.getter(#xp),
-        returnValue: 0,
-      ) as int);
+  int get xp =>
+      (super.noSuchMethod(Invocation.getter(#xp), returnValue: 0) as int);
 
   @override
-  bool get isCurrentUser => (super.noSuchMethod(
-        Invocation.getter(#isCurrentUser),
-        returnValue: false,
-      ) as bool);
+  bool get isCurrentUser =>
+      (super.noSuchMethod(Invocation.getter(#isCurrentUser), returnValue: false)
+          as bool);
 
   @override
-  String get rankDisplay => (super.noSuchMethod(
-        Invocation.getter(#rankDisplay),
-        returnValue: _i9.dummyValue<String>(
-          this,
-          Invocation.getter(#rankDisplay),
-        ),
-      ) as String);
+  String get rankDisplay =>
+      (super.noSuchMethod(
+            Invocation.getter(#rankDisplay),
+            returnValue: _i9.dummyValue<String>(
+              this,
+              Invocation.getter(#rankDisplay),
+            ),
+          )
+          as String);
 
   @override
-  bool get hasMedal => (super.noSuchMethod(
-        Invocation.getter(#hasMedal),
-        returnValue: false,
-      ) as bool);
+  bool get hasMedal =>
+      (super.noSuchMethod(Invocation.getter(#hasMedal), returnValue: false)
+          as bool);
 
   @override
   _i6.LeaderboardUserModel copyWith({
@@ -513,41 +448,33 @@ class MockLeaderboardUserModel extends _i1.Mock
     String? badge,
   }) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #copyWith,
-          [],
-          {
-            #rank: rank,
-            #name: name,
-            #avatarUrl: avatarUrl,
-            #xp: xp,
-            #isCurrentUser: isCurrentUser,
-            #badge: badge,
-          },
-        ),
-        returnValue: _FakeLeaderboardUserModel_4(
-          this,
-          Invocation.method(
-            #copyWith,
-            [],
-            {
+            Invocation.method(#copyWith, [], {
               #rank: rank,
               #name: name,
               #avatarUrl: avatarUrl,
               #xp: xp,
               #isCurrentUser: isCurrentUser,
               #badge: badge,
-            },
-          ),
-        ),
-      ) as _i6.LeaderboardUserModel);
+            }),
+            returnValue: _FakeLeaderboardUserModel_4(
+              this,
+              Invocation.method(#copyWith, [], {
+                #rank: rank,
+                #name: name,
+                #avatarUrl: avatarUrl,
+                #xp: xp,
+                #isCurrentUser: isCurrentUser,
+                #badge: badge,
+              }),
+            ),
+          )
+          as _i6.LeaderboardUserModel);
 
   @override
-  Map<String, dynamic> toJson() => (super.noSuchMethod(
-        Invocation.method(
-          #toJson,
-          [],
-        ),
-        returnValue: <String, dynamic>{},
-      ) as Map<String, dynamic>);
+  Map<String, dynamic> toJson() =>
+      (super.noSuchMethod(
+            Invocation.method(#toJson, []),
+            returnValue: <String, dynamic>{},
+          )
+          as Map<String, dynamic>);
 }

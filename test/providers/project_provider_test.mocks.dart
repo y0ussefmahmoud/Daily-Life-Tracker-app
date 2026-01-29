@@ -39,48 +39,43 @@ class MockProjectService extends _i1.Mock implements _i2.ProjectService {
   }
 
   @override
-  _i3.Future<List<_i4.Project>> fetchProjects() => (super.noSuchMethod(
-        Invocation.method(
-          #fetchProjects,
-          [],
-        ),
-        returnValue: _i3.Future<List<_i4.Project>>.value(<_i4.Project>[]),
-      ) as _i3.Future<List<_i4.Project>>);
+  _i3.Future<List<_i4.Project>> fetchProjects() =>
+      (super.noSuchMethod(
+            Invocation.method(#fetchProjects, []),
+            returnValue: _i3.Future<List<_i4.Project>>.value(<_i4.Project>[]),
+          )
+          as _i3.Future<List<_i4.Project>>);
 
   @override
-  _i3.Future<String> createProject(_i4.Project? project) => (super.noSuchMethod(
-        Invocation.method(
-          #createProject,
-          [project],
-        ),
-        returnValue: _i3.Future<String>.value(_i5.dummyValue<String>(
-          this,
-          Invocation.method(
-            #createProject,
-            [project],
-          ),
-        )),
-      ) as _i3.Future<String>);
+  _i3.Future<String> createProject(_i4.Project? project) =>
+      (super.noSuchMethod(
+            Invocation.method(#createProject, [project]),
+            returnValue: _i3.Future<String>.value(
+              _i5.dummyValue<String>(
+                this,
+                Invocation.method(#createProject, [project]),
+              ),
+            ),
+          )
+          as _i3.Future<String>);
 
   @override
-  _i3.Future<void> updateProject(_i4.Project? project) => (super.noSuchMethod(
-        Invocation.method(
-          #updateProject,
-          [project],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> updateProject(_i4.Project? project) =>
+      (super.noSuchMethod(
+            Invocation.method(#updateProject, [project]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
-  _i3.Future<void> deleteProject(String? projectId) => (super.noSuchMethod(
-        Invocation.method(
-          #deleteProject,
-          [projectId],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> deleteProject(String? projectId) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteProject, [projectId]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
   _i3.Future<void> toggleProjectStatus(
@@ -88,116 +83,88 @@ class MockProjectService extends _i1.Mock implements _i2.ProjectService {
     _i4.ProjectStatus? newStatus,
   ) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #toggleProjectStatus,
-          [
-            projectId,
-            newStatus,
-          ],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+            Invocation.method(#toggleProjectStatus, [projectId, newStatus]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
-  _i3.Future<void> updateProjectProgress(
-    String? projectId,
-    double? progress,
-  ) =>
+  _i3.Future<void> updateProjectProgress(String? projectId, double? progress) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #updateProjectProgress,
-          [
-            projectId,
-            progress,
-          ],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+            Invocation.method(#updateProjectProgress, [projectId, progress]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
-  _i3.Future<void> logProjectTime(
-    String? projectId,
-    int? minutes,
-  ) =>
+  _i3.Future<void> logProjectTime(String? projectId, int? minutes) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #logProjectTime,
-          [
-            projectId,
-            minutes,
-          ],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+            Invocation.method(#logProjectTime, [projectId, minutes]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
   _i3.Future<List<Map<String, dynamic>>> fetchProjectTimeLogs(
-          String? projectId) =>
+    String? projectId,
+  ) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #fetchProjectTimeLogs,
-          [projectId],
-        ),
-        returnValue: _i3.Future<List<Map<String, dynamic>>>.value(
-            <Map<String, dynamic>>[]),
-      ) as _i3.Future<List<Map<String, dynamic>>>);
+            Invocation.method(#fetchProjectTimeLogs, [projectId]),
+            returnValue: _i3.Future<List<Map<String, dynamic>>>.value(
+              <Map<String, dynamic>>[],
+            ),
+          )
+          as _i3.Future<List<Map<String, dynamic>>>);
 
   @override
-  _i3.Future<int> getTotalTimeSpent(String? projectId) => (super.noSuchMethod(
-        Invocation.method(
-          #getTotalTimeSpent,
-          [projectId],
-        ),
-        returnValue: _i3.Future<int>.value(0),
-      ) as _i3.Future<int>);
+  _i3.Future<int> getTotalTimeSpent(String? projectId) =>
+      (super.noSuchMethod(
+            Invocation.method(#getTotalTimeSpent, [projectId]),
+            returnValue: _i3.Future<int>.value(0),
+          )
+          as _i3.Future<int>);
 
   @override
   _i3.Future<List<_i6.Subtask>> fetchSubTasks(String? projectId) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #fetchSubTasks,
-          [projectId],
-        ),
-        returnValue: _i3.Future<List<_i6.Subtask>>.value(<_i6.Subtask>[]),
-      ) as _i3.Future<List<_i6.Subtask>>);
+            Invocation.method(#fetchSubTasks, [projectId]),
+            returnValue: _i3.Future<List<_i6.Subtask>>.value(<_i6.Subtask>[]),
+          )
+          as _i3.Future<List<_i6.Subtask>>);
 
   @override
-  _i3.Future<String> createSubTask(_i6.Subtask? subtask) => (super.noSuchMethod(
-        Invocation.method(
-          #createSubTask,
-          [subtask],
-        ),
-        returnValue: _i3.Future<String>.value(_i5.dummyValue<String>(
-          this,
-          Invocation.method(
-            #createSubTask,
-            [subtask],
-          ),
-        )),
-      ) as _i3.Future<String>);
+  _i3.Future<String> createSubTask(_i6.Subtask? subtask) =>
+      (super.noSuchMethod(
+            Invocation.method(#createSubTask, [subtask]),
+            returnValue: _i3.Future<String>.value(
+              _i5.dummyValue<String>(
+                this,
+                Invocation.method(#createSubTask, [subtask]),
+              ),
+            ),
+          )
+          as _i3.Future<String>);
 
   @override
-  _i3.Future<void> updateSubTask(_i6.Subtask? subtask) => (super.noSuchMethod(
-        Invocation.method(
-          #updateSubTask,
-          [subtask],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> updateSubTask(_i6.Subtask? subtask) =>
+      (super.noSuchMethod(
+            Invocation.method(#updateSubTask, [subtask]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
-  _i3.Future<void> deleteSubTask(String? subtaskId) => (super.noSuchMethod(
-        Invocation.method(
-          #deleteSubTask,
-          [subtaskId],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> deleteSubTask(String? subtaskId) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteSubTask, [subtaskId]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
   _i3.Future<void> toggleSubTaskCompletion(
@@ -205,16 +172,14 @@ class MockProjectService extends _i1.Mock implements _i2.ProjectService {
     bool? isCompleted,
   ) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #toggleSubTaskCompletion,
-          [
-            subtaskId,
-            isCompleted,
-          ],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+            Invocation.method(#toggleSubTaskCompletion, [
+              subtaskId,
+              isCompleted,
+            ]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 }
 
 /// A class which mocks [AchievementsProvider].
@@ -227,132 +192,125 @@ class MockAchievementsProvider extends _i1.Mock
   }
 
   @override
-  List<_i8.BadgeModel> get earnedBadges => (super.noSuchMethod(
-        Invocation.getter(#earnedBadges),
-        returnValue: <_i8.BadgeModel>[],
-      ) as List<_i8.BadgeModel>);
+  List<_i8.BadgeModel> get earnedBadges =>
+      (super.noSuchMethod(
+            Invocation.getter(#earnedBadges),
+            returnValue: <_i8.BadgeModel>[],
+          )
+          as List<_i8.BadgeModel>);
 
   @override
-  List<_i8.BadgeModel> get lockedBadges => (super.noSuchMethod(
-        Invocation.getter(#lockedBadges),
-        returnValue: <_i8.BadgeModel>[],
-      ) as List<_i8.BadgeModel>);
+  List<_i8.BadgeModel> get lockedBadges =>
+      (super.noSuchMethod(
+            Invocation.getter(#lockedBadges),
+            returnValue: <_i8.BadgeModel>[],
+          )
+          as List<_i8.BadgeModel>);
 
   @override
-  List<_i8.BadgeModel> get allBadges => (super.noSuchMethod(
-        Invocation.getter(#allBadges),
-        returnValue: <_i8.BadgeModel>[],
-      ) as List<_i8.BadgeModel>);
+  List<_i8.BadgeModel> get allBadges =>
+      (super.noSuchMethod(
+            Invocation.getter(#allBadges),
+            returnValue: <_i8.BadgeModel>[],
+          )
+          as List<_i8.BadgeModel>);
 
   @override
-  List<_i8.BadgeModel> get badges => (super.noSuchMethod(
-        Invocation.getter(#badges),
-        returnValue: <_i8.BadgeModel>[],
-      ) as List<_i8.BadgeModel>);
+  List<_i8.BadgeModel> get badges =>
+      (super.noSuchMethod(
+            Invocation.getter(#badges),
+            returnValue: <_i8.BadgeModel>[],
+          )
+          as List<_i8.BadgeModel>);
 
   @override
-  List<_i9.LeaderboardUserModel> get leaderboard => (super.noSuchMethod(
-        Invocation.getter(#leaderboard),
-        returnValue: <_i9.LeaderboardUserModel>[],
-      ) as List<_i9.LeaderboardUserModel>);
+  List<_i9.LeaderboardUserModel> get leaderboard =>
+      (super.noSuchMethod(
+            Invocation.getter(#leaderboard),
+            returnValue: <_i9.LeaderboardUserModel>[],
+          )
+          as List<_i9.LeaderboardUserModel>);
 
   @override
-  int get earnedBadgeCount => (super.noSuchMethod(
-        Invocation.getter(#earnedBadgeCount),
-        returnValue: 0,
-      ) as int);
+  int get earnedBadgeCount =>
+      (super.noSuchMethod(Invocation.getter(#earnedBadgeCount), returnValue: 0)
+          as int);
 
   @override
-  bool get isLoading => (super.noSuchMethod(
-        Invocation.getter(#isLoading),
-        returnValue: false,
-      ) as bool);
+  bool get isLoading =>
+      (super.noSuchMethod(Invocation.getter(#isLoading), returnValue: false)
+          as bool);
 
   @override
-  int get currentLevelPoints => (super.noSuchMethod(
-        Invocation.getter(#currentLevelPoints),
-        returnValue: 0,
-      ) as int);
+  int get currentLevelPoints =>
+      (super.noSuchMethod(
+            Invocation.getter(#currentLevelPoints),
+            returnValue: 0,
+          )
+          as int);
 
   @override
-  bool get hasListeners => (super.noSuchMethod(
-        Invocation.getter(#hasListeners),
-        returnValue: false,
-      ) as bool);
+  bool get hasListeners =>
+      (super.noSuchMethod(Invocation.getter(#hasListeners), returnValue: false)
+          as bool);
 
   @override
-  _i3.Future<void> loadAchievementsData() => (super.noSuchMethod(
-        Invocation.method(
-          #loadAchievementsData,
-          [],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> loadAchievementsData() =>
+      (super.noSuchMethod(
+            Invocation.method(#loadAchievementsData, []),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
-  _i3.Future<void> earnBadge(String? badgeId) => (super.noSuchMethod(
-        Invocation.method(
-          #earnBadge,
-          [badgeId],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> earnBadge(String? badgeId) =>
+      (super.noSuchMethod(
+            Invocation.method(#earnBadge, [badgeId]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
-  _i3.Future<void> addXP(int? amount) => (super.noSuchMethod(
-        Invocation.method(
-          #addXP,
-          [amount],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> addXP(int? amount) =>
+      (super.noSuchMethod(
+            Invocation.method(#addXP, [amount]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
-  _i3.Future<void> refreshLeaderboard() => (super.noSuchMethod(
-        Invocation.method(
-          #refreshLeaderboard,
-          [],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> refreshLeaderboard() =>
+      (super.noSuchMethod(
+            Invocation.method(#refreshLeaderboard, []),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
   void addListener(_i10.VoidCallback? listener) => super.noSuchMethod(
-        Invocation.method(
-          #addListener,
-          [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#addListener, [listener]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void removeListener(_i10.VoidCallback? listener) => super.noSuchMethod(
-        Invocation.method(
-          #removeListener,
-          [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#removeListener, [listener]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void dispose() => super.noSuchMethod(
-        Invocation.method(
-          #dispose,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#dispose, []),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void notifyListeners() => super.noSuchMethod(
-        Invocation.method(
-          #notifyListeners,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#notifyListeners, []),
+    returnValueForMissingStub: null,
+  );
 }

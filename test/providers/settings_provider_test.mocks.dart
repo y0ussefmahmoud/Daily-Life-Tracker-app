@@ -28,23 +28,13 @@ import 'package:supabase_flutter/supabase_flutter.dart' as _i3;
 // ignore_for_file: invalid_use_of_internal_member
 
 class _FakeSettingsModel_0 extends _i1.SmartFake implements _i2.SettingsModel {
-  _FakeSettingsModel_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeSettingsModel_0(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 class _FakeAuthResponse_1 extends _i1.SmartFake implements _i3.AuthResponse {
-  _FakeAuthResponse_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeAuthResponse_1(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 /// A class which mocks [SettingsService].
@@ -56,63 +46,45 @@ class MockSettingsService extends _i1.Mock implements _i4.SettingsService {
   }
 
   @override
-  _i5.Future<_i2.SettingsModel> fetchSettings() => (super.noSuchMethod(
-        Invocation.method(
-          #fetchSettings,
-          [],
-        ),
-        returnValue: _i5.Future<_i2.SettingsModel>.value(_FakeSettingsModel_0(
-          this,
-          Invocation.method(
-            #fetchSettings,
-            [],
-          ),
-        )),
-      ) as _i5.Future<_i2.SettingsModel>);
+  _i5.Future<_i2.SettingsModel> fetchSettings() =>
+      (super.noSuchMethod(
+            Invocation.method(#fetchSettings, []),
+            returnValue: _i5.Future<_i2.SettingsModel>.value(
+              _FakeSettingsModel_0(this, Invocation.method(#fetchSettings, [])),
+            ),
+          )
+          as _i5.Future<_i2.SettingsModel>);
 
   @override
   _i5.Future<String> createSettings(_i2.SettingsModel? settings) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #createSettings,
-          [settings],
-        ),
-        returnValue: _i5.Future<String>.value(_i6.dummyValue<String>(
-          this,
-          Invocation.method(
-            #createSettings,
-            [settings],
-          ),
-        )),
-      ) as _i5.Future<String>);
+            Invocation.method(#createSettings, [settings]),
+            returnValue: _i5.Future<String>.value(
+              _i6.dummyValue<String>(
+                this,
+                Invocation.method(#createSettings, [settings]),
+              ),
+            ),
+          )
+          as _i5.Future<String>);
 
   @override
   _i5.Future<void> updateSettings(_i2.SettingsModel? settings) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #updateSettings,
-          [settings],
-        ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+            Invocation.method(#updateSettings, [settings]),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
 
   @override
-  _i5.Future<void> updateField(
-    String? field,
-    dynamic value,
-  ) =>
+  _i5.Future<void> updateField(String? field, dynamic value) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #updateField,
-          [
-            field,
-            value,
-          ],
-        ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+            Invocation.method(#updateField, [field, value]),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
 }
 
 /// A class which mocks [AuthService].
@@ -124,16 +96,17 @@ class MockAuthService extends _i1.Mock implements _i7.AuthService {
   }
 
   @override
-  bool get isLoggedIn => (super.noSuchMethod(
-        Invocation.getter(#isLoggedIn),
-        returnValue: false,
-      ) as bool);
+  bool get isLoggedIn =>
+      (super.noSuchMethod(Invocation.getter(#isLoggedIn), returnValue: false)
+          as bool);
 
   @override
-  _i5.Stream<_i3.AuthState> get onAuthStateChange => (super.noSuchMethod(
-        Invocation.getter(#onAuthStateChange),
-        returnValue: _i5.Stream<_i3.AuthState>.empty(),
-      ) as _i5.Stream<_i3.AuthState>);
+  _i5.Stream<_i3.AuthState> get onAuthStateChange =>
+      (super.noSuchMethod(
+            Invocation.getter(#onAuthStateChange),
+            returnValue: _i5.Stream<_i3.AuthState>.empty(),
+          )
+          as _i5.Stream<_i3.AuthState>);
 
   @override
   _i5.Future<_i3.AuthResponse> signInWithEmail({
@@ -141,26 +114,21 @@ class MockAuthService extends _i1.Mock implements _i7.AuthService {
     required String? password,
   }) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #signInWithEmail,
-          [],
-          {
-            #email: email,
-            #password: password,
-          },
-        ),
-        returnValue: _i5.Future<_i3.AuthResponse>.value(_FakeAuthResponse_1(
-          this,
-          Invocation.method(
-            #signInWithEmail,
-            [],
-            {
+            Invocation.method(#signInWithEmail, [], {
               #email: email,
               #password: password,
-            },
-          ),
-        )),
-      ) as _i5.Future<_i3.AuthResponse>);
+            }),
+            returnValue: _i5.Future<_i3.AuthResponse>.value(
+              _FakeAuthResponse_1(
+                this,
+                Invocation.method(#signInWithEmail, [], {
+                  #email: email,
+                  #password: password,
+                }),
+              ),
+            ),
+          )
+          as _i5.Future<_i3.AuthResponse>);
 
   @override
   _i5.Future<_i3.AuthResponse> signUpWithEmail({
@@ -169,47 +137,40 @@ class MockAuthService extends _i1.Mock implements _i7.AuthService {
     String? name,
   }) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #signUpWithEmail,
-          [],
-          {
-            #email: email,
-            #password: password,
-            #name: name,
-          },
-        ),
-        returnValue: _i5.Future<_i3.AuthResponse>.value(_FakeAuthResponse_1(
-          this,
-          Invocation.method(
-            #signUpWithEmail,
-            [],
-            {
+            Invocation.method(#signUpWithEmail, [], {
               #email: email,
               #password: password,
               #name: name,
-            },
-          ),
-        )),
-      ) as _i5.Future<_i3.AuthResponse>);
+            }),
+            returnValue: _i5.Future<_i3.AuthResponse>.value(
+              _FakeAuthResponse_1(
+                this,
+                Invocation.method(#signUpWithEmail, [], {
+                  #email: email,
+                  #password: password,
+                  #name: name,
+                }),
+              ),
+            ),
+          )
+          as _i5.Future<_i3.AuthResponse>);
 
   @override
-  _i5.Future<void> signOut() => (super.noSuchMethod(
-        Invocation.method(
-          #signOut,
-          [],
-        ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+  _i5.Future<void> signOut() =>
+      (super.noSuchMethod(
+            Invocation.method(#signOut, []),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
 
   @override
-  _i5.Future<Map<String, dynamic>?> getUserProfile() => (super.noSuchMethod(
-        Invocation.method(
-          #getUserProfile,
-          [],
-        ),
-        returnValue: _i5.Future<Map<String, dynamic>?>.value(),
-      ) as _i5.Future<Map<String, dynamic>?>);
+  _i5.Future<Map<String, dynamic>?> getUserProfile() =>
+      (super.noSuchMethod(
+            Invocation.method(#getUserProfile, []),
+            returnValue: _i5.Future<Map<String, dynamic>?>.value(),
+          )
+          as _i5.Future<Map<String, dynamic>?>);
 
   @override
   _i5.Future<void> updateProfile({
@@ -217,25 +178,21 @@ class MockAuthService extends _i1.Mock implements _i7.AuthService {
     required Map<String, dynamic>? updates,
   }) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #updateProfile,
-          [],
-          {
-            #userId: userId,
-            #updates: updates,
-          },
-        ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+            Invocation.method(#updateProfile, [], {
+              #userId: userId,
+              #updates: updates,
+            }),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
 
   @override
-  _i5.Future<void> resetPassword(String? email) => (super.noSuchMethod(
-        Invocation.method(
-          #resetPassword,
-          [email],
-        ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+  _i5.Future<void> resetPassword(String? email) =>
+      (super.noSuchMethod(
+            Invocation.method(#resetPassword, [email]),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
+          )
+          as _i5.Future<void>);
 }

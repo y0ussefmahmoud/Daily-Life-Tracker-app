@@ -42,13 +42,8 @@ import 'package:mockito/src/dummies.dart' as _i10;
 
 class _FakeUserLevelModel_0 extends _i1.SmartFake
     implements _i2.UserLevelModel {
-  _FakeUserLevelModel_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+  _FakeUserLevelModel_0(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
 }
 
 /// A class which mocks [StatsService].
@@ -62,53 +57,48 @@ class MockStatsService extends _i1.Mock implements _i3.StatsService {
   @override
   _i4.Future<Map<String, dynamic>?> fetchDailyStats(DateTime? date) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #fetchDailyStats,
-          [date],
-        ),
-        returnValue: _i4.Future<Map<String, dynamic>?>.value(),
-      ) as _i4.Future<Map<String, dynamic>?>);
+            Invocation.method(#fetchDailyStats, [date]),
+            returnValue: _i4.Future<Map<String, dynamic>?>.value(),
+          )
+          as _i4.Future<Map<String, dynamic>?>);
 
   @override
-  _i4.Future<double> calculateWeeklyProductivity() => (super.noSuchMethod(
-        Invocation.method(
-          #calculateWeeklyProductivity,
-          [],
-        ),
-        returnValue: _i4.Future<double>.value(0.0),
-      ) as _i4.Future<double>);
+  _i4.Future<double> calculateWeeklyProductivity() =>
+      (super.noSuchMethod(
+            Invocation.method(#calculateWeeklyProductivity, []),
+            returnValue: _i4.Future<double>.value(0.0),
+          )
+          as _i4.Future<double>);
 
   @override
-  _i4.Future<List<_i5.WeeklyStats>> getWeeklyChartData() => (super.noSuchMethod(
-        Invocation.method(
-          #getWeeklyChartData,
-          [],
-        ),
-        returnValue:
-            _i4.Future<List<_i5.WeeklyStats>>.value(<_i5.WeeklyStats>[]),
-      ) as _i4.Future<List<_i5.WeeklyStats>>);
+  _i4.Future<List<_i5.WeeklyStats>> getWeeklyChartData() =>
+      (super.noSuchMethod(
+            Invocation.method(#getWeeklyChartData, []),
+            returnValue: _i4.Future<List<_i5.WeeklyStats>>.value(
+              <_i5.WeeklyStats>[],
+            ),
+          )
+          as _i4.Future<List<_i5.WeeklyStats>>);
 
   @override
   _i4.Future<List<_i5.TimeDistribution>> calculateTimeDistribution() =>
       (super.noSuchMethod(
-        Invocation.method(
-          #calculateTimeDistribution,
-          [],
-        ),
-        returnValue: _i4.Future<List<_i5.TimeDistribution>>.value(
-            <_i5.TimeDistribution>[]),
-      ) as _i4.Future<List<_i5.TimeDistribution>>);
+            Invocation.method(#calculateTimeDistribution, []),
+            returnValue: _i4.Future<List<_i5.TimeDistribution>>.value(
+              <_i5.TimeDistribution>[],
+            ),
+          )
+          as _i4.Future<List<_i5.TimeDistribution>>);
 
   @override
   _i4.Future<List<_i5.Achievement>> getWeeklyAchievements() =>
       (super.noSuchMethod(
-        Invocation.method(
-          #getWeeklyAchievements,
-          [],
-        ),
-        returnValue:
-            _i4.Future<List<_i5.Achievement>>.value(<_i5.Achievement>[]),
-      ) as _i4.Future<List<_i5.Achievement>>);
+            Invocation.method(#getWeeklyAchievements, []),
+            returnValue: _i4.Future<List<_i5.Achievement>>.value(
+              <_i5.Achievement>[],
+            ),
+          )
+          as _i4.Future<List<_i5.Achievement>>);
 
   @override
   _i4.Future<void> saveDailyStats({
@@ -120,21 +110,18 @@ class MockStatsService extends _i1.Mock implements _i3.StatsService {
     required int? xpEarned,
   }) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #saveDailyStats,
-          [],
-          {
-            #completedTasksCount: completedTasksCount,
-            #totalTasksCount: totalTasksCount,
-            #waterIntakeMl: waterIntakeMl,
-            #projectHours: projectHours,
-            #completionPercentage: completionPercentage,
-            #xpEarned: xpEarned,
-          },
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+            Invocation.method(#saveDailyStats, [], {
+              #completedTasksCount: completedTasksCount,
+              #totalTasksCount: totalTasksCount,
+              #waterIntakeMl: waterIntakeMl,
+              #projectHours: projectHours,
+              #completionPercentage: completionPercentage,
+              #xpEarned: xpEarned,
+            }),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 }
 
 /// A class which mocks [ReportsService].
@@ -151,48 +138,42 @@ class MockReportsService extends _i1.Mock implements _i6.ReportsService {
     DateTime? endDate,
   ) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #fetchDailyReport,
-          [
-            startDate,
-            endDate,
-          ],
-        ),
-        returnValue: _i4.Future<List<_i7.DailyReportModel>>.value(
-            <_i7.DailyReportModel>[]),
-      ) as _i4.Future<List<_i7.DailyReportModel>>);
+            Invocation.method(#fetchDailyReport, [startDate, endDate]),
+            returnValue: _i4.Future<List<_i7.DailyReportModel>>.value(
+              <_i7.DailyReportModel>[],
+            ),
+          )
+          as _i4.Future<List<_i7.DailyReportModel>>);
 
   @override
   _i4.Future<List<_i7.DailyReportModel>> fetchWeeklyReport() =>
       (super.noSuchMethod(
-        Invocation.method(
-          #fetchWeeklyReport,
-          [],
-        ),
-        returnValue: _i4.Future<List<_i7.DailyReportModel>>.value(
-            <_i7.DailyReportModel>[]),
-      ) as _i4.Future<List<_i7.DailyReportModel>>);
+            Invocation.method(#fetchWeeklyReport, []),
+            returnValue: _i4.Future<List<_i7.DailyReportModel>>.value(
+              <_i7.DailyReportModel>[],
+            ),
+          )
+          as _i4.Future<List<_i7.DailyReportModel>>);
 
   @override
   _i4.Future<List<_i7.ProjectReportModel>> fetchProjectsReport() =>
       (super.noSuchMethod(
-        Invocation.method(
-          #fetchProjectsReport,
-          [],
-        ),
-        returnValue: _i4.Future<List<_i7.ProjectReportModel>>.value(
-            <_i7.ProjectReportModel>[]),
-      ) as _i4.Future<List<_i7.ProjectReportModel>>);
+            Invocation.method(#fetchProjectsReport, []),
+            returnValue: _i4.Future<List<_i7.ProjectReportModel>>.value(
+              <_i7.ProjectReportModel>[],
+            ),
+          )
+          as _i4.Future<List<_i7.ProjectReportModel>>);
 
   @override
   _i4.Future<Map<String, double>> calculateWeeklyProductivityFromReport() =>
       (super.noSuchMethod(
-        Invocation.method(
-          #calculateWeeklyProductivityFromReport,
-          [],
-        ),
-        returnValue: _i4.Future<Map<String, double>>.value(<String, double>{}),
-      ) as _i4.Future<Map<String, double>>);
+            Invocation.method(#calculateWeeklyProductivityFromReport, []),
+            returnValue: _i4.Future<Map<String, double>>.value(
+              <String, double>{},
+            ),
+          )
+          as _i4.Future<Map<String, double>>);
 }
 
 /// A class which mocks [ProjectService].
@@ -204,48 +185,43 @@ class MockProjectService extends _i1.Mock implements _i8.ProjectService {
   }
 
   @override
-  _i4.Future<List<_i9.Project>> fetchProjects() => (super.noSuchMethod(
-        Invocation.method(
-          #fetchProjects,
-          [],
-        ),
-        returnValue: _i4.Future<List<_i9.Project>>.value(<_i9.Project>[]),
-      ) as _i4.Future<List<_i9.Project>>);
+  _i4.Future<List<_i9.Project>> fetchProjects() =>
+      (super.noSuchMethod(
+            Invocation.method(#fetchProjects, []),
+            returnValue: _i4.Future<List<_i9.Project>>.value(<_i9.Project>[]),
+          )
+          as _i4.Future<List<_i9.Project>>);
 
   @override
-  _i4.Future<String> createProject(_i9.Project? project) => (super.noSuchMethod(
-        Invocation.method(
-          #createProject,
-          [project],
-        ),
-        returnValue: _i4.Future<String>.value(_i10.dummyValue<String>(
-          this,
-          Invocation.method(
-            #createProject,
-            [project],
-          ),
-        )),
-      ) as _i4.Future<String>);
+  _i4.Future<String> createProject(_i9.Project? project) =>
+      (super.noSuchMethod(
+            Invocation.method(#createProject, [project]),
+            returnValue: _i4.Future<String>.value(
+              _i10.dummyValue<String>(
+                this,
+                Invocation.method(#createProject, [project]),
+              ),
+            ),
+          )
+          as _i4.Future<String>);
 
   @override
-  _i4.Future<void> updateProject(_i9.Project? project) => (super.noSuchMethod(
-        Invocation.method(
-          #updateProject,
-          [project],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> updateProject(_i9.Project? project) =>
+      (super.noSuchMethod(
+            Invocation.method(#updateProject, [project]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
-  _i4.Future<void> deleteProject(String? projectId) => (super.noSuchMethod(
-        Invocation.method(
-          #deleteProject,
-          [projectId],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> deleteProject(String? projectId) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteProject, [projectId]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
   _i4.Future<void> toggleProjectStatus(
@@ -253,117 +229,88 @@ class MockProjectService extends _i1.Mock implements _i8.ProjectService {
     _i9.ProjectStatus? newStatus,
   ) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #toggleProjectStatus,
-          [
-            projectId,
-            newStatus,
-          ],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+            Invocation.method(#toggleProjectStatus, [projectId, newStatus]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
-  _i4.Future<void> updateProjectProgress(
-    String? projectId,
-    double? progress,
-  ) =>
+  _i4.Future<void> updateProjectProgress(String? projectId, double? progress) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #updateProjectProgress,
-          [
-            projectId,
-            progress,
-          ],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+            Invocation.method(#updateProjectProgress, [projectId, progress]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
-  _i4.Future<void> logProjectTime(
-    String? projectId,
-    int? minutes,
-  ) =>
+  _i4.Future<void> logProjectTime(String? projectId, int? minutes) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #logProjectTime,
-          [
-            projectId,
-            minutes,
-          ],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+            Invocation.method(#logProjectTime, [projectId, minutes]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
   _i4.Future<List<Map<String, dynamic>>> fetchProjectTimeLogs(
-          String? projectId) =>
+    String? projectId,
+  ) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #fetchProjectTimeLogs,
-          [projectId],
-        ),
-        returnValue: _i4.Future<List<Map<String, dynamic>>>.value(
-            <Map<String, dynamic>>[]),
-      ) as _i4.Future<List<Map<String, dynamic>>>);
+            Invocation.method(#fetchProjectTimeLogs, [projectId]),
+            returnValue: _i4.Future<List<Map<String, dynamic>>>.value(
+              <Map<String, dynamic>>[],
+            ),
+          )
+          as _i4.Future<List<Map<String, dynamic>>>);
 
   @override
-  _i4.Future<int> getTotalTimeSpent(String? projectId) => (super.noSuchMethod(
-        Invocation.method(
-          #getTotalTimeSpent,
-          [projectId],
-        ),
-        returnValue: _i4.Future<int>.value(0),
-      ) as _i4.Future<int>);
+  _i4.Future<int> getTotalTimeSpent(String? projectId) =>
+      (super.noSuchMethod(
+            Invocation.method(#getTotalTimeSpent, [projectId]),
+            returnValue: _i4.Future<int>.value(0),
+          )
+          as _i4.Future<int>);
 
   @override
   _i4.Future<List<_i11.Subtask>> fetchSubTasks(String? projectId) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #fetchSubTasks,
-          [projectId],
-        ),
-        returnValue: _i4.Future<List<_i11.Subtask>>.value(<_i11.Subtask>[]),
-      ) as _i4.Future<List<_i11.Subtask>>);
+            Invocation.method(#fetchSubTasks, [projectId]),
+            returnValue: _i4.Future<List<_i11.Subtask>>.value(<_i11.Subtask>[]),
+          )
+          as _i4.Future<List<_i11.Subtask>>);
 
   @override
   _i4.Future<String> createSubTask(_i11.Subtask? subtask) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #createSubTask,
-          [subtask],
-        ),
-        returnValue: _i4.Future<String>.value(_i10.dummyValue<String>(
-          this,
-          Invocation.method(
-            #createSubTask,
-            [subtask],
-          ),
-        )),
-      ) as _i4.Future<String>);
+            Invocation.method(#createSubTask, [subtask]),
+            returnValue: _i4.Future<String>.value(
+              _i10.dummyValue<String>(
+                this,
+                Invocation.method(#createSubTask, [subtask]),
+              ),
+            ),
+          )
+          as _i4.Future<String>);
 
   @override
-  _i4.Future<void> updateSubTask(_i11.Subtask? subtask) => (super.noSuchMethod(
-        Invocation.method(
-          #updateSubTask,
-          [subtask],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> updateSubTask(_i11.Subtask? subtask) =>
+      (super.noSuchMethod(
+            Invocation.method(#updateSubTask, [subtask]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
-  _i4.Future<void> deleteSubTask(String? subtaskId) => (super.noSuchMethod(
-        Invocation.method(
-          #deleteSubTask,
-          [subtaskId],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> deleteSubTask(String? subtaskId) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteSubTask, [subtaskId]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
   _i4.Future<void> toggleSubTaskCompletion(
@@ -371,16 +318,14 @@ class MockProjectService extends _i1.Mock implements _i8.ProjectService {
     bool? isCompleted,
   ) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #toggleSubTaskCompletion,
-          [
-            subtaskId,
-            isCompleted,
-          ],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+            Invocation.method(#toggleSubTaskCompletion, [
+              subtaskId,
+              isCompleted,
+            ]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 }
 
 /// A class which mocks [TaskProvider].
@@ -392,136 +337,109 @@ class MockTaskProvider extends _i1.Mock implements _i12.TaskProvider {
   }
 
   @override
-  List<_i13.Task> get tasks => (super.noSuchMethod(
-        Invocation.getter(#tasks),
-        returnValue: <_i13.Task>[],
-      ) as List<_i13.Task>);
+  List<_i13.Task> get tasks =>
+      (super.noSuchMethod(Invocation.getter(#tasks), returnValue: <_i13.Task>[])
+          as List<_i13.Task>);
 
   @override
-  bool get isLoading => (super.noSuchMethod(
-        Invocation.getter(#isLoading),
-        returnValue: false,
-      ) as bool);
+  bool get isLoading =>
+      (super.noSuchMethod(Invocation.getter(#isLoading), returnValue: false)
+          as bool);
 
   @override
-  bool get hasListeners => (super.noSuchMethod(
-        Invocation.getter(#hasListeners),
-        returnValue: false,
-      ) as bool);
+  bool get hasListeners =>
+      (super.noSuchMethod(Invocation.getter(#hasListeners), returnValue: false)
+          as bool);
 
   @override
   void setAchievementsProvider(
-          _i14.AchievementsProvider? achievementsProvider) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #setAchievementsProvider,
-          [achievementsProvider],
-        ),
-        returnValueForMissingStub: null,
-      );
+    _i14.AchievementsProvider? achievementsProvider,
+  ) => super.noSuchMethod(
+    Invocation.method(#setAchievementsProvider, [achievementsProvider]),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  _i4.Future<void> initialize() => (super.noSuchMethod(
-        Invocation.method(
-          #initialize,
-          [],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> initialize() =>
+      (super.noSuchMethod(
+            Invocation.method(#initialize, []),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
-  _i4.Future<void> toggleTask(String? taskId) => (super.noSuchMethod(
-        Invocation.method(
-          #toggleTask,
-          [taskId],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> toggleTask(String? taskId) =>
+      (super.noSuchMethod(
+            Invocation.method(#toggleTask, [taskId]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
-  List<_i13.Task> getTasksByCategory(String? category) => (super.noSuchMethod(
-        Invocation.method(
-          #getTasksByCategory,
-          [category],
-        ),
-        returnValue: <_i13.Task>[],
-      ) as List<_i13.Task>);
+  List<_i13.Task> getTasksByCategory(String? category) =>
+      (super.noSuchMethod(
+            Invocation.method(#getTasksByCategory, [category]),
+            returnValue: <_i13.Task>[],
+          )
+          as List<_i13.Task>);
 
   @override
-  double getCompletionPercentage() => (super.noSuchMethod(
-        Invocation.method(
-          #getCompletionPercentage,
-          [],
-        ),
-        returnValue: 0.0,
-      ) as double);
+  double getCompletionPercentage() =>
+      (super.noSuchMethod(
+            Invocation.method(#getCompletionPercentage, []),
+            returnValue: 0.0,
+          )
+          as double);
 
   @override
-  _i4.Future<void> addTask(_i13.Task? task) => (super.noSuchMethod(
-        Invocation.method(
-          #addTask,
-          [task],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> addTask(_i13.Task? task) =>
+      (super.noSuchMethod(
+            Invocation.method(#addTask, [task]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
-  _i4.Future<void> refreshTasks() => (super.noSuchMethod(
-        Invocation.method(
-          #refreshTasks,
-          [],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> refreshTasks() =>
+      (super.noSuchMethod(
+            Invocation.method(#refreshTasks, []),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
   void clearError() => super.noSuchMethod(
-        Invocation.method(
-          #clearError,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#clearError, []),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void addListener(_i15.VoidCallback? listener) => super.noSuchMethod(
-        Invocation.method(
-          #addListener,
-          [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#addListener, [listener]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void removeListener(_i15.VoidCallback? listener) => super.noSuchMethod(
-        Invocation.method(
-          #removeListener,
-          [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#removeListener, [listener]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void dispose() => super.noSuchMethod(
-        Invocation.method(
-          #dispose,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#dispose, []),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void notifyListeners() => super.noSuchMethod(
-        Invocation.method(
-          #notifyListeners,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#notifyListeners, []),
+    returnValueForMissingStub: null,
+  );
 }
 
 /// A class which mocks [ProjectProvider].
@@ -533,230 +451,203 @@ class MockProjectProvider extends _i1.Mock implements _i16.ProjectProvider {
   }
 
   @override
-  List<_i9.Project> get projects => (super.noSuchMethod(
-        Invocation.getter(#projects),
-        returnValue: <_i9.Project>[],
-      ) as List<_i9.Project>);
+  List<_i9.Project> get projects =>
+      (super.noSuchMethod(
+            Invocation.getter(#projects),
+            returnValue: <_i9.Project>[],
+          )
+          as List<_i9.Project>);
 
   @override
-  bool get isLoading => (super.noSuchMethod(
-        Invocation.getter(#isLoading),
-        returnValue: false,
-      ) as bool);
+  bool get isLoading =>
+      (super.noSuchMethod(Invocation.getter(#isLoading), returnValue: false)
+          as bool);
 
   @override
-  List<_i9.Project> get activeProjects => (super.noSuchMethod(
-        Invocation.getter(#activeProjects),
-        returnValue: <_i9.Project>[],
-      ) as List<_i9.Project>);
+  List<_i9.Project> get activeProjects =>
+      (super.noSuchMethod(
+            Invocation.getter(#activeProjects),
+            returnValue: <_i9.Project>[],
+          )
+          as List<_i9.Project>);
 
   @override
-  List<_i9.Project> get pausedProjects => (super.noSuchMethod(
-        Invocation.getter(#pausedProjects),
-        returnValue: <_i9.Project>[],
-      ) as List<_i9.Project>);
+  List<_i9.Project> get pausedProjects =>
+      (super.noSuchMethod(
+            Invocation.getter(#pausedProjects),
+            returnValue: <_i9.Project>[],
+          )
+          as List<_i9.Project>);
 
   @override
-  List<_i9.Project> get completedProjects => (super.noSuchMethod(
-        Invocation.getter(#completedProjects),
-        returnValue: <_i9.Project>[],
-      ) as List<_i9.Project>);
+  List<_i9.Project> get completedProjects =>
+      (super.noSuchMethod(
+            Invocation.getter(#completedProjects),
+            returnValue: <_i9.Project>[],
+          )
+          as List<_i9.Project>);
 
   @override
-  List<_i9.Project> get allProjects => (super.noSuchMethod(
-        Invocation.getter(#allProjects),
-        returnValue: <_i9.Project>[],
-      ) as List<_i9.Project>);
+  List<_i9.Project> get allProjects =>
+      (super.noSuchMethod(
+            Invocation.getter(#allProjects),
+            returnValue: <_i9.Project>[],
+          )
+          as List<_i9.Project>);
 
   @override
-  int get activeProjectsCount => (super.noSuchMethod(
-        Invocation.getter(#activeProjectsCount),
-        returnValue: 0,
-      ) as int);
+  int get activeProjectsCount =>
+      (super.noSuchMethod(
+            Invocation.getter(#activeProjectsCount),
+            returnValue: 0,
+          )
+          as int);
 
   @override
-  int get pausedProjectsCount => (super.noSuchMethod(
-        Invocation.getter(#pausedProjectsCount),
-        returnValue: 0,
-      ) as int);
+  int get pausedProjectsCount =>
+      (super.noSuchMethod(
+            Invocation.getter(#pausedProjectsCount),
+            returnValue: 0,
+          )
+          as int);
 
   @override
-  int get completedProjectsCount => (super.noSuchMethod(
-        Invocation.getter(#completedProjectsCount),
-        returnValue: 0,
-      ) as int);
+  int get completedProjectsCount =>
+      (super.noSuchMethod(
+            Invocation.getter(#completedProjectsCount),
+            returnValue: 0,
+          )
+          as int);
 
   @override
-  bool get hasListeners => (super.noSuchMethod(
-        Invocation.getter(#hasListeners),
-        returnValue: false,
-      ) as bool);
+  bool get hasListeners =>
+      (super.noSuchMethod(Invocation.getter(#hasListeners), returnValue: false)
+          as bool);
 
   @override
   void setAchievementsProvider(
-          _i14.AchievementsProvider? achievementsProvider) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #setAchievementsProvider,
-          [achievementsProvider],
-        ),
-        returnValueForMissingStub: null,
-      );
+    _i14.AchievementsProvider? achievementsProvider,
+  ) => super.noSuchMethod(
+    Invocation.method(#setAchievementsProvider, [achievementsProvider]),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  double getMonthlyProgress() => (super.noSuchMethod(
-        Invocation.method(
-          #getMonthlyProgress,
-          [],
-        ),
-        returnValue: 0.0,
-      ) as double);
+  double getMonthlyProgress() =>
+      (super.noSuchMethod(
+            Invocation.method(#getMonthlyProgress, []),
+            returnValue: 0.0,
+          )
+          as double);
 
   @override
   _i4.Future<void> toggleProjectStatus(String? projectId) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #toggleProjectStatus,
-          [projectId],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+            Invocation.method(#toggleProjectStatus, [projectId]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
-  _i4.Future<void> updateProjectProgress(
-    String? projectId,
-    double? progress,
-  ) =>
+  _i4.Future<void> updateProjectProgress(String? projectId, double? progress) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #updateProjectProgress,
-          [
-            projectId,
-            progress,
-          ],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+            Invocation.method(#updateProjectProgress, [projectId, progress]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
-  _i4.Future<void> addProject(_i9.Project? project) => (super.noSuchMethod(
-        Invocation.method(
-          #addProject,
-          [project],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> addProject(_i9.Project? project) =>
+      (super.noSuchMethod(
+            Invocation.method(#addProject, [project]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
-  _i4.Future<void> refreshProjects() => (super.noSuchMethod(
-        Invocation.method(
-          #refreshProjects,
-          [],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> refreshProjects() =>
+      (super.noSuchMethod(
+            Invocation.method(#refreshProjects, []),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
   _i4.Future<void> updateProject(_i9.Project? updatedProject) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #updateProject,
-          [updatedProject],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+            Invocation.method(#updateProject, [updatedProject]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
-  _i4.Future<void> deleteProject(String? projectId) => (super.noSuchMethod(
-        Invocation.method(
-          #deleteProject,
-          [projectId],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> deleteProject(String? projectId) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteProject, [projectId]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
   _i9.Project? getProjectById(String? projectId) =>
-      (super.noSuchMethod(Invocation.method(
-        #getProjectById,
-        [projectId],
-      )) as _i9.Project?);
+      (super.noSuchMethod(Invocation.method(#getProjectById, [projectId]))
+          as _i9.Project?);
 
   @override
-  String generateProjectId() => (super.noSuchMethod(
-        Invocation.method(
-          #generateProjectId,
-          [],
-        ),
-        returnValue: _i10.dummyValue<String>(
-          this,
-          Invocation.method(
-            #generateProjectId,
-            [],
-          ),
-        ),
-      ) as String);
+  String generateProjectId() =>
+      (super.noSuchMethod(
+            Invocation.method(#generateProjectId, []),
+            returnValue: _i10.dummyValue<String>(
+              this,
+              Invocation.method(#generateProjectId, []),
+            ),
+          )
+          as String);
 
   @override
   void clearError() => super.noSuchMethod(
-        Invocation.method(
-          #clearError,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#clearError, []),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  _i4.Future<void> loadProjects() => (super.noSuchMethod(
-        Invocation.method(
-          #loadProjects,
-          [],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> loadProjects() =>
+      (super.noSuchMethod(
+            Invocation.method(#loadProjects, []),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
   void addListener(_i15.VoidCallback? listener) => super.noSuchMethod(
-        Invocation.method(
-          #addListener,
-          [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#addListener, [listener]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void removeListener(_i15.VoidCallback? listener) => super.noSuchMethod(
-        Invocation.method(
-          #removeListener,
-          [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#removeListener, [listener]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void dispose() => super.noSuchMethod(
-        Invocation.method(
-          #dispose,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#dispose, []),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void notifyListeners() => super.noSuchMethod(
-        Invocation.method(
-          #notifyListeners,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#notifyListeners, []),
+    returnValueForMissingStub: null,
+  );
 }
 
 /// A class which mocks [WaterProvider].
@@ -768,127 +659,97 @@ class MockWaterProvider extends _i1.Mock implements _i17.WaterProvider {
   }
 
   @override
-  int get currentCups => (super.noSuchMethod(
-        Invocation.getter(#currentCups),
-        returnValue: 0,
-      ) as int);
+  int get currentCups =>
+      (super.noSuchMethod(Invocation.getter(#currentCups), returnValue: 0)
+          as int);
 
   @override
-  int get targetCups => (super.noSuchMethod(
-        Invocation.getter(#targetCups),
-        returnValue: 0,
-      ) as int);
+  int get targetCups =>
+      (super.noSuchMethod(Invocation.getter(#targetCups), returnValue: 0)
+          as int);
 
   @override
-  int get currentIntakeMl => (super.noSuchMethod(
-        Invocation.getter(#currentIntakeMl),
-        returnValue: 0,
-      ) as int);
+  int get currentIntakeMl =>
+      (super.noSuchMethod(Invocation.getter(#currentIntakeMl), returnValue: 0)
+          as int);
 
   @override
-  bool get isLoading => (super.noSuchMethod(
-        Invocation.getter(#isLoading),
-        returnValue: false,
-      ) as bool);
+  bool get isLoading =>
+      (super.noSuchMethod(Invocation.getter(#isLoading), returnValue: false)
+          as bool);
 
   @override
-  bool get hasListeners => (super.noSuchMethod(
-        Invocation.getter(#hasListeners),
-        returnValue: false,
-      ) as bool);
+  bool get hasListeners =>
+      (super.noSuchMethod(Invocation.getter(#hasListeners), returnValue: false)
+          as bool);
 
   @override
-  _i4.Future<void> initialize() => (super.noSuchMethod(
-        Invocation.method(
-          #initialize,
-          [],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> initialize() =>
+      (super.noSuchMethod(
+            Invocation.method(#initialize, []),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
-  _i4.Future<void> addCup() => (super.noSuchMethod(
-        Invocation.method(
-          #addCup,
-          [],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> addCup() =>
+      (super.noSuchMethod(
+            Invocation.method(#addCup, []),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
   void reset() => super.noSuchMethod(
-        Invocation.method(
-          #reset,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#reset, []),
+    returnValueForMissingStub: null,
+  );
 
   @override
-  double getProgress() => (super.noSuchMethod(
-        Invocation.method(
-          #getProgress,
-          [],
-        ),
-        returnValue: 0.0,
-      ) as double);
+  double getProgress() =>
+      (super.noSuchMethod(Invocation.method(#getProgress, []), returnValue: 0.0)
+          as double);
 
   @override
-  _i4.Future<void> refreshWaterData() => (super.noSuchMethod(
-        Invocation.method(
-          #refreshWaterData,
-          [],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> refreshWaterData() =>
+      (super.noSuchMethod(
+            Invocation.method(#refreshWaterData, []),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
   void clearError() => super.noSuchMethod(
-        Invocation.method(
-          #clearError,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#clearError, []),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void addListener(_i15.VoidCallback? listener) => super.noSuchMethod(
-        Invocation.method(
-          #addListener,
-          [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#addListener, [listener]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void removeListener(_i15.VoidCallback? listener) => super.noSuchMethod(
-        Invocation.method(
-          #removeListener,
-          [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#removeListener, [listener]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void dispose() => super.noSuchMethod(
-        Invocation.method(
-          #dispose,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#dispose, []),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void notifyListeners() => super.noSuchMethod(
-        Invocation.method(
-          #notifyListeners,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#notifyListeners, []),
+    returnValueForMissingStub: null,
+  );
 }
 
 /// A class which mocks [AchievementsProvider].
@@ -901,134 +762,127 @@ class MockAchievementsProvider extends _i1.Mock
   }
 
   @override
-  List<_i18.BadgeModel> get earnedBadges => (super.noSuchMethod(
-        Invocation.getter(#earnedBadges),
-        returnValue: <_i18.BadgeModel>[],
-      ) as List<_i18.BadgeModel>);
+  List<_i18.BadgeModel> get earnedBadges =>
+      (super.noSuchMethod(
+            Invocation.getter(#earnedBadges),
+            returnValue: <_i18.BadgeModel>[],
+          )
+          as List<_i18.BadgeModel>);
 
   @override
-  List<_i18.BadgeModel> get lockedBadges => (super.noSuchMethod(
-        Invocation.getter(#lockedBadges),
-        returnValue: <_i18.BadgeModel>[],
-      ) as List<_i18.BadgeModel>);
+  List<_i18.BadgeModel> get lockedBadges =>
+      (super.noSuchMethod(
+            Invocation.getter(#lockedBadges),
+            returnValue: <_i18.BadgeModel>[],
+          )
+          as List<_i18.BadgeModel>);
 
   @override
-  List<_i18.BadgeModel> get allBadges => (super.noSuchMethod(
-        Invocation.getter(#allBadges),
-        returnValue: <_i18.BadgeModel>[],
-      ) as List<_i18.BadgeModel>);
+  List<_i18.BadgeModel> get allBadges =>
+      (super.noSuchMethod(
+            Invocation.getter(#allBadges),
+            returnValue: <_i18.BadgeModel>[],
+          )
+          as List<_i18.BadgeModel>);
 
   @override
-  List<_i18.BadgeModel> get badges => (super.noSuchMethod(
-        Invocation.getter(#badges),
-        returnValue: <_i18.BadgeModel>[],
-      ) as List<_i18.BadgeModel>);
+  List<_i18.BadgeModel> get badges =>
+      (super.noSuchMethod(
+            Invocation.getter(#badges),
+            returnValue: <_i18.BadgeModel>[],
+          )
+          as List<_i18.BadgeModel>);
 
   @override
-  List<_i19.LeaderboardUserModel> get leaderboard => (super.noSuchMethod(
-        Invocation.getter(#leaderboard),
-        returnValue: <_i19.LeaderboardUserModel>[],
-      ) as List<_i19.LeaderboardUserModel>);
+  List<_i19.LeaderboardUserModel> get leaderboard =>
+      (super.noSuchMethod(
+            Invocation.getter(#leaderboard),
+            returnValue: <_i19.LeaderboardUserModel>[],
+          )
+          as List<_i19.LeaderboardUserModel>);
 
   @override
-  int get earnedBadgeCount => (super.noSuchMethod(
-        Invocation.getter(#earnedBadgeCount),
-        returnValue: 0,
-      ) as int);
+  int get earnedBadgeCount =>
+      (super.noSuchMethod(Invocation.getter(#earnedBadgeCount), returnValue: 0)
+          as int);
 
   @override
-  bool get isLoading => (super.noSuchMethod(
-        Invocation.getter(#isLoading),
-        returnValue: false,
-      ) as bool);
+  bool get isLoading =>
+      (super.noSuchMethod(Invocation.getter(#isLoading), returnValue: false)
+          as bool);
 
   @override
-  int get currentLevelPoints => (super.noSuchMethod(
-        Invocation.getter(#currentLevelPoints),
-        returnValue: 0,
-      ) as int);
+  int get currentLevelPoints =>
+      (super.noSuchMethod(
+            Invocation.getter(#currentLevelPoints),
+            returnValue: 0,
+          )
+          as int);
 
   @override
-  bool get hasListeners => (super.noSuchMethod(
-        Invocation.getter(#hasListeners),
-        returnValue: false,
-      ) as bool);
+  bool get hasListeners =>
+      (super.noSuchMethod(Invocation.getter(#hasListeners), returnValue: false)
+          as bool);
 
   @override
-  _i4.Future<void> loadAchievementsData() => (super.noSuchMethod(
-        Invocation.method(
-          #loadAchievementsData,
-          [],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> loadAchievementsData() =>
+      (super.noSuchMethod(
+            Invocation.method(#loadAchievementsData, []),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
-  _i4.Future<void> earnBadge(String? badgeId) => (super.noSuchMethod(
-        Invocation.method(
-          #earnBadge,
-          [badgeId],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> earnBadge(String? badgeId) =>
+      (super.noSuchMethod(
+            Invocation.method(#earnBadge, [badgeId]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
-  _i4.Future<void> addXP(int? amount) => (super.noSuchMethod(
-        Invocation.method(
-          #addXP,
-          [amount],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> addXP(int? amount) =>
+      (super.noSuchMethod(
+            Invocation.method(#addXP, [amount]),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
-  _i4.Future<void> refreshLeaderboard() => (super.noSuchMethod(
-        Invocation.method(
-          #refreshLeaderboard,
-          [],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+  _i4.Future<void> refreshLeaderboard() =>
+      (super.noSuchMethod(
+            Invocation.method(#refreshLeaderboard, []),
+            returnValue: _i4.Future<void>.value(),
+            returnValueForMissingStub: _i4.Future<void>.value(),
+          )
+          as _i4.Future<void>);
 
   @override
   void addListener(_i15.VoidCallback? listener) => super.noSuchMethod(
-        Invocation.method(
-          #addListener,
-          [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#addListener, [listener]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void removeListener(_i15.VoidCallback? listener) => super.noSuchMethod(
-        Invocation.method(
-          #removeListener,
-          [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#removeListener, [listener]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void dispose() => super.noSuchMethod(
-        Invocation.method(
-          #dispose,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#dispose, []),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void notifyListeners() => super.noSuchMethod(
-        Invocation.method(
-          #notifyListeners,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#notifyListeners, []),
+    returnValueForMissingStub: null,
+  );
 }
 
 /// A class which mocks [UserLevelModel].
@@ -1040,61 +894,57 @@ class MockUserLevelModel extends _i1.Mock implements _i2.UserLevelModel {
   }
 
   @override
-  int get currentLevel => (super.noSuchMethod(
-        Invocation.getter(#currentLevel),
-        returnValue: 0,
-      ) as int);
+  int get currentLevel =>
+      (super.noSuchMethod(Invocation.getter(#currentLevel), returnValue: 0)
+          as int);
 
   @override
-  String get levelTitle => (super.noSuchMethod(
-        Invocation.getter(#levelTitle),
-        returnValue: _i10.dummyValue<String>(
-          this,
-          Invocation.getter(#levelTitle),
-        ),
-      ) as String);
+  String get levelTitle =>
+      (super.noSuchMethod(
+            Invocation.getter(#levelTitle),
+            returnValue: _i10.dummyValue<String>(
+              this,
+              Invocation.getter(#levelTitle),
+            ),
+          )
+          as String);
 
   @override
-  int get currentXP => (super.noSuchMethod(
-        Invocation.getter(#currentXP),
-        returnValue: 0,
-      ) as int);
+  int get currentXP =>
+      (super.noSuchMethod(Invocation.getter(#currentXP), returnValue: 0)
+          as int);
 
   @override
-  int get xpForNextLevel => (super.noSuchMethod(
-        Invocation.getter(#xpForNextLevel),
-        returnValue: 0,
-      ) as int);
+  int get xpForNextLevel =>
+      (super.noSuchMethod(Invocation.getter(#xpForNextLevel), returnValue: 0)
+          as int);
 
   @override
-  int get totalXP => (super.noSuchMethod(
-        Invocation.getter(#totalXP),
-        returnValue: 0,
-      ) as int);
+  int get totalXP =>
+      (super.noSuchMethod(Invocation.getter(#totalXP), returnValue: 0) as int);
 
   @override
-  double get xpProgress => (super.noSuchMethod(
-        Invocation.getter(#xpProgress),
-        returnValue: 0.0,
-      ) as double);
+  double get xpProgress =>
+      (super.noSuchMethod(Invocation.getter(#xpProgress), returnValue: 0.0)
+          as double);
 
   @override
-  int get xpRemaining => (super.noSuchMethod(
-        Invocation.getter(#xpRemaining),
-        returnValue: 0,
-      ) as int);
+  int get xpRemaining =>
+      (super.noSuchMethod(Invocation.getter(#xpRemaining), returnValue: 0)
+          as int);
 
   @override
-  int get progressPercentage => (super.noSuchMethod(
-        Invocation.getter(#progressPercentage),
-        returnValue: 0,
-      ) as int);
+  int get progressPercentage =>
+      (super.noSuchMethod(
+            Invocation.getter(#progressPercentage),
+            returnValue: 0,
+          )
+          as int);
 
   @override
-  bool get isMaxLevel => (super.noSuchMethod(
-        Invocation.getter(#isMaxLevel),
-        returnValue: false,
-      ) as bool);
+  bool get isMaxLevel =>
+      (super.noSuchMethod(Invocation.getter(#isMaxLevel), returnValue: false)
+          as bool);
 
   @override
   _i2.UserLevelModel copyWith({
@@ -1105,39 +955,31 @@ class MockUserLevelModel extends _i1.Mock implements _i2.UserLevelModel {
     int? totalXP,
   }) =>
       (super.noSuchMethod(
-        Invocation.method(
-          #copyWith,
-          [],
-          {
-            #currentLevel: currentLevel,
-            #levelTitle: levelTitle,
-            #currentXP: currentXP,
-            #xpForNextLevel: xpForNextLevel,
-            #totalXP: totalXP,
-          },
-        ),
-        returnValue: _FakeUserLevelModel_0(
-          this,
-          Invocation.method(
-            #copyWith,
-            [],
-            {
+            Invocation.method(#copyWith, [], {
               #currentLevel: currentLevel,
               #levelTitle: levelTitle,
               #currentXP: currentXP,
               #xpForNextLevel: xpForNextLevel,
               #totalXP: totalXP,
-            },
-          ),
-        ),
-      ) as _i2.UserLevelModel);
+            }),
+            returnValue: _FakeUserLevelModel_0(
+              this,
+              Invocation.method(#copyWith, [], {
+                #currentLevel: currentLevel,
+                #levelTitle: levelTitle,
+                #currentXP: currentXP,
+                #xpForNextLevel: xpForNextLevel,
+                #totalXP: totalXP,
+              }),
+            ),
+          )
+          as _i2.UserLevelModel);
 
   @override
-  Map<String, dynamic> toJson() => (super.noSuchMethod(
-        Invocation.method(
-          #toJson,
-          [],
-        ),
-        returnValue: <String, dynamic>{},
-      ) as Map<String, dynamic>);
+  Map<String, dynamic> toJson() =>
+      (super.noSuchMethod(
+            Invocation.method(#toJson, []),
+            returnValue: <String, dynamic>{},
+          )
+          as Map<String, dynamic>);
 }

@@ -38,65 +38,52 @@ class MockTaskService extends _i1.Mock implements _i2.TaskService {
   }
 
   @override
-  _i3.Future<List<_i4.Task>> fetchTasks() => (super.noSuchMethod(
-        Invocation.method(
-          #fetchTasks,
-          [],
-        ),
-        returnValue: _i3.Future<List<_i4.Task>>.value(<_i4.Task>[]),
-      ) as _i3.Future<List<_i4.Task>>);
-
-  @override
-  _i3.Future<String> createTask(_i4.Task? task) => (super.noSuchMethod(
-        Invocation.method(
-          #createTask,
-          [task],
-        ),
-        returnValue: _i3.Future<String>.value(_i5.dummyValue<String>(
-          this,
-          Invocation.method(
-            #createTask,
-            [task],
-          ),
-        )),
-      ) as _i3.Future<String>);
-
-  @override
-  _i3.Future<void> updateTask(_i4.Task? task) => (super.noSuchMethod(
-        Invocation.method(
-          #updateTask,
-          [task],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
-
-  @override
-  _i3.Future<void> deleteTask(String? taskId) => (super.noSuchMethod(
-        Invocation.method(
-          #deleteTask,
-          [taskId],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
-
-  @override
-  _i3.Future<void> toggleTaskCompletion(
-    String? taskId,
-    bool? isCompleted,
-  ) =>
+  _i3.Future<List<_i4.Task>> fetchTasks() =>
       (super.noSuchMethod(
-        Invocation.method(
-          #toggleTaskCompletion,
-          [
-            taskId,
-            isCompleted,
-          ],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+            Invocation.method(#fetchTasks, []),
+            returnValue: _i3.Future<List<_i4.Task>>.value(<_i4.Task>[]),
+          )
+          as _i3.Future<List<_i4.Task>>);
+
+  @override
+  _i3.Future<String> createTask(_i4.Task? task) =>
+      (super.noSuchMethod(
+            Invocation.method(#createTask, [task]),
+            returnValue: _i3.Future<String>.value(
+              _i5.dummyValue<String>(
+                this,
+                Invocation.method(#createTask, [task]),
+              ),
+            ),
+          )
+          as _i3.Future<String>);
+
+  @override
+  _i3.Future<void> updateTask(_i4.Task? task) =>
+      (super.noSuchMethod(
+            Invocation.method(#updateTask, [task]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
+
+  @override
+  _i3.Future<void> deleteTask(String? taskId) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteTask, [taskId]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
+
+  @override
+  _i3.Future<void> toggleTaskCompletion(String? taskId, bool? isCompleted) =>
+      (super.noSuchMethod(
+            Invocation.method(#toggleTaskCompletion, [taskId, isCompleted]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 }
 
 /// A class which mocks [AchievementsProvider].
@@ -109,132 +96,125 @@ class MockAchievementsProvider extends _i1.Mock
   }
 
   @override
-  List<_i7.BadgeModel> get earnedBadges => (super.noSuchMethod(
-        Invocation.getter(#earnedBadges),
-        returnValue: <_i7.BadgeModel>[],
-      ) as List<_i7.BadgeModel>);
+  List<_i7.BadgeModel> get earnedBadges =>
+      (super.noSuchMethod(
+            Invocation.getter(#earnedBadges),
+            returnValue: <_i7.BadgeModel>[],
+          )
+          as List<_i7.BadgeModel>);
 
   @override
-  List<_i7.BadgeModel> get lockedBadges => (super.noSuchMethod(
-        Invocation.getter(#lockedBadges),
-        returnValue: <_i7.BadgeModel>[],
-      ) as List<_i7.BadgeModel>);
+  List<_i7.BadgeModel> get lockedBadges =>
+      (super.noSuchMethod(
+            Invocation.getter(#lockedBadges),
+            returnValue: <_i7.BadgeModel>[],
+          )
+          as List<_i7.BadgeModel>);
 
   @override
-  List<_i7.BadgeModel> get allBadges => (super.noSuchMethod(
-        Invocation.getter(#allBadges),
-        returnValue: <_i7.BadgeModel>[],
-      ) as List<_i7.BadgeModel>);
+  List<_i7.BadgeModel> get allBadges =>
+      (super.noSuchMethod(
+            Invocation.getter(#allBadges),
+            returnValue: <_i7.BadgeModel>[],
+          )
+          as List<_i7.BadgeModel>);
 
   @override
-  List<_i7.BadgeModel> get badges => (super.noSuchMethod(
-        Invocation.getter(#badges),
-        returnValue: <_i7.BadgeModel>[],
-      ) as List<_i7.BadgeModel>);
+  List<_i7.BadgeModel> get badges =>
+      (super.noSuchMethod(
+            Invocation.getter(#badges),
+            returnValue: <_i7.BadgeModel>[],
+          )
+          as List<_i7.BadgeModel>);
 
   @override
-  List<_i8.LeaderboardUserModel> get leaderboard => (super.noSuchMethod(
-        Invocation.getter(#leaderboard),
-        returnValue: <_i8.LeaderboardUserModel>[],
-      ) as List<_i8.LeaderboardUserModel>);
+  List<_i8.LeaderboardUserModel> get leaderboard =>
+      (super.noSuchMethod(
+            Invocation.getter(#leaderboard),
+            returnValue: <_i8.LeaderboardUserModel>[],
+          )
+          as List<_i8.LeaderboardUserModel>);
 
   @override
-  int get earnedBadgeCount => (super.noSuchMethod(
-        Invocation.getter(#earnedBadgeCount),
-        returnValue: 0,
-      ) as int);
+  int get earnedBadgeCount =>
+      (super.noSuchMethod(Invocation.getter(#earnedBadgeCount), returnValue: 0)
+          as int);
 
   @override
-  bool get isLoading => (super.noSuchMethod(
-        Invocation.getter(#isLoading),
-        returnValue: false,
-      ) as bool);
+  bool get isLoading =>
+      (super.noSuchMethod(Invocation.getter(#isLoading), returnValue: false)
+          as bool);
 
   @override
-  int get currentLevelPoints => (super.noSuchMethod(
-        Invocation.getter(#currentLevelPoints),
-        returnValue: 0,
-      ) as int);
+  int get currentLevelPoints =>
+      (super.noSuchMethod(
+            Invocation.getter(#currentLevelPoints),
+            returnValue: 0,
+          )
+          as int);
 
   @override
-  bool get hasListeners => (super.noSuchMethod(
-        Invocation.getter(#hasListeners),
-        returnValue: false,
-      ) as bool);
+  bool get hasListeners =>
+      (super.noSuchMethod(Invocation.getter(#hasListeners), returnValue: false)
+          as bool);
 
   @override
-  _i3.Future<void> loadAchievementsData() => (super.noSuchMethod(
-        Invocation.method(
-          #loadAchievementsData,
-          [],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> loadAchievementsData() =>
+      (super.noSuchMethod(
+            Invocation.method(#loadAchievementsData, []),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
-  _i3.Future<void> earnBadge(String? badgeId) => (super.noSuchMethod(
-        Invocation.method(
-          #earnBadge,
-          [badgeId],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> earnBadge(String? badgeId) =>
+      (super.noSuchMethod(
+            Invocation.method(#earnBadge, [badgeId]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
-  _i3.Future<void> addXP(int? amount) => (super.noSuchMethod(
-        Invocation.method(
-          #addXP,
-          [amount],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> addXP(int? amount) =>
+      (super.noSuchMethod(
+            Invocation.method(#addXP, [amount]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
-  _i3.Future<void> refreshLeaderboard() => (super.noSuchMethod(
-        Invocation.method(
-          #refreshLeaderboard,
-          [],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> refreshLeaderboard() =>
+      (super.noSuchMethod(
+            Invocation.method(#refreshLeaderboard, []),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
   void addListener(_i9.VoidCallback? listener) => super.noSuchMethod(
-        Invocation.method(
-          #addListener,
-          [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#addListener, [listener]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void removeListener(_i9.VoidCallback? listener) => super.noSuchMethod(
-        Invocation.method(
-          #removeListener,
-          [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#removeListener, [listener]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void dispose() => super.noSuchMethod(
-        Invocation.method(
-          #dispose,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#dispose, []),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void notifyListeners() => super.noSuchMethod(
-        Invocation.method(
-          #notifyListeners,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(#notifyListeners, []),
+    returnValueForMissingStub: null,
+  );
 }

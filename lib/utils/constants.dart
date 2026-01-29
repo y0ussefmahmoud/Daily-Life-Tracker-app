@@ -294,6 +294,11 @@ class AppStrings {
   // Error Messages - Initialization
   static const String errorInitialization = 'فشل تهيئة التطبيق';
   static const String errorDatabaseConnection = 'فشل الاتصال بقاعدة البيانات';
+
+  // Error Messages - Enhanced
+  static const String errorCheckConnection = 'تحقق من اتصالك بالإنترنت وحاول مرة أخرى';
+  static const String errorOfflineMode = 'أنت غير متصل بالإنترنت';
+  static const String errorRetrying = 'جاري إعادة المحاولة...';
 }
 
 class AppIcons {

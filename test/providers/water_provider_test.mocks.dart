@@ -33,39 +33,35 @@ class MockWaterService extends _i1.Mock implements _i2.WaterService {
   }
 
   @override
-  _i3.Future<void> logWaterIntake(int? amountMl) => (super.noSuchMethod(
-        Invocation.method(
-          #logWaterIntake,
-          [amountMl],
-        ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+  _i3.Future<void> logWaterIntake(int? amountMl) =>
+      (super.noSuchMethod(
+            Invocation.method(#logWaterIntake, [amountMl]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
 
   @override
-  _i3.Future<List<_i4.WaterLog>> fetchTodayWaterLogs() => (super.noSuchMethod(
-        Invocation.method(
-          #fetchTodayWaterLogs,
-          [],
-        ),
-        returnValue: _i3.Future<List<_i4.WaterLog>>.value(<_i4.WaterLog>[]),
-      ) as _i3.Future<List<_i4.WaterLog>>);
+  _i3.Future<List<_i4.WaterLog>> fetchTodayWaterLogs() =>
+      (super.noSuchMethod(
+            Invocation.method(#fetchTodayWaterLogs, []),
+            returnValue: _i3.Future<List<_i4.WaterLog>>.value(<_i4.WaterLog>[]),
+          )
+          as _i3.Future<List<_i4.WaterLog>>);
 
   @override
-  _i3.Future<int> getTodayWaterIntake() => (super.noSuchMethod(
-        Invocation.method(
-          #getTodayWaterIntake,
-          [],
-        ),
-        returnValue: _i3.Future<int>.value(0),
-      ) as _i3.Future<int>);
+  _i3.Future<int> getTodayWaterIntake() =>
+      (super.noSuchMethod(
+            Invocation.method(#getTodayWaterIntake, []),
+            returnValue: _i3.Future<int>.value(0),
+          )
+          as _i3.Future<int>);
 
   @override
-  _i3.Future<int> getWaterGoal() => (super.noSuchMethod(
-        Invocation.method(
-          #getWaterGoal,
-          [],
-        ),
-        returnValue: _i3.Future<int>.value(0),
-      ) as _i3.Future<int>);
+  _i3.Future<int> getWaterGoal() =>
+      (super.noSuchMethod(
+            Invocation.method(#getWaterGoal, []),
+            returnValue: _i3.Future<int>.value(0),
+          )
+          as _i3.Future<int>);
 }
