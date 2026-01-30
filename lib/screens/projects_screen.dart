@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../providers/project_provider.dart';
 import '../models/project_model.dart';
 import '../utils/constants.dart';
+import '../utils/error_handler.dart';
 import '../widgets/project_card.dart';
 import '../widgets/paused_project_card.dart';
 import '../widgets/monthly_progress_widget.dart';
@@ -43,8 +44,24 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
         final activeProjects = projectProvider.activeProjects;
         final pausedProjects = projectProvider.pausedProjects;
 
+        // Check for error state
+        if (projectProvider.error != null) {
+          return ErrorStateWidget(
+            message: handleProviderError(projectProvider.error, 'projects'),
+            subtitle: 'لا يمكن عرض المشاريع حالياً',
+            icon: Icons.work_off,
+            onRetry: () => projectProvider.loadProjects(),
+          );
+        }
+
         return RefreshIndicator(
-          onRefresh: () => projectProvider.refreshProjects(),
+          onRefresh: () async {
+            try {
+              await projectProvider.refreshProjects();
+            } catch (error) {
+              showErrorSnackbar(context, handleSupabaseError(error));
+            }
+          },
           child: projectProvider.isLoading
               ? SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(), // Enable refresh even when loading
@@ -183,6 +200,35 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                               'لا توجد مشاريع نشطة',
                               style: theme.textTheme.titleMedium?.copyWith(
                                 color: AppColors.gray400,
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.md),
+                            ElevatedButton.icon(
+                              onPressed: () {
+                                HapticFeedback.lightImpact();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const AddScreen()),
+                                );
+                              },
+                              icon: const Icon(Icons.add, size: 18),
+                              label: Text(
+                                'إضافة مشروع',
+                                style: GoogleFonts.tajawal(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primaryColor,
+                                foregroundColor: AppColors.textLight,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(AppBorderRadius.full),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: AppSpacing.md,
+                                  vertical: AppSpacing.sm,
+                                ),
                               ),
                             ),
                           ],
@@ -394,7 +440,11 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
               onTap: () {
                 Navigator.pop(context);
                 if (project.id != null) {
-                  context.read<ProjectProvider>().toggleProjectStatus(project.id!);
+                  try {
+                    context.read<ProjectProvider>().toggleProjectStatus(project.id!);
+                  } catch (error) {
+                    showErrorSnackbar(context, AppStrings.errorUpdatingProject);
+                  }
                 }
               },
             ),
@@ -427,7 +477,11 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
             onPressed: () {
               Navigator.pop(context);
               if (project.id != null) {
-                context.read<ProjectProvider>().deleteProject(project.id!);
+                try {
+                  context.read<ProjectProvider>().deleteProject(project.id!);
+                } catch (error) {
+                  showErrorSnackbar(context, AppStrings.errorDeletingProject);
+                }
               }
             },
             style: ElevatedButton.styleFrom(

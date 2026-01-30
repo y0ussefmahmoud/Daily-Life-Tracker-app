@@ -92,4 +92,12 @@ class AchievementsProvider extends ChangeNotifier {
       debugPrint('Error refreshing leaderboard: $e');
     }
   }
+
+  void clearAchievements() {
+    _userLevel = null;
+    _badges = [];
+    _leaderboard = [];
+    _error = null;
+    notifyListeners();
+  }
 }

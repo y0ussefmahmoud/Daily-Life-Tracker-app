@@ -31,7 +31,7 @@ class SettingsListItem extends StatelessWidget {
           border: showBorder
               ? Border(
                   bottom: BorderSide(
-                    color: AppColors.primaryColor.withOpacity(0.05),
+                    color: isDark ? AppColors.borderDark : AppColors.borderLight,
                     width: 1,
                   ),
                 )

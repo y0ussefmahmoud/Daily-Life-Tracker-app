@@ -21,15 +21,18 @@ enum BadgeCategory {
 
 @JsonSerializable()
 class BadgeModel {
-  final String? userId; // Added for Supabase operations
+  /// User ID - null for Supabase operations
+  final String? userId;
   final String id;
   final String title;
   final String description;
+  /// URL for custom badge icon - null if using default icon
   final String? iconUrl;
   @JsonKey(fromJson: _iconDataFromJson, toJson: _iconDataToJson)
   final IconData icon;
   final bool isEarned;
   final double progress;
+  /// Date when badge was earned - null if not yet earned
   final DateTime? earnedDate;
   final BadgeCategory category;
   @JsonKey(fromJson: _colorFromJson, toJson: _colorToJson)
@@ -123,9 +126,15 @@ class BadgeModel {
   }
 
   // Helper methods for JSON serialization
-  static IconData _iconDataFromJson(int codePoint) => IconData(codePoint);
+  static IconData _iconDataFromJson(int? codePoint) {
+    if (codePoint == null) return Icons.star; // Default icon
+    return IconData(codePoint, fontFamily: 'MaterialIcons');
+  }
   static int _iconDataToJson(IconData icon) => icon.codePoint;
   
-  static Color _colorFromJson(int value) => Color(value);
+  static Color _colorFromJson(int? value) {
+    if (value == null) return Colors.blue; // Default color
+    return Color(value);
+  }
   static int _colorToJson(Color color) => color.value;
 }

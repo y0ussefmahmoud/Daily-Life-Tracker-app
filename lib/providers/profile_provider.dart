@@ -3,6 +3,7 @@ import '../models/user_profile_model.dart';
 import '../providers/achievements_provider.dart';
 import '../services/auth_service.dart';
 import '../services/supabase_service.dart';
+import '../utils/error_handler.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfileProvider extends ChangeNotifier {
@@ -30,7 +31,7 @@ class ProfileProvider extends ChangeNotifier {
     try {
       final user = _authService.currentUser;
       if (user == null) {
-        _error = 'User not authenticated';
+        _error = handleSupabaseError('User not authenticated');
         return;
       }
 
@@ -54,8 +55,10 @@ class ProfileProvider extends ChangeNotifier {
         streakDays: streakDays,
         points: points,
       );
+      // Ensure _error remains null on success
+      _error = null;
     } catch (e) {
-      _error = e.toString();
+      _error = handleSupabaseError(e);
       debugPrint('Error loading profile: $e');
     } finally {
       _isLoading = false;
@@ -73,7 +76,7 @@ class ProfileProvider extends ChangeNotifier {
     try {
       // Update user metadata in Supabase
       await _authService.updateProfile(
-        userId: _profile!.id,
+        userId: _profile?.id ?? '',
         updates: {
           if (name != null) 'name': name,
           if (avatarUrl != null) 'avatar_url': avatarUrl,
@@ -81,14 +84,16 @@ class ProfileProvider extends ChangeNotifier {
       );
 
       // Update local state
-      _profile = _profile!.copyWith(
+      _profile = _profile?.copyWith(
         name: name,
         subtitle: subtitle,
         avatarUrl: avatarUrl,
       );
+      // Ensure _error remains null on success
+      _error = null;
       notifyListeners();
     } catch (e) {
-      _error = e.toString();
+      _error = handleSupabaseError(e);
       debugPrint('Error updating profile: $e');
       notifyListeners();
     }

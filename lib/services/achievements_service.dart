@@ -54,8 +54,8 @@ class AchievementsService {
           .limit(1);
 
       if (response is List && response.isNotEmpty) {
-        final totalXP = response.first['total_xp'] as int? ?? 0;
-        return _calculateUserLevel(totalXP);
+        final totalXP = response.first['total_xp'] as num?;
+        return _calculateUserLevel(totalXP?.toInt() ?? 0);
       }
 
       return _getDefaultUserLevel();
@@ -132,7 +132,8 @@ class AchievementsService {
       int currentTotalXP = 0;
       final hasExistingRow = currentXPResponse is List && currentXPResponse.isNotEmpty;
       if (currentXPResponse is List && currentXPResponse.isNotEmpty) {
-        currentTotalXP = currentXPResponse.first['total_xp'] as int? ?? 0;
+        final totalXP = currentXPResponse.first['total_xp'] as num?;
+        currentTotalXP = totalXP?.toInt() ?? 0;
       }
 
       final newTotalXP = currentTotalXP + amount;
@@ -187,14 +188,14 @@ class AchievementsService {
           final index = entry.key;
           final data = entry.value as Map<String, dynamic>;
           final userId = data['user_id'] as String;
-          final totalXP = data['total_xp'] as int? ?? 0;
+          final totalXP = data['total_xp'] as num?;
           final userMetadata = data['auth']?['user_metadata'] as Map<String, dynamic>? ?? {};
           final userName = userMetadata['name'] as String? ?? 'مستخدم';
 
           return LeaderboardUserModel(
             rank: index + 1,
             name: userId == currentUserId ? 'أنت' : userName,
-            xp: totalXP,
+            xp: totalXP?.toInt() ?? 0,
             isCurrentUser: userId == currentUserId,
             badge: index < 3 ? _getBadgeForRank(index + 1) : null,
           );

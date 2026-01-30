@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../utils/constants.dart';
+import '../utils/error_handler.dart';
 import '../providers/profile_provider.dart';
 import '../providers/settings_provider.dart';
 import '../providers/achievements_provider.dart';
@@ -9,6 +10,7 @@ import 'splash_screen.dart';
 import '../widgets/profile_stats_card.dart';
 import '../widgets/settings_list_item.dart';
 import '../widgets/ios_toggle.dart';
+import '../widgets/skeleton_loader.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -18,17 +20,42 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  bool _isLoading = true;
+  String? _error;
+  bool _isSigningOut = false;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
+
+    try {
       final profileProvider = context.read<ProfileProvider>();
       final achievementsProvider = context.read<AchievementsProvider>();
       final settingsProvider = context.read<SettingsProvider>();
       
-      profileProvider.loadProfile(achievementsProvider);
-      settingsProvider.loadSettings();
-    });
+      await Future.wait([
+        profileProvider.loadProfile(achievementsProvider),
+        settingsProvider.loadSettings(),
+      ]);
+    } catch (error) {
+      setState(() {
+        _error = handleSupabaseError(error);
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override
@@ -37,6 +64,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
       builder: (context, profileProvider, settingsProvider, child) {
         final isDark = Theme.of(context).brightness == Brightness.dark;
         final profile = profileProvider.profile;
+
+        // Check for provider errors
+        if (profileProvider.error != null || settingsProvider.error != null) {
+          final error = profileProvider.error ?? settingsProvider.error;
+          final context = error == profileProvider.error ? 'profile' : 'settings';
+          return Scaffold(
+            backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+            body: ErrorStateWidget(
+              message: handleProviderError(error, context),
+              subtitle: context == 'settings' ? 'لا يمكن تحميل الإعدادات حالياً' : 'لا يمكن عرض الملف الشخصي حالياً',
+              icon: context == 'settings' ? Icons.settings : Icons.person,
+              onRetry: _loadData,
+            ),
+          );
+        }
+
+        // Show loading skeleton
+        if (_isLoading) {
+          return Scaffold(
+            backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+            body: _buildLoadingSkeleton(isDark),
+          );
+        }
+
+        // Show error state
+        if (_error != null) {
+          return Scaffold(
+            backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+            body: ErrorStateWidget(
+              message: _error!,
+              subtitle: 'فشل تحميل الملف الشخصي',
+              icon: Icons.error_outline,
+              onRetry: _loadData,
+            ),
+          );
+        }
 
         return Scaffold(
           backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
@@ -54,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   leading: Container(
                     margin: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.9),
+                      color: Theme.of(context).cardColor,
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
@@ -182,12 +245,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SliverToBoxAdapter(child: SizedBox(height: 24)),
 
               // My Account Section
-              _buildSectionHeader(AppStrings.myAccount),
+              _buildSectionHeader(Text(
+                AppStrings.myAccount,
+                style: TextStyle(
+                  fontSize: AppTypography.title,
+                  fontWeight: AppTypography.bold,
+                  color: isDark ? Colors.white : AppColors.textPrimary,
+                ),
+              )),
               SliverToBoxAdapter(
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.white.withOpacity(0.05) : Colors.white,
+                    color: Theme.of(context).cardColor.withOpacity(isDark ? 0.05 : 1.0),
                     borderRadius: BorderRadius.circular(AppBorderRadius.xl),
                     border: Border.all(
                       color: AppColors.primaryColor.withOpacity(0.05),
@@ -218,12 +288,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SliverToBoxAdapter(child: SizedBox(height: 24)),
 
               // Notifications Section
-              _buildSectionHeader(AppStrings.notifications),
+              _buildSectionHeader(Text(
+                AppStrings.notifications,
+                style: TextStyle(
+                  fontSize: AppTypography.title,
+                  fontWeight: AppTypography.bold,
+                  color: isDark ? Colors.white : AppColors.textPrimary,
+                ),
+              )),
               SliverToBoxAdapter(
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.white.withOpacity(0.05) : Colors.white,
+                    color: Theme.of(context).cardColor.withOpacity(isDark ? 0.05 : 1.0),
                     borderRadius: BorderRadius.circular(AppBorderRadius.xl),
                     border: Border.all(
                       color: AppColors.primaryColor.withOpacity(0.05),
@@ -242,8 +319,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               )
                             : IosToggle(
                                 value: settingsProvider.prayerNotificationsEnabled,
-                                onChanged: (value) {
-                                  settingsProvider.togglePrayerNotifications();
+                                onChanged: (value) async {
+                                  try {
+                                    await settingsProvider.togglePrayerNotifications();
+                                  } catch (error) {
+                                    showErrorSnackbar(context, AppStrings.errorUpdatingSettings);
+                                  }
                                 },
                               ),
                       ),
@@ -258,8 +339,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               )
                             : IosToggle(
                                 value: settingsProvider.projectRemindersEnabled,
-                                onChanged: (value) {
-                                  settingsProvider.toggleProjectReminders();
+                                onChanged: (value) async {
+                                  try {
+                                    await settingsProvider.toggleProjectReminders();
+                                  } catch (error) {
+                                    showErrorSnackbar(context, AppStrings.errorUpdatingSettings);
+                                  }
                                 },
                               ),
                       ),
@@ -279,12 +364,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SliverToBoxAdapter(child: SizedBox(height: 24)),
 
               // Appearance Section
-              _buildSectionHeader(AppStrings.appearance),
+              _buildSectionHeader(Text(
+                AppStrings.appearance,
+                style: TextStyle(
+                  fontSize: AppTypography.title,
+                  fontWeight: AppTypography.bold,
+                  color: isDark ? Colors.white : AppColors.textPrimary,
+                ),
+              )),
               SliverToBoxAdapter(
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.white.withOpacity(0.05) : Colors.white,
+                    color: Theme.of(context).cardColor.withOpacity(isDark ? 0.05 : 1.0),
                     borderRadius: BorderRadius.circular(AppBorderRadius.xl),
                     border: Border.all(
                       color: AppColors.primaryColor.withOpacity(0.05),
@@ -303,8 +395,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               )
                             : IosToggle(
                                 value: settingsProvider.darkModeEnabled,
-                                onChanged: (value) {
-                                  settingsProvider.toggleDarkMode();
+                                onChanged: (value) async {
+                                  try {
+                                    await settingsProvider.toggleDarkMode();
+                                  } catch (error) {
+                                    showErrorSnackbar(context, AppStrings.errorUpdatingSettings);
+                                  }
                                 },
                               ),
                       ),
@@ -324,12 +420,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SliverToBoxAdapter(child: SizedBox(height: 24)),
 
               // Support Section
-              _buildSectionHeader(AppStrings.support),
+              _buildSectionHeader(Text(
+                AppStrings.support,
+                style: TextStyle(
+                  fontSize: AppTypography.title,
+                  fontWeight: AppTypography.bold,
+                  color: isDark ? Colors.white : AppColors.textPrimary,
+                ),
+              )),
               SliverToBoxAdapter(
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.white.withOpacity(0.05) : Colors.white,
+                    color: Theme.of(context).cardColor.withOpacity(isDark ? 0.05 : 1.0),
                     borderRadius: BorderRadius.circular(AppBorderRadius.xl),
                     border: Border.all(
                       color: AppColors.primaryColor.withOpacity(0.05),
@@ -376,26 +479,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     child: MaterialButton(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      onPressed: () => _showSignOutDialog(profileProvider),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.logout,
-                            color: Colors.red.shade500,
-                            size: AppSizes.iconDefault,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            AppStrings.signOut,
-                            style: TextStyle(
-                              color: Colors.red.shade500,
-                              fontSize: AppTypography.body,
-                              fontWeight: AppTypography.bold,
+                      onPressed: _isSigningOut ? null : () => _showSignOutDialog(profileProvider),
+                      child: _isSigningOut
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+                              ),
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.logout,
+                                  color: Colors.red.shade500,
+                                  size: AppSizes.iconDefault,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  AppStrings.signOut,
+                                  style: TextStyle(
+                                    color: Colors.red.shade500,
+                                    fontSize: AppTypography.body,
+                                    fontWeight: AppTypography.bold,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                 ),
@@ -428,19 +540,114 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildSectionHeader(String title) {
+  Widget _buildLoadingSkeleton(bool isDark) {
+    return CustomScrollView(
+      slivers: [
+        // Custom AppBar Skeleton
+        SliverAppBar(
+          floating: true,
+          pinned: true,
+          backgroundColor: isDark 
+              ? AppColors.backgroundDark.withOpacity(0.8) 
+              : AppColors.backgroundLight.withOpacity(0.8),
+          elevation: 0,
+          leading: Container(
+            margin: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.9),
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: const Center(
+              child: SkeletonLoader(width: 24, height: 24),
+            ),
+          ),
+          centerTitle: true,
+          title: const SkeletonLoader(width: 120, height: 20),
+        ),
+
+        // Profile Header Skeleton
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                const SizedBox(height: 8),
+                // Avatar Skeleton
+                SkeletonLoader(
+                  width: 128,
+                  height: 128,
+                  borderRadius: BorderRadius.circular(64),
+                ),
+                const SizedBox(height: 16),
+                // Name Skeleton
+                const SkeletonLoader(width: 100, height: 24),
+                const SizedBox(height: 4),
+                // Subtitle Skeleton
+                const SkeletonLoader(width: 200, height: 16),
+              ],
+            ),
+          ),
+        ),
+
+        // Stats Cards Skeleton
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: SkeletonCard(
+                    height: 80,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: SkeletonCard(
+                    height: 80,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: SkeletonCard(
+                    height: 80,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        const SliverToBoxAdapter(child: SizedBox(height: 24)),
+
+        // Sections Skeleton
+        ...List.generate(4, (index) => [
+          _buildSectionHeader(const SkeletonLoader(width: 80, height: 12)),
+          SliverToBoxAdapter(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16),
+              child: SkeletonCard(
+                height: 120,
+              ),
+            ),
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 24)),
+        ]).expand((e) => e).toList(),
+      ],
+    );
+  }
+
+  Widget _buildSectionHeader(Widget child) {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
-        child: Text(
-          title,
-          style: TextStyle(
-            fontSize: AppTypography.small,
-            fontWeight: AppTypography.bold,
-            color: AppColors.primaryColor.withOpacity(0.6),
-            letterSpacing: 1.2,
-          ),
-        ),
+        child: child,
       ),
     );
   }
@@ -459,20 +666,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
           TextButton(
             onPressed: () async {
               Navigator.pop(context);
-              final authProvider = context.read<AuthProvider>();
-              await authProvider.signOut();
-              if (mounted) {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (_) => const SplashScreen()),
-                  (route) => false,
-                );
+              
+              setState(() => _isSigningOut = true);
+              
+              try {
+                final authProvider = context.read<AuthProvider>();
+                await authProvider.signOut();
+                
+                if (mounted) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (_) => const SplashScreen()),
+                    (route) => false,
+                  );
+                }
+              } catch (error) {
+                if (mounted) {
+                  setState(() => _isSigningOut = false);
+                  showErrorDialog(
+                    context,
+                    'فشل تسجيل الخروج',
+                    handleSupabaseError(error),
+                    onRetry: () => _showSignOutDialog(profileProvider),
+                  );
+                }
               }
             },
-            child: const Text(
-              AppStrings.signOut,
-              style: TextStyle(color: Colors.red),
-            ),
+            child: _isSigningOut
+                ? const SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+                    ),
+                  )
+                : const Text(
+                    AppStrings.signOut,
+                    style: TextStyle(color: Colors.red),
+                  ),
           ),
         ],
       ),

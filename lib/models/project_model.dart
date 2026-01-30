@@ -17,6 +17,7 @@ enum ProjectStatus {
 @JsonSerializable()
 class Project {
   @JsonKey(name: 'id')
+  /// Project ID - null for local projects not yet synced
   final String? id;
   final String name;
   final double progress;
@@ -25,20 +26,27 @@ class Project {
   @JsonKey(name: 'weekly_hours')
   final int weeklyHours;
   final ProjectStatus status;
+  /// Project deadline - null if not set
   final DateTime? deadline;
   @JsonKey(name: 'status_message')
+  /// Status message - null if not set
   final String? statusMessage;
   @JsonKey(name: 'weekly_focus')
+  /// Weekly focus description - null if not set
   final String? weeklyFocus;
   @JsonKey(name: 'start_date')
+  /// Project start date - null if not set
   final DateTime? startDate;
   @JsonKey(name: 'end_date')
+  /// Project end date - null if not set
   final DateTime? endDate;
   @JsonKey(name: 'subtasks')
   final List<Subtask> subtasks;
   @JsonKey(name: 'user_id')
+  /// User ID - null for local projects not yet synced
   final String? userId;
   @JsonKey(name: 'created_at')
+  /// Creation timestamp - null for local projects not yet synced
   final DateTime? createdAt;
 
   const Project({

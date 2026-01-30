@@ -6,6 +6,7 @@ import '../widgets/badge_widget.dart';
 import '../widgets/level_hero_card.dart';
 import '../widgets/leaderboard_item.dart';
 import '../utils/constants.dart';
+import '../utils/error_handler.dart';
 
 class AchievementsScreen extends StatefulWidget {
   const AchievementsScreen({Key? key}) : super(key: key);
@@ -83,82 +84,89 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
           }
 
           if (provider.error != null) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.error_outline,
-                    size: 64,
-                    color: Theme.of(context).colorScheme.error,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'حدث خطأ في تحميل البيانات',
-                    style: TextStyle(
-                      fontFamily: 'Tajawal',
-                      fontSize: AppTypography.body,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    provider.error!,
-                    style: TextStyle(
-                      fontFamily: 'Tajawal',
-                      fontSize: AppTypography.small,
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => provider.loadAchievementsData(),
-                    child: const Text('إعادة المحاولة'),
-                  ),
-                ],
-              ),
+            return ErrorStateWidget(
+              message: handleProviderError(provider.error, 'achievements'),
+              subtitle: 'لا يمكن عرض الإنجازات حالياً',
+              icon: Icons.emoji_events_outlined,
+              onRetry: () => provider.loadAchievementsData(),
             );
           }
 
           if (provider.userLevel == null) {
             return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.emoji_events_outlined,
-                    size: 64,
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'لا توجد بيانات إنجازات',
-                    style: TextStyle(
-                      fontFamily: 'Tajawal',
-                      fontSize: AppTypography.body,
-                      color: Theme.of(context).colorScheme.onSurface,
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.lg),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 120,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(60),
+                      ),
+                      child: Icon(
+                        Icons.emoji_events_outlined,
+                        size: 64,
+                        color: AppColors.primaryColor.withOpacity(0.6),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'ابدأ بإكمال المهام لكسب نقاط الخبرة والإنجازات',
-                    style: TextStyle(
-                      fontFamily: 'Tajawal',
-                      fontSize: AppTypography.small,
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                    const SizedBox(height: AppSpacing.lg),
+                    Text(
+                      'ابدأ رحلة الإنجازات!',
+                      style: TextStyle(
+                        fontFamily: 'Tajawal',
+                        fontSize: AppTypography.title,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+                    const SizedBox(height: AppSpacing.sm),
+                    Text(
+                      'أكمل المهام اليومية واحصل على نقاط الخبرة لفتح الأوسمة والارتقاء بمستواك',
+                      style: TextStyle(
+                        fontFamily: 'Tajawal',
+                        fontSize: AppTypography.body,
+                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: AppSpacing.lg),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      icon: const Icon(Icons.add_task),
+                      label: const Text('إضافة مهمة'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryColor,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.lg,
+                          vertical: AppSpacing.md,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           }
 
           return RefreshIndicator(
             onRefresh: () async {
-              await provider.loadAchievementsData();
-              await provider.refreshLeaderboard();
+              try {
+                await Future.wait([
+                  provider.loadAchievementsData(),
+                  provider.refreshLeaderboard(),
+                ]);
+              } catch (error) {
+                showErrorSnackbar(context, handleSupabaseError(error));
+              }
             },
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
@@ -319,94 +327,104 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
 }
 
   void _showBadgeDetailsDialog(BuildContext context, dynamic badge) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppBorderRadius.xl),
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            BadgeWidget(
-              badge: badge,
-              size: 100,
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Text(
-              badge.title,
-              style: TextStyle(
-                fontFamily: 'Tajawal',
-                fontSize: AppTypography.title,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onSurface,
+    try {
+      // Validate badge data
+      if (badge == null) {
+        showErrorSnackbar(context, AppStrings.errorLoadingAchievements);
+        return;
+      }
+
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppBorderRadius.xl),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              BadgeWidget(
+                badge: badge,
+                size: 100,
               ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            Text(
-              badge.description,
-              style: TextStyle(
-                fontFamily: 'Tajawal',
-                fontSize: AppTypography.body,
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-              ),
-              textAlign: TextAlign.center,
-            ),
-            if (!badge.isEarned) ...[
               const SizedBox(height: AppSpacing.md),
-              LinearProgressIndicator(
-                value: badge.progress,
-                backgroundColor: AppColors.gray200,
-                valueColor: AlwaysStoppedAnimation<Color>(badge.color),
+              Text(
+                badge.title ?? 'شارة غير معروفة',
+                style: TextStyle(
+                  fontFamily: 'Tajawal',
+                  fontSize: AppTypography.title,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                '${(badge.progress * 100).round()}% مكتمل',
+                badge.description ?? 'لا يوجد وصف لهذه الشارة',
                 style: TextStyle(
                   fontFamily: 'Tajawal',
-                  fontSize: AppTypography.small,
-                  color: badge.color,
-                  fontWeight: FontWeight.w500,
+                  fontSize: AppTypography.body,
+                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                 ),
+                textAlign: TextAlign.center,
               ),
-            ] else ...[
-              const SizedBox(height: AppSpacing.md),
-              Text(
-                'تم الحصول عليها في ${badge.earnedDate?.day}/${badge.earnedDate?.month}/${badge.earnedDate?.year}',
-                style: TextStyle(
-                  fontFamily: 'Tajawal',
-                  fontSize: AppTypography.small,
-                  color: AppColors.successColor,
-                  fontWeight: FontWeight.w500,
+              if (badge.isEarned == false) ...[
+                const SizedBox(height: AppSpacing.md),
+                LinearProgressIndicator(
+                  value: badge.progress ?? 0.0,
+                  backgroundColor: AppColors.gray200,
+                  valueColor: AlwaysStoppedAnimation<Color>(badge.color ?? AppColors.primaryColor),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  '${((badge.progress ?? 0.0) * 100).round()}% مكتمل',
+                  style: TextStyle(
+                    fontFamily: 'Tajawal',
+                    fontSize: AppTypography.small,
+                    color: badge.color ?? AppColors.primaryColor,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ] else if (badge.earnedDate != null) ...[
+                const SizedBox(height: AppSpacing.md),
+                Text(
+                  'تم الحصول عليها في ${badge.earnedDate?.day}/${badge.earnedDate?.month}/${badge.earnedDate?.year}',
+                  style: TextStyle(
+                    fontFamily: 'Tajawal',
+                    fontSize: AppTypography.small,
+                    color: AppColors.successColor,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+              const SizedBox(height: AppSpacing.lg),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primaryColor,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+                    ),
+                  ),
+                  child: Text(
+                    'حسناً',
+                    style: TextStyle(
+                      fontFamily: 'Tajawal',
+                      fontSize: AppTypography.body,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
             ],
-            const SizedBox(height: AppSpacing.lg),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primaryColor,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppBorderRadius.lg),
-                  ),
-                ),
-                child: Text(
-                  'حسناً',
-                  style: TextStyle(
-                    fontFamily: 'Tajawal',
-                    fontSize: AppTypography.body,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
-    );
+      );
+    } catch (error) {
+      showErrorSnackbar(context, 'فشل عرض تفاصيل الشارة');
+    }
   }
 }

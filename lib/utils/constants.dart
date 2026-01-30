@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../models/subtask_model.dart';
 
 class AppColors {
   // Primary Colors
@@ -51,7 +52,9 @@ class AppTypography {
   static const double heading = 22.0;
   static const double title = 18.0;
   static const double titleLarge = 20.0;
+  static const double headlineSmall = 24.0;
   static const double body = 16.0;
+  static const double bodyMedium = 14.0;
   static const double caption = 14.0;
   static const double small = 12.0;
   static const double tiny = 10.0;
@@ -82,6 +85,7 @@ class AppBorderRadius {
   // Border Radius Values
   static const double small = 2.0;
   static const double default_ = 4.0;
+  static const double md = 8.0;
   static const double lg = 8.0;
   static const double large = 12.0;
   static const double xl = 12.0;
@@ -299,6 +303,20 @@ class AppStrings {
   static const String errorCheckConnection = 'تحقق من اتصالك بالإنترنت وحاول مرة أخرى';
   static const String errorOfflineMode = 'أنت غير متصل بالإنترنت';
   static const String errorRetrying = 'جاري إعادة المحاولة...';
+
+  // Error Messages - Additional
+  static const String errorSavingTask = 'فشل حفظ المهمة';
+  static const String errorSavingProject = 'فشل حفظ المشروع';
+  static const String errorDeletingProject = 'فشل حذف المشروع';
+  static const String errorUpdatingProject = 'فشل تحديث المشروع';
+  static const String errorLoadingSettings = 'فشل تحميل الإعدادات';
+  static const String errorUpdatingSettings = 'فشل تحديث الإعدادات';
+  static const String errorSignOut = 'فشل تسجيل الخروج';
+  static const String errorInvalidInput = 'البيانات المدخلة غير صحيحة';
+  static const String errorNameTooShort = 'الاسم قصير جداً (3 أحرف على الأقل)';
+  static const String errorNameTooLong = 'الاسم طويل جداً (100 حرف كحد أقصى)';
+  static const String errorSelectCategory = 'الرجاء اختيار تصنيف';
+  static const String errorAddTechStack = 'الرجاء إضافة تقنية واحدة على الأقل';
 }
 
 class AppIcons {
@@ -442,6 +460,70 @@ class AppCategories {
         return Colors.purple;
       default:
         return AppColors.gray500;
+    }
+  }
+}
+
+class AppThemeHelper {
+  static Color getCardColor(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark 
+        ? AppColors.cardDark 
+        : AppColors.cardLight;
+  }
+  
+  static Color getTextColor(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark 
+        ? AppColors.textLight 
+        : AppColors.textPrimary;
+  }
+  
+  static Color getSecondaryTextColor(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark 
+        ? AppColors.gray400 
+        : AppColors.textSecondary;
+  }
+  
+  static Color getBorderColor(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark 
+        ? AppColors.borderDark 
+        : AppColors.borderLight;
+  }
+  
+  static Color getBackgroundColor(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark 
+        ? AppColors.backgroundDark 
+        : AppColors.backgroundLight;
+  }
+  
+  static Map<String, Color> getPriorityColors(TaskPriority priority, bool isDark) {
+    switch (priority) {
+      case TaskPriority.high:
+        return {
+          'backgroundColor': isDark 
+              ? Colors.red.withOpacity(0.2) 
+              : Colors.red.shade100,
+          'textColor': isDark 
+              ? Colors.red.shade300 
+              : Colors.red.shade700,
+        };
+      case TaskPriority.medium:
+        return {
+          'backgroundColor': isDark 
+              ? Colors.orange.withOpacity(0.2) 
+              : Colors.yellow.shade100,
+          'textColor': isDark 
+              ? Colors.orange.shade300 
+              : Colors.orange.shade700,
+        };
+      case TaskPriority.low:
+        return {
+          'backgroundColor': isDark 
+              ? Colors.blue.withOpacity(0.2) 
+              : Colors.blue.shade100,
+          'textColor': isDark 
+              ? Colors.blue.shade300 
+              : Colors.blue.shade700,
+        };
     }
   }
 }

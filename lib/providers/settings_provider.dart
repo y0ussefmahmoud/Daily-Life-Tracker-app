@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import '../models/settings_model.dart';
 import '../services/settings_service.dart';
 import '../services/auth_service.dart';
+import '../utils/error_handler.dart';
 
 class SettingsProvider extends ChangeNotifier {
   final SettingsService _settingsService;
@@ -14,10 +15,12 @@ class SettingsProvider extends ChangeNotifier {
        _authService = authService ?? AuthService();
   SettingsModel _settings = SettingsModel.initial();
   bool _isLoading = false;
+  String? _error;
   int _loadRequestId = 0;
   
   SettingsModel get settings => _settings;
   bool get isLoading => _isLoading;
+  String? get error => _error;
 
   bool get prayerNotificationsEnabled => _settings.prayerNotificationsEnabled;
   bool get projectRemindersEnabled => _settings.projectRemindersEnabled;
@@ -30,6 +33,7 @@ class SettingsProvider extends ChangeNotifier {
     final currentUserId = _authService.currentUser?.id;
     
     _isLoading = true;
+    _error = null; // Clear error state before fetch
     notifyListeners();
     
     try {
@@ -39,6 +43,8 @@ class SettingsProvider extends ChangeNotifier {
       if (currentRequestId != _loadRequestId || 
           currentUserId != _authService.currentUser?.id) {
         // User logged out during fetch or new request started, discard results
+        _isLoading = false;
+        notifyListeners();
         return;
       }
       
@@ -48,6 +54,7 @@ class SettingsProvider extends ChangeNotifier {
       // Only apply error state if this request is still valid
       if (currentRequestId == _loadRequestId) {
         _settings = SettingsModel.initial();
+        _error = handleSupabaseError(e); // Set error state
       }
     }
     
@@ -71,6 +78,7 @@ class SettingsProvider extends ChangeNotifier {
       print('Error updating prayer notifications: $e');
       // Revert on error
       _settings = _settings.copyWith(prayerNotificationsEnabled: originalValue);
+      _error = handleSupabaseError(e); // Set error state when update fails
       notifyListeners();
     }
   }
@@ -88,6 +96,7 @@ class SettingsProvider extends ChangeNotifier {
       print('Error updating project reminders: $e');
       // Revert on error
       _settings = _settings.copyWith(projectRemindersEnabled: originalValue);
+      _error = handleSupabaseError(e); // Set error state when update fails
       notifyListeners();
     }
   }
@@ -122,6 +131,7 @@ class SettingsProvider extends ChangeNotifier {
       print('Error updating dark mode: $e');
       // Revert on error
       _settings = _settings.copyWith(darkModeEnabled: originalValue);
+      _error = handleSupabaseError(e); // Set error state when update fails
       notifyListeners();
     }
   }
@@ -145,6 +155,12 @@ class SettingsProvider extends ChangeNotifier {
     // Cancel any in-flight requests by incrementing request ID
     _loadRequestId++;
     _settings = SettingsModel.initial();
+    _error = null; // Clear error state
+    notifyListeners();
+  }
+
+  void clearError() {
+    _error = null;
     notifyListeners();
   }
 }

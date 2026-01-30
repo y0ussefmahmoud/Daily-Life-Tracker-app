@@ -15,6 +15,7 @@ class ProjectProvider extends ChangeNotifier {
   List<Project> get projects => List.unmodifiable(_projects);
   bool get isLoading => _isLoading;
   String? get error => _error;
+  bool get isInitialized => _projects.isNotEmpty || _error != null;
 
   void setAchievementsProvider(AchievementsProvider achievementsProvider) {
     _achievementsProvider = achievementsProvider;
@@ -95,7 +96,7 @@ class ProjectProvider extends ChangeNotifier {
           // Award XP if project was just completed
           if (wasJustCompleted && _achievementsProvider != null) {
             final xpAmount = _calculateXPForProject(currentProject);
-            await _achievementsProvider!.addXP(xpAmount);
+            await _achievementsProvider?.addXP(xpAmount);
           }
         } else {
           await _projectService.updateProjectProgress(projectId, progress);
@@ -119,13 +120,13 @@ class ProjectProvider extends ChangeNotifier {
     
     // Add bonus XP for subtasks (if project has them)
     if (project.subtasks.isNotEmpty) {
-      bonusXP += (project.subtasks.length * 10) as int;
+      bonusXP += project.subtasks.length * 10;
     }
     
     // Add bonus XP based on project duration (longer projects get more XP)
     if (project.startDate != null && project.endDate != null) {
       final duration = project.endDate!.difference(project.startDate!).inDays;
-      bonusXP += (duration ~/ 7) * 5 as int; // 5 XP per week
+      bonusXP += (duration ~/ 7) * 5; // 5 XP per week
     }
     
     return baseXP + bonusXP;
@@ -150,6 +151,7 @@ class ProjectProvider extends ChangeNotifier {
 
   Future<void> refreshProjects() async {
     _isLoading = true;
+    _error = null; // Clear error state at the start of refresh
     notifyListeners();
     
     try {
@@ -211,6 +213,7 @@ class ProjectProvider extends ChangeNotifier {
 
   Future<void> loadProjects() async {
     try {
+      _error = null; // Clear error state before fetching projects
       _projects = await _projectService.fetchProjects();
     } catch (e) {
       _projects = [];

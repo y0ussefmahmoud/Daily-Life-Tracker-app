@@ -17,18 +17,18 @@ class StatsProvider extends ChangeNotifier {
   final StatsService _statsService = StatsService();
   final ReportsService _reportsService = ReportsService();
   final ProjectService _projectService = ProjectService();
-  late TaskProvider _taskProvider;
-  late ProjectProvider _projectProvider;
-  late WaterProvider _waterProvider;
-  late AchievementsProvider _achievementsProvider;
+  TaskProvider? _taskProvider;
+  ProjectProvider? _projectProvider;
+  WaterProvider? _waterProvider;
+  AchievementsProvider? _achievementsProvider;
   bool _isLoading = false;
   String? _errorMessage;
 
   void setProviders(
-    TaskProvider taskProvider,
-    ProjectProvider projectProvider,
-    WaterProvider waterProvider,
-    AchievementsProvider achievementsProvider,
+    TaskProvider? taskProvider,
+    ProjectProvider? projectProvider,
+    WaterProvider? waterProvider,
+    AchievementsProvider? achievementsProvider,
   ) {
     _taskProvider = taskProvider;
     _projectProvider = projectProvider;
@@ -48,11 +48,11 @@ class StatsProvider extends ChangeNotifier {
     try {
       // Save current day stats to database
       final completedTasksCount = getCompletedTasksCount();
-      final totalTasksCount = _taskProvider.tasks.length;
+      final totalTasksCount = _taskProvider?.tasks.length ?? 0;
       final completionPercentage = getTaskCompletionPercentage();
-      final waterIntakeMl = _waterProvider.currentIntakeMl;
+      final waterIntakeMl = _waterProvider?.currentIntakeMl ?? 0;
       final projectHours = await _calculateProjectHours();
-      final xpEarned = _achievementsProvider.userLevel?.totalXP ?? 0;
+      final xpEarned = _achievementsProvider?.userLevel?.totalXP ?? 0;
       
       await _statsService.saveDailyStats(
         completedTasksCount: completedTasksCount,
@@ -194,17 +194,20 @@ class StatsProvider extends ChangeNotifier {
   }
 
   int getCompletedTasksCount() {
-    return _taskProvider.tasks.where((task) => task.isCompleted).length;
+    return _taskProvider?.tasks.where((task) => task.isCompleted).length ?? 0;
   }
 
   double getTaskCompletionPercentage() {
-    return _taskProvider.getCompletionPercentage() * 100;
+    final pct = _taskProvider?.getCompletionPercentage() ?? 0.0;
+    return pct * 100;
   }
 
   Future<double> _calculateProjectHours() async {
     double totalMinutes = 0;
 
-    for (final project in _projectProvider.projects) {
+    if (_projectProvider == null) return 0.0;
+    
+    for (final project in _projectProvider!.projects) {
       final projectId = project.id;
       if (projectId == null) {
         continue;

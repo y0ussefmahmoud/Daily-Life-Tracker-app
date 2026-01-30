@@ -16,6 +16,7 @@ class TaskProvider extends ChangeNotifier {
   List<Task> get tasks => List.unmodifiable(_tasks);
   bool get isLoading => _isLoading;
   String? get error => _error;
+  bool get isInitialized => _tasks.isNotEmpty || _error != null;
 
   void setAchievementsProvider(AchievementsProvider achievementsProvider) {
     _achievementsProvider = achievementsProvider;
@@ -55,7 +56,7 @@ class TaskProvider extends ChangeNotifier {
         if (updatedTask.isCompleted && !currentTask.isCompleted) {
           final xpAmount = _calculateXPForTask(updatedTask);
           if (_achievementsProvider != null) {
-            await _achievementsProvider!.addXP(xpAmount);
+            await _achievementsProvider?.addXP(xpAmount);
           }
         }
       } on PostgrestException catch (e) {

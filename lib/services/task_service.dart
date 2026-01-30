@@ -58,7 +58,11 @@ class TaskService {
         .select('id')
         .single();
 
-    return response['id'] as String;
+    final taskId = response?['id'] as String?;
+    if (taskId == null) {
+      throw Exception('Failed to create task: No ID returned from database');
+    }
+    return taskId;
   }
 
   Future<void> updateTask(Task task) async {

@@ -14,12 +14,16 @@ class LevelHeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return Container(
       margin: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppBorderRadius.xl),
-        gradient: const LinearGradient(
-          colors: [AppColors.primaryColor, Color(0xFF4338CA)],
+        gradient: LinearGradient(
+          colors: isDark 
+              ? [AppColors.primaryColor.withOpacity(0.8), Color(0xFF4338CA).withOpacity(0.8)]
+              : [AppColors.primaryColor, Color(0xFF4338CA)],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -162,7 +166,7 @@ class LevelHeroCard extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: onRoadmapPressed,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
+                      backgroundColor: isDark ? AppColors.cardLight : Colors.white,
                       foregroundColor: AppColors.primaryColor,
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       shape: RoundedRectangleBorder(

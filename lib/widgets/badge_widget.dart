@@ -191,7 +191,9 @@ class _BadgeWidgetState extends State<BadgeWidget>
             decoration: BoxDecoration(
               color: widget.badge.isEarned
                   ? widget.badge.color.withOpacity(0.1)
-                  : AppColors.gray200,
+                  : (Theme.of(context).brightness == Brightness.dark 
+                      ? AppColors.gray700 
+                      : AppColors.gray200),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
@@ -201,7 +203,9 @@ class _BadgeWidgetState extends State<BadgeWidget>
                 fontSize: 10,
                 color: widget.badge.isEarned
                     ? widget.badge.color
-                    : AppColors.gray500,
+                    : (Theme.of(context).brightness == Brightness.dark 
+                        ? AppColors.gray400 
+                        : AppColors.gray500),
                 fontWeight: FontWeight.w500,
               ),
             ),

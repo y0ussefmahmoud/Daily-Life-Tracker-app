@@ -12,15 +12,17 @@ class DailySummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: AppColors.gray900,
+        color: isDark ? AppColors.cardDark : AppColors.primaryColor,
         borderRadius: BorderRadius.circular(AppBorderRadius.xxl),
         boxShadow: [
           BoxShadow(
-            color: AppColors.gray900.withOpacity(0.3),
+            color: (isDark ? AppColors.cardDark : AppColors.primaryColor).withOpacity(0.3),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -45,7 +47,7 @@ class DailySummaryCard extends StatelessWidget {
                 style: GoogleFonts.tajawal(
                   fontSize: AppTypography.caption,
                   fontWeight: AppTypography.bold,
-                  color: AppColors.primaryColor,
+                  color: AppColors.textLight,
                 ),
               ),
               const SizedBox(height: AppSpacing.sm),

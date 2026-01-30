@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../providers/stats_provider.dart';
+import '../providers/task_provider.dart';
+import '../providers/project_provider.dart';
+import '../providers/water_provider.dart';
+import '../providers/achievements_provider.dart';
 import '../utils/constants.dart';
 import '../widgets/weekly_chart.dart';
 import '../widgets/achievement_item.dart';
@@ -11,13 +15,161 @@ import '../models/stats_model.dart';
 import '../models/report_model.dart';
 import '../utils/error_handler.dart';
 
-class StatsScreen extends StatelessWidget {
+class StatsScreen extends StatefulWidget {
   final bool showScaffold;
 
   const StatsScreen({
-    Key? key,
+    super.key,
     this.showScaffold = true,
-  }) : super(key: key);
+  });
+
+  @override
+  State<StatsScreen> createState() => _StatsScreenState();
+}
+
+class _StatsScreenState extends State<StatsScreen> {
+  bool _isInitialized = false;
+  bool _isLoading = true;
+  String? _errorMessage;
+  
+  // State variables for loaded data
+  Map<String, double>? _weeklyProductivity;
+  List<WeeklyStats>? _weeklyChartData;
+  List<TimeDistribution>? _timeDistribution;
+  List<Achievement>? _achievements;
+  List<ProjectReportModel>? _projectsOverview;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initializeProviders();
+    });
+  }
+
+  Future<void> _initializeProviders() async {
+    if (!mounted) return;
+    
+    final context = this.context; // Store context before async operations
+    
+    try {
+      final statsProvider = Provider.of<StatsProvider>(context, listen: false);
+      final taskProvider = Provider.of<TaskProvider>(context, listen: false);
+      final projectProvider = Provider.of<ProjectProvider>(context, listen: false);
+      final waterProvider = Provider.of<WaterProvider>(context, listen: false);
+      final achievementsProvider = Provider.of<AchievementsProvider>(context, listen: false);
+      
+      // Set providers in StatsProvider
+      statsProvider.setProviders(
+        taskProvider,
+        projectProvider,
+        waterProvider,
+        achievementsProvider,
+      );
+      
+      // Load stats data
+      await _loadStatsData();
+    } catch (error) {
+      if (mounted) {
+        setState(() {
+          _errorMessage = handleSupabaseError(error);
+          _isLoading = false;
+          _isInitialized = true;
+        });
+        showErrorSnackbar(context, _errorMessage!);
+      }
+    }
+  }
+
+  Future<void> _loadStatsData() async {
+    if (!mounted) return;
+    
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+    
+    try {
+      final statsProvider = Provider.of<StatsProvider>(context, listen: false);
+      
+      // Load each dataset individually with fallback handling
+      Map<String, double> weeklyProductivity = {};
+      List<WeeklyStats> weeklyChartData = [];
+      List<TimeDistribution> timeDistribution = [];
+      List<Achievement> achievements = [];
+      List<ProjectReportModel> projectsOverview = [];
+      
+      // Load weekly productivity with fallback
+      try {
+        weeklyProductivity = await statsProvider.getWeeklyProductivity();
+      } catch (error) {
+        debugPrint('Error loading weekly productivity, using fallback: $error');
+        if (error is StatsException) {
+          weeklyProductivity = await statsProvider.getWeeklyProductivityFallback();
+        }
+      }
+      
+      // Load weekly chart data with fallback
+      try {
+        weeklyChartData = await statsProvider.getWeeklyChartData();
+      } catch (error) {
+        debugPrint('Error loading weekly chart data, using fallback: $error');
+        if (error is StatsException) {
+          weeklyChartData = await statsProvider.getWeeklyChartDataFallback();
+        }
+      }
+      
+      // Load time distribution (already has built-in fallback)
+      try {
+        timeDistribution = await statsProvider.getTimeDistribution();
+      } catch (error) {
+        debugPrint('Error loading time distribution: $error');
+        timeDistribution = [];
+      }
+      
+      // Load weekly achievements (already has built-in fallback)
+      try {
+        achievements = await statsProvider.getWeeklyAchievements();
+      } catch (error) {
+        debugPrint('Error loading weekly achievements: $error');
+        achievements = [];
+      }
+      
+      // Load projects overview (no fallback method available)
+      try {
+        projectsOverview = await statsProvider.getProjectsOverview();
+      } catch (error) {
+        debugPrint('Error loading projects overview: $error');
+        projectsOverview = [];
+      }
+      
+      if (mounted) {
+        setState(() {
+          _weeklyProductivity = weeklyProductivity;
+          _weeklyChartData = weeklyChartData;
+          _timeDistribution = timeDistribution;
+          _achievements = achievements;
+          _projectsOverview = projectsOverview;
+          _isLoading = false;
+          _isInitialized = true;
+        });
+      }
+    } catch (error) {
+      debugPrint('Unexpected error in _loadStatsData: $error');
+      if (mounted) {
+        setState(() {
+          _errorMessage = handleSupabaseError(error);
+          _isLoading = false;
+          _isInitialized = true;
+        });
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,48 +177,49 @@ class StatsScreen extends StatelessWidget {
 
     Widget content = Directionality(
       textDirection: TextDirection.rtl,
-      child: Consumer<StatsProvider>(
-        builder: (context, statsProvider, child) {
-          if (statsProvider.errorMessage != null) {
-            return _buildErrorState(statsProvider.errorMessage, context);
+      child: Consumer5<
+        StatsProvider,
+        TaskProvider,
+        ProjectProvider,
+        WaterProvider,
+        AchievementsProvider
+      >(
+        builder: (
+          context,
+          statsProvider,
+          taskProvider,
+          projectProvider,
+          waterProvider,
+          achievementsProvider,
+          child,
+        ) {
+          // Check for error states
+          if (!_isInitialized || _isLoading) {
+            return _buildLoadingState();
           }
+          
+          if (_errorMessage != null) {
+            return _buildErrorState(_errorMessage);
+          }
+          
           return RefreshIndicator(
             onRefresh: () async {
-              await statsProvider.refreshStats();
+              final context = this.context; // Store context before async operations
+              try {
+                await statsProvider.refreshStats();
+                await _loadStatsData();
+              } catch (error) {
+                showErrorSnackbar(context, handleSupabaseError(error));
+              }
             },
-            child: FutureBuilder(
-              future: Future.wait([
-                statsProvider.getWeeklyProductivity(),
-                statsProvider.getWeeklyChartData(),
-                statsProvider.getTimeDistribution(),
-                statsProvider.getWeeklyAchievements(),
-                statsProvider.getProjectsOverview(),
-              ]),
-              builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return _buildLoadingState();
-                }
-
-                if (snapshot.hasError) {
-                  return _buildErrorState(snapshot.error, context);
-                }
-
-                final weeklyProductivity = snapshot.data![0] as Map<String, double>;
-                final weeklyChartData = snapshot.data![1] as List<WeeklyStats>;
-                final timeDistribution = snapshot.data![2] as List<TimeDistribution>;
-                final achievements = snapshot.data![3] as List<Achievement>;
-                final projectsOverview = snapshot.data![4] as List<ProjectReportModel>;
-
-                return _buildContent(
-                  context,
-                  isDark,
-                  weeklyProductivity,
-                  weeklyChartData,
-                  timeDistribution,
-                  achievements,
-                  projectsOverview,
-                );
-              },
+            child: _buildContent(
+              context,
+              isDark,
+              _weeklyProductivity ?? {},
+              _weeklyChartData ?? [],
+              _timeDistribution ?? [],
+              _achievements ?? [],
+              _projectsOverview ?? [],
             ),
           );
         },
@@ -120,47 +273,12 @@ class StatsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildErrorState(dynamic error, BuildContext context) {
-    final message = error is String
-        ? error
-        : error is StatsException
-            ? error.message
-            : handleSupabaseError(error);
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.error_outline,
-            size: 64,
-            color: Theme.of(context).colorScheme.error,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            AppStrings.errorLoadingStats,
-            style: GoogleFonts.tajawal(
-              fontSize: 18,
-              color: Theme.of(context).textTheme.titleLarge?.color,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            message,
-            style: GoogleFonts.tajawal(
-              fontSize: 14,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () {
-              Provider.of<StatsProvider>(context, listen: false).refreshStats();
-            },
-            child: const Text('إعادة المحاولة'),
-          ),
-        ],
-      ),
+  Widget _buildErrorState(String? errorMessage) {
+    return ErrorStateWidget(
+      message: errorMessage ?? AppStrings.errorLoadingStats,
+      onRetry: () {
+        _loadStatsData();
+      },
     );
   }
 

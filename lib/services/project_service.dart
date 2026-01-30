@@ -53,7 +53,11 @@ class ProjectService {
         .select('id')
         .single();
 
-    return response['id'] as String;
+    final projectId = response?['id'] as String?;
+    if (projectId == null) {
+      throw Exception('Failed to create project: No ID returned from database');
+    }
+    return projectId;
   }
 
   Future<void> updateProject(Project project) async {
@@ -131,8 +135,8 @@ class ProjectService {
 
       if (response is List) {
         return response.fold<int>(0, (sum, log) {
-          final minutes = (log as Map<String, dynamic>)['time_spent_minutes'] as int?;
-          return sum + (minutes ?? 0);
+          final minutes = (log as Map<String, dynamic>)['time_spent_minutes'] as num?;
+          return sum + (minutes?.toInt() ?? 0);
         });
       }
 
@@ -210,13 +214,8 @@ class ProjectService {
   Future<void> toggleSubTaskCompletion(String subtaskId, bool isCompleted) async {
     final updateData = {
       'is_completed': isCompleted,
+      'completed_at': isCompleted, // Treat as boolean based on database schema
     };
-
-    if (isCompleted) {
-      updateData['completed_at'] = true;
-    } else {
-      updateData['completed_at'] = false;
-    }
 
     await _supabase
         .from('project_time_logs')

@@ -78,13 +78,8 @@ class WaterService {
 
       if (response is List && response.isNotEmpty) {
         final row = response.first as Map<String, dynamic>;
-        final goal = row['water_goal_ml'];
-        if (goal is int) {
-          return goal;
-        }
-        if (goal is num) {
-          return goal.toInt();
-        }
+        final goal = row['water_goal_ml'] as num?;
+        return goal?.toInt() ?? 2000;
       }
 
       return 2000;

@@ -7,6 +7,7 @@ import '../providers/project_provider.dart';
 import '../models/task_model.dart';
 import '../models/project_model.dart';
 import '../utils/constants.dart';
+import '../utils/error_handler.dart';
 import '../widgets/category_chip.dart';
 import '../widgets/tech_stack_input.dart';
 import '../widgets/ios_toggle.dart';
@@ -32,6 +33,12 @@ class _AddScreenState extends State<AddScreen> {
   bool _isRepeating = false;
   DateTime? _deadline;
   bool _isSaving = false;
+  
+  // Validation state variables
+  String? _taskNameError;
+  String? _projectNameError;
+  String? _categoryError;
+  String? _techStackError;
 
   @override
   Widget build(BuildContext context) {
@@ -228,7 +235,18 @@ class _AddScreenState extends State<AddScreen> {
               if (value == null || value.trim().isEmpty) {
                 return AppStrings.required;
               }
+              if (value.trim().length < 3) {
+                return AppStrings.errorNameTooShort;
+              }
+              if (value.trim().length > 100) {
+                return AppStrings.errorNameTooLong;
+              }
               return null;
+            },
+            onChanged: (value) {
+              setState(() {
+                _taskNameError = null;
+              });
             },
             onSaved: (value) => _taskName = value ?? '',
           ),
@@ -244,6 +262,16 @@ class _AddScreenState extends State<AddScreen> {
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
+        if (_categoryError != null) ...[
+          Text(
+            _categoryError!,
+            style: GoogleFonts.tajawal(
+              fontSize: AppTypography.caption,
+              color: AppColors.warningColor,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.xs),
+        ],
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
@@ -254,7 +282,12 @@ class _AddScreenState extends State<AddScreen> {
                   label: AppCategories.getCategoryLabel(category),
                   icon: AppCategories.getCategoryIcon(category),
                   isSelected: _selectedCategory == category,
-                  onTap: () => setState(() => _selectedCategory = category),
+                  onTap: () {
+                    setState(() {
+                      _selectedCategory = category;
+                      _categoryError = null;
+                    });
+                  },
                 ),
               );
             }).toList(),
@@ -357,7 +390,18 @@ class _AddScreenState extends State<AddScreen> {
               if (value == null || value.trim().isEmpty) {
                 return AppStrings.required;
               }
+              if (value.trim().length < 3) {
+                return AppStrings.errorNameTooShort;
+              }
+              if (value.trim().length > 100) {
+                return AppStrings.errorNameTooLong;
+              }
               return null;
+            },
+            onChanged: (value) {
+              setState(() {
+                _projectNameError = null;
+              });
             },
             onSaved: (value) => _projectName = value ?? '',
           ),
@@ -373,10 +417,29 @@ class _AddScreenState extends State<AddScreen> {
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
+        if (_techStackError != null) ...[
+          Text(
+            _techStackError!,
+            style: GoogleFonts.tajawal(
+              fontSize: AppTypography.caption,
+              color: AppColors.warningColor,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.xs),
+        ],
         TechStackInput(
           techStack: _techStack,
-          onAdd: (tech) => setState(() => _techStack.add(tech)),
-          onRemove: (tech) => setState(() => _techStack.remove(tech)),
+          onAdd: (tech) {
+            setState(() {
+              _techStack.add(tech);
+              _techStackError = null;
+            });
+          },
+          onRemove: (tech) {
+            setState(() {
+              _techStack.remove(tech);
+            });
+          },
         ),
         
         const SizedBox(height: AppSpacing.lg),
@@ -483,19 +546,31 @@ class _AddScreenState extends State<AddScreen> {
           color: Colors.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(AppBorderRadius.xl),
-            onTap: _handleSave,
+            onTap: _isSaving ? null : _handleSave,
             child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.check_circle,
-                    color: AppColors.textLight,
-                    size: AppSizes.iconDefault,
-                  ),
+                  if (_isSaving)
+                    const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    )
+                  else
+                    Icon(
+                      Icons.check_circle,
+                      color: AppColors.textLight,
+                      size: AppSizes.iconDefault,
+                    ),
                   const SizedBox(width: AppSpacing.sm),
                   Text(
-                    _isTaskMode ? AppStrings.saveTask : AppStrings.saveProject,
+                    _isSaving 
+                        ? 'جاري الحفظ...'
+                        : (_isTaskMode ? AppStrings.saveTask : AppStrings.saveProject),
                     style: GoogleFonts.tajawal(
                       fontSize: AppTypography.title,
                       fontWeight: FontWeight.w600,
@@ -512,24 +587,46 @@ class _AddScreenState extends State<AddScreen> {
   }
 
   void _handleSave() async {
+    // Clear previous errors
+    setState(() {
+      _taskNameError = null;
+      _projectNameError = null;
+      _categoryError = null;
+      _techStackError = null;
+    });
+
     if (!_formKey.currentState!.validate()) {
+      HapticFeedback.lightImpact();
       return;
     }
 
     _formKey.currentState!.save();
+
+    // Additional validation
+    bool hasError = false;
+    
+    if (_isTaskMode && _selectedCategory.isEmpty) {
+      setState(() => _categoryError = AppStrings.errorSelectCategory);
+      hasError = true;
+    }
+    
+    if (!_isTaskMode && _techStack.isEmpty) {
+      setState(() => _techStackError = AppStrings.errorAddTechStack);
+      hasError = true;
+    }
+    
+    if (hasError) {
+      HapticFeedback.lightImpact();
+      return;
+    }
 
     if (_isSaving) return;
     setState(() => _isSaving = true);
 
     try {
       if (_isTaskMode) {
-        if (_selectedCategory.isEmpty) {
-          _showErrorSnackBar('الرجاء اختيار تصنيف للمهمة');
-          return;
-        }
-
         final task = Task(
-          title: _taskName,
+          title: _taskName.trim(),
           icon: AppCategories.getCategoryIcon(_selectedCategory),
           isCompleted: false,
           category: _selectedCategory,
@@ -542,14 +639,9 @@ class _AddScreenState extends State<AddScreen> {
         HapticFeedback.mediumImpact();
         _showSuccessSnackBar('تمت إضافة المهمة بنجاح');
       } else {
-        if (_techStack.isEmpty) {
-          _showErrorSnackBar('الرجاء إضافة تقنية واحدة على الأقل');
-          return;
-        }
-
         final project = Project(
           id: Provider.of<ProjectProvider>(context, listen: false).generateProjectId(),
-          name: _projectName,
+          name: _projectName.trim(),
           progress: 0.0,
           techStack: _techStack,
           weeklyHours: 0,
@@ -564,8 +656,15 @@ class _AddScreenState extends State<AddScreen> {
       }
 
       Navigator.pop(context);
-    } catch (e) {
-      _showErrorSnackBar(e.toString());
+    } catch (error) {
+      HapticFeedback.heavyImpact();
+      final errorMessage = handleSupabaseError(error);
+      
+      if (_isTaskMode) {
+        showErrorSnackbar(context, AppStrings.errorSavingTask, onRetry: () => _handleSave());
+      } else {
+        showErrorSnackbar(context, AppStrings.errorSavingProject, onRetry: () => _handleSave());
+      }
     } finally {
       if (mounted) {
         setState(() => _isSaving = false);
@@ -576,9 +675,19 @@ class _AddScreenState extends State<AddScreen> {
   void _showSuccessSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Row(
+          children: [
+            const Icon(Icons.check_circle, color: Colors.white),
+            const SizedBox(width: AppSpacing.sm),
+            Expanded(child: Text(message)),
+          ],
+        ),
         backgroundColor: AppColors.successColor,
         behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 3),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+        ),
       ),
     );
   }
@@ -586,9 +695,19 @@ class _AddScreenState extends State<AddScreen> {
   void _showErrorSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Row(
+          children: [
+            const Icon(Icons.error_outline, color: Colors.white),
+            const SizedBox(width: AppSpacing.sm),
+            Expanded(child: Text(message)),
+          ],
+        ),
         backgroundColor: AppColors.warningColor,
         behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 4),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+        ),
       ),
     );
   }

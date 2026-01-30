@@ -1,13 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../providers/water_provider.dart';
 import '../utils/constants.dart';
 import 'skeleton_loader.dart';
 
-class WaterTracker extends StatelessWidget {
+class WaterTracker extends StatefulWidget {
   const WaterTracker({Key? key}) : super(key: key);
+
+  @override
+  _WaterTrackerState createState() => _WaterTrackerState();
+}
+
+class _WaterTrackerState extends State<WaterTracker>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +107,7 @@ class WaterTracker extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Text(
-                  'حدث خطأ أثناء تحميل بيانات المياه',
+                  provider.error ?? 'حدث خطأ أثناء تحميل بيانات المياه',
                   style: GoogleFonts.tajawal(
                     fontSize: AppTypography.caption,
                     fontWeight: AppTypography.medium,
@@ -96,11 +118,12 @@ class WaterTracker extends StatelessWidget {
                 const SizedBox(height: AppSpacing.sm),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: TextButton(
+                  child: ElevatedButton.icon(
                     onPressed: () {
                       provider.initialize();
                     },
-                    child: Text(
+                    icon: Icon(Icons.refresh, size: 16),
+                    label: Text(
                       'إعادة المحاولة',
                       style: GoogleFonts.tajawal(
                         fontSize: AppTypography.caption,
@@ -114,11 +137,23 @@ class WaterTracker extends StatelessWidget {
           );
         }
 
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        final currentCups = provider.currentCups;
+        final targetCups = provider.targetCups;
+        final progress = currentCups / targetCups;
+
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
           padding: const EdgeInsets.all(AppSpacing.md),
           decoration: BoxDecoration(
-            color: AppColors.primaryColor.withOpacity(0.1),
+            gradient: LinearGradient(
+              colors: [
+                AppColors.primaryColor.withOpacity(0.1),
+                AppColors.secondaryColor.withOpacity(0.05),
+              ],
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft,
+            ),
             borderRadius: BorderRadius.circular(AppBorderRadius.lg),
             border: Border.all(
               color: AppColors.primaryColor.withOpacity(0.2),
@@ -128,98 +163,191 @@ class WaterTracker extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
+              // Header
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
-                    '${provider.currentCups} / ${provider.targetCups} أكواب',
-                    style: GoogleFonts.robotoMono(
-                      fontSize: AppTypography.caption,
-                      fontWeight: AppTypography.medium,
-                      color: AppColors.primaryColor,
-                    ),
+                  Icon(
+                    Icons.water_drop,
+                    color: AppColors.primaryColor,
+                    size: AppSizes.iconDefault,
                   ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.water_drop,
-                        color: AppColors.primaryColor,
-                        size: AppSizes.iconDefault,
-                      ),
-                      const SizedBox(width: AppSpacing.sm),
-                      Text(
-                        'متتبع المياه',
-                        style: GoogleFonts.tajawal(
-                          fontSize: AppTypography.title,
-                          fontWeight: AppTypography.bold,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                    ],
+                  const SizedBox(width: AppSpacing.sm),
+                  Text(
+                    'متتبع المياه',
+                    style: GoogleFonts.tajawal(
+                      fontSize: AppTypography.title,
+                      fontWeight: AppTypography.bold,
+                      color: AppColors.textPrimary,
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: AppSpacing.md),
+              
+              // Progress info
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: List.generate(
-                  provider.targetCups,
-                  (index) => Padding(
-                    padding: const EdgeInsets.only(left: AppSpacing.sm),
-                    child: _buildCupIndicator(context, index, provider),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '$currentCups من $targetCups أكواب',
+                    style: GoogleFonts.tajawal(
+                      fontSize: AppTypography.body,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                  Text(
+                    '${(progress * 100).toInt()}%',
+                    style: GoogleFonts.tajawal(
+                      fontSize: AppTypography.body,
+                      fontWeight: AppTypography.bold,
+                      color: AppColors.primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              
+              // Progress bar
+              Container(
+                height: 8,
+                decoration: BoxDecoration(
+                  color: isDark ? AppColors.gray700 : AppColors.gray200,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: FractionallySizedBox(
+                  alignment: Alignment.centerRight,
+                  widthFactor: progress.clamp(0.0, 1.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [AppColors.primaryColor, AppColors.secondaryColor],
+                      ),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
                   ),
                 ),
               ),
+              const SizedBox(height: AppSpacing.md),
+              
+              // Cups grid
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: List.generate(
+                  targetCups,
+                  (index) => Padding(
+                    padding: const EdgeInsets.only(left: AppSpacing.sm),
+                    child: GestureDetector(
+                      onTap: () async {
+                        if (index < currentCups) return;
+                        
+                        _animationController.forward().then((_) {
+                          _animationController.reverse();
+                        });
+                        
+                        try {
+                          await provider.addCup();
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('حدث خطأ أثناء إضافة كوب الماء'),
+                              backgroundColor: Theme.of(context).colorScheme.error,
+                            ),
+                          );
+                        }
+                      },
+                      child: AnimatedContainer(
+                        duration: AppConstants.mediumAnimation,
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          gradient: index < currentCups
+                              ? LinearGradient(
+                                  colors: [AppColors.primaryColor, AppColors.secondaryColor],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                )
+                              : null,
+                          color: index < currentCups
+                              ? null
+                              : isDark ? AppColors.gray800 : AppColors.gray200,
+                          borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+                          border: Border.all(
+                            color: index < currentCups
+                                ? Colors.transparent
+                                : isDark
+                                    ? AppColors.primaryColor.withOpacity(0.3)
+                                    : AppColors.primaryColor.withOpacity(0.4),
+                            width: 1,
+                          ),
+                          boxShadow: index < currentCups && isDark
+                              ? [
+                                  BoxShadow(
+                                    color: AppColors.primaryColor.withOpacity(0.3),
+                                    blurRadius: 4,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ]
+                              : null,
+                        ),
+                        child: Icon(
+                          index < currentCups ? Icons.check : Icons.add,
+                          size: 16,
+                          color: index < currentCups
+                              ? AppColors.textLight
+                              : Theme.of(context).textTheme.bodyLarge?.color?.withOpacity(0.6) ?? AppColors.primaryColor.withOpacity(0.6),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              
+              // Success message
+              if (progress >= 1.0) ...[
+                const SizedBox(height: AppSpacing.md),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.md,
+                    vertical: AppSpacing.sm,
+                  ),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        AppColors.primaryColor.withOpacity(0.2),
+                        AppColors.secondaryColor.withOpacity(0.2),
+                      ],
+                      begin: Alignment.centerRight,
+                      end: Alignment.centerLeft,
+                    ),
+                    borderRadius: BorderRadius.circular(AppBorderRadius.md),
+                  ),
+                  child: ShaderMask(
+                    shaderCallback: (bounds) => LinearGradient(
+                      colors: [AppColors.primaryColor, AppColors.secondaryColor],
+                    ).createShader(bounds),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.emoji_events, color: Colors.white, size: 20),
+                        const SizedBox(width: AppSpacing.xs),
+                        Text(
+                          'ممتاز! لقد حققت هدفك اليومي 🎉',
+                          style: GoogleFonts.tajawal(
+                            fontSize: AppTypography.caption,
+                            fontWeight: AppTypography.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         );
       },
-    );
-  }
-
-  Widget _buildCupIndicator(BuildContext context, int index, WaterProvider provider) {
-    final isFilled = index < provider.currentCups;
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-
-    return AnimatedScale(
-      scale: isFilled ? 1.0 : 0.95,
-      duration: Duration(milliseconds: 200),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(AppBorderRadius.lg),
-        splashColor: AppColors.primaryColor.withOpacity(0.3),
-        highlightColor: AppColors.primaryColor.withOpacity(0.1),
-        onTap: () async {
-          if (!isFilled) {
-            HapticFeedback.lightImpact();
-            await provider.addCup();
-          }
-        },
-        child: AnimatedContainer(
-          duration: AppConstants.mediumAnimation,
-          width: 32,
-          height: 32,
-          decoration: BoxDecoration(
-            color: isFilled 
-                ? AppColors.primaryColor 
-                : isDark ? AppColors.gray700 : AppColors.gray200,
-            borderRadius: BorderRadius.circular(AppBorderRadius.lg),
-            border: Border.all(
-              color: isFilled 
-                  ? AppColors.primaryColor 
-                  : AppColors.primaryColor.withOpacity(0.4),
-              width: 1,
-            ),
-          ),
-          child: Icon(
-            isFilled ? Icons.check : Icons.add,
-            size: 16,
-            color: isFilled 
-                ? AppColors.textLight 
-                : AppColors.primaryColor.withOpacity(0.6),
-          ),
-        ),
-      ),
     );
   }
 }

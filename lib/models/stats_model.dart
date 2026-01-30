@@ -10,6 +10,12 @@ class WeeklyStats {
     required this.percentage,
     required this.isToday,
   });
+
+  factory WeeklyStats.empty() => WeeklyStats(
+    dayName: '',
+    percentage: 0.0,
+    isToday: false,
+  );
 }
 
 class TimeDistribution {
@@ -26,6 +32,14 @@ class TimeDistribution {
     required this.icon,
     required this.color,
   });
+
+  factory TimeDistribution.empty() => TimeDistribution(
+    category: '',
+    hours: 0.0,
+    percentage: 0.0,
+    icon: Icons.help_outline,
+    color: Colors.grey,
+  );
 }
 
 class Achievement {
@@ -42,4 +56,12 @@ class Achievement {
     required this.iconColor,
     required this.backgroundColor,
   });
+
+  factory Achievement.empty() => Achievement(
+    title: '',
+    subtitle: '',
+    icon: Icons.hourglass_empty,
+    iconColor: Colors.grey,
+    backgroundColor: Colors.grey.withOpacity(0.1),
+  );
 }

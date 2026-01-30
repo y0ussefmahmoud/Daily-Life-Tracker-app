@@ -309,7 +309,7 @@ void main() {
         await projectProvider.loadProjects();
         await projectProvider.updateProjectProgress('1', 1.0);
 
-        verify(mockAchievementsProvider.addXP(65)).called(1); // 50 base + 15 duration bonus
+        verify(mockAchievementsProvider.addXP(70)).called(1); // 50 base + 20 duration bonus
       });
 
       test('should calculate XP with all bonuses', () async {
@@ -336,7 +336,7 @@ void main() {
         await projectProvider.loadProjects();
         await projectProvider.updateProjectProgress('1', 1.0);
 
-        verify(mockAchievementsProvider.addXP(80)).called(1); // 50 base + 20 subtasks + 10 duration
+        verify(mockAchievementsProvider.addXP(90)).called(1); // 50 base + 20 subtasks + 20 duration
       });
     });
 

@@ -20,6 +20,7 @@ class TaskItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final priorityColor = task.priority.getPriorityColor();
+    final isDark = theme.brightness == Brightness.dark;
     
     return GestureDetector(
       onTap: () {
@@ -78,7 +79,7 @@ class TaskItem extends StatelessWidget {
                         textDirection: TextDirection.rtl,
                       ),
                       SizedBox(height: AppSpacing.xs),
-                      _buildPriorityBadge(priorityColor),
+                      _buildPriorityBadge(priorityColor, isDark),
                     ],
                   ),
                 ),
@@ -90,26 +91,19 @@ class TaskItem extends StatelessWidget {
     );
   }
 
-  Widget _buildPriorityBadge(Color priorityColor) {
-    String priorityText;
-    Color backgroundColor;
-    Color textColor;
+  Widget _buildPriorityBadge(Color priorityColor, bool isDark) {
+    final priorityColors = AppThemeHelper.getPriorityColors(task.priority, isDark);
     
+    String priorityText;
     switch (task.priority) {
       case TaskPriority.high:
         priorityText = 'عالي';
-        backgroundColor = Colors.red.shade100;
-        textColor = Colors.red.shade600;
         break;
       case TaskPriority.medium:
         priorityText = 'متوسط';
-        backgroundColor = Colors.yellow.shade100;
-        textColor = Colors.yellow.shade700;
         break;
       case TaskPriority.low:
         priorityText = 'منخفض';
-        backgroundColor = Colors.blue.shade100;
-        textColor = Colors.blue.shade600;
         break;
     }
     
@@ -119,13 +113,13 @@ class TaskItem extends StatelessWidget {
         vertical: AppSpacing.xs / 2,
       ),
       decoration: BoxDecoration(
-        color: backgroundColor,
+        color: priorityColors['backgroundColor'],
         borderRadius: BorderRadius.circular(AppBorderRadius.small),
       ),
       child: Text(
         priorityText.toUpperCase(),
         style: TextStyle(
-          color: textColor,
+          color: priorityColors['textColor'],
           fontSize: 10,
           fontWeight: FontWeight.bold,
         ),

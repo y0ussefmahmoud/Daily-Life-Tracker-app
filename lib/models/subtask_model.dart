@@ -37,6 +37,7 @@ enum TaskPriority {
 @JsonSerializable()
 class Subtask {
   @JsonKey(name: 'id')
+  /// Subtask ID - null for local subtasks not yet synced
   final String? id;
   final String title;
   @JsonKey(name: 'is_completed')
@@ -45,12 +46,16 @@ class Subtask {
   @JsonKey(name: 'project_id')
   final String projectId;
   @JsonKey(name: 'user_id')
+  /// User ID - null for local subtasks not yet synced
   final String? userId;
   @JsonKey(name: 'created_at')
+  /// Creation timestamp - null for local subtasks not yet synced
   final DateTime? createdAt;
   @JsonKey(name: 'completed_at')
+  /// Completion timestamp - null if not completed
   final DateTime? completedAt;
   @JsonKey(name: 'time_spent_minutes')
+  /// Time spent in minutes - null if not tracked
   final int? timeSpentMinutes;
 
   Subtask({

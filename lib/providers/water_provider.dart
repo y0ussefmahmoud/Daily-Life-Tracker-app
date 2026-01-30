@@ -17,8 +17,10 @@ class WaterProvider extends ChangeNotifier {
   int get currentCups => (_currentIntakeMl / 250).floor();
   int get targetCups => (_goalMl / 250.0).ceil().toInt();
   int get currentIntakeMl => _currentIntakeMl;
+  int get todayIntake => _currentIntakeMl; // Add this for compatibility
   bool get isLoading => _isLoading;
   String? get error => _error;
+  bool get isInitialized => _initialized;
 
   Future<void> initialize() async {
     if (_initialized) return;

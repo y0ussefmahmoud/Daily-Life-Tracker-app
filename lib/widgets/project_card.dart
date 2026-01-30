@@ -97,7 +97,7 @@ class ProjectCard extends StatelessWidget {
                                   vertical: 2,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: _getTechColor(tech),
+                                  color: _getTechColor(tech, isDark: isDark),
                                   borderRadius: BorderRadius.circular(AppBorderRadius.default_),
                                 ),
                                 child: Text(
@@ -187,20 +187,20 @@ class ProjectCard extends StatelessWidget {
     );
   }
 
-  Color _getTechColor(String tech) {
+  Color _getTechColor(String tech, {bool isDark = false}) {
     switch (tech.toLowerCase()) {
       case 'flutter':
-        return AppColors.primaryColor;
+        return isDark ? AppColors.primaryColor.withOpacity(0.9) : AppColors.primaryColor;
       case 'firebase':
-        return const Color(0xFFFFA726);
+        return isDark ? const Color(0xFFFFB74D) : const Color(0xFFFFA726);
       case 'healthtech':
-        return AppColors.successColor;
+        return isDark ? AppColors.successColor.withOpacity(0.9) : AppColors.successColor;
       case 'web':
-        return AppColors.warningColor;
+        return isDark ? AppColors.warningColor.withOpacity(0.9) : AppColors.warningColor;
       case 'html':
-        return const Color(0xFFE34C26);
+        return isDark ? const Color(0xFFEF6C00) : const Color(0xFFE34C26);
       default:
-        return AppColors.gray600;
+        return isDark ? AppColors.gray500 : AppColors.gray600;
     }
   }
 }

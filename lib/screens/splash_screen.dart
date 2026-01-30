@@ -6,6 +6,9 @@ import '../providers/auth_provider.dart';
 import '../providers/task_provider.dart';
 import '../providers/water_provider.dart';
 import '../providers/project_provider.dart';
+import '../providers/achievements_provider.dart';
+import '../providers/settings_provider.dart';
+import '../providers/profile_provider.dart';
 import '../utils/error_handler.dart';
 import '../utils/constants.dart';
 import '../services/supabase_service.dart';
@@ -26,6 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
   bool _isRetrying = false;
   IconData _errorIcon = Icons.error_outline;
   StreamSubscription<bool>? _connectivitySubscription;
+  String _loadingStage = 'جاري التهيئة...';
   @override
   void initState() {
     super.initState();
@@ -52,18 +56,65 @@ class _SplashScreenState extends State<SplashScreen> {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     
     try {
+      // Stage 1: Initialize AuthProvider
+      setState(() => _loadingStage = 'جاري تهيئة المصادقة...');
       await authProvider.initialize()
           .timeout(AppConstants.longTimeout);
 
       if (authProvider.isAuthenticated) {
-        await Future.wait([
-          Provider.of<TaskProvider>(context, listen: false).initialize()
-              .timeout(AppConstants.mediumTimeout),
-          Provider.of<WaterProvider>(context, listen: false).initialize()
-              .timeout(AppConstants.mediumTimeout),
-          Provider.of<ProjectProvider>(context, listen: false).loadProjects()
-              .timeout(AppConstants.mediumTimeout),
-        ]);
+        // Stage 2: Initialize independent providers in parallel
+        setState(() => _loadingStage = 'جاري تحميل البيانات الأساسية...');
+        final achievementsProvider = Provider.of<AchievementsProvider>(context, listen: false);
+        final settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
+        
+        try {
+          await Future.wait([
+            achievementsProvider.loadAchievementsData()
+                .timeout(AppConstants.mediumTimeout),
+            settingsProvider.loadSettings()
+                .timeout(AppConstants.mediumTimeout),
+          ]);
+        } catch (e) {
+          if (mounted) {
+            print('Stage 2 error: $e'); // Log the error
+            // Fall back to defaults and continue gracefully
+            achievementsProvider.clearAchievements();
+            settingsProvider.clearSettings();
+            // Optionally show a warning (non-blocking)
+            print('Warning: Using defaults for achievements/settings due to loading failure');
+          }
+          // Continue to Stage 3 instead of returning early
+        }
+
+        // Stage 3: Initialize dependent providers in parallel
+        setState(() => _loadingStage = 'جاري تحميل البيانات المتبقية...');
+        final taskProvider = Provider.of<TaskProvider>(context, listen: false);
+        final waterProvider = Provider.of<WaterProvider>(context, listen: false);
+        final projectProvider = Provider.of<ProjectProvider>(context, listen: false);
+        final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
+        
+        try {
+          await Future.wait([
+            taskProvider.initialize()
+                .timeout(AppConstants.mediumTimeout),
+            waterProvider.initialize()
+                .timeout(AppConstants.mediumTimeout),
+            projectProvider.loadProjects()
+                .timeout(AppConstants.mediumTimeout),
+            profileProvider.loadProfile(achievementsProvider)
+                .timeout(AppConstants.mediumTimeout),
+          ]);
+        } catch (e) {
+          if (mounted) {
+            setState(() {
+              _hasError = true;
+              _errorMessage = handleSupabaseError(e);
+              _errorIcon = _getIconForError(e);
+              _isRetrying = false;
+            });
+          }
+          return;
+        }
       }
       
       if (mounted) {
@@ -232,7 +283,7 @@ class _SplashScreenState extends State<SplashScreen> {
                                     ),
                                     const SizedBox(height: AppSpacing.md),
                                     Text(
-                                      AppStrings.loading,
+                                      _loadingStage,
                                       style: GoogleFonts.tajawal(
                                         fontSize: AppTypography.body,
                                         color: Theme.of(context).textTheme.bodyMedium?.color,
@@ -259,6 +310,21 @@ class _SplashScreenState extends State<SplashScreen> {
     }
     if (_errorMessage?.contains('المصادقة') == true) {
       return 'يرجى التحقق من بيانات الدخول والمحاولة مرة أخرى';
+    }
+    if (_errorMessage == AppStrings.errorLoadingAchievements) {
+      return 'فشل تحميل بيانات الإنجازات، يمكنك المتابعة بدونها';
+    }
+    if (_errorMessage == AppStrings.errorLoadingProfile) {
+      return 'فشل تحميل الملف الشخصي، يمكنك المتابعة';
+    }
+    if (_errorMessage == AppStrings.errorLoadingTasks) {
+      return 'فشل تحميل المهام، يمكنك المتابعة وإضافتها لاحقاً';
+    }
+    if (_errorMessage == AppStrings.errorLoadingProjects) {
+      return 'فشل تحميل المشاريع، يمكنك المتابعة وإضافتها لاحقاً';
+    }
+    if (_errorMessage == AppStrings.errorLoadingWater) {
+      return 'فشل تحميل بيانات المياه، يمكنك المتابعة';
     }
     return AppStrings.errorTryAgain;
   }

@@ -26,18 +26,34 @@ class DailyReportModel {
   });
 
   factory DailyReportModel.fromJson(Map<String, dynamic> json) {
-    return DailyReportModel(
-      date: DateTime.parse(json['date'] as String? ?? DateTime.now().toIso8601String()),
-      userId: json['user_id'] as String? ?? '',
-      completedTasksCount: (json['completed_tasks_count'] as num?)?.toInt() ?? 0,
-      totalTasksCount: (json['total_tasks_count'] as num?)?.toInt() ?? 0,
-      completionPercentage: (json['completion_percentage'] as num?)?.toDouble() ?? 0.0,
-      waterIntakeMl: (json['water_intake_ml'] as num?)?.toInt() ?? 0,
-      projectHours: (json['project_hours'] as num?)?.toDouble() ?? 0.0,
-      xpEarned: (json['xp_earned'] as num?)?.toInt() ?? 0,
-      dayName: json['day_name'] as String? ?? '',
-      weekNumber: (json['week_number'] as num?)?.toInt() ?? 0,
-    );
+    try {
+      return DailyReportModel(
+        date: DateTime.parse(json['date'] as String? ?? DateTime.now().toIso8601String()),
+        userId: json['user_id'] as String? ?? '',
+        completedTasksCount: (json['completed_tasks_count'] as num?)?.toInt() ?? 0,
+        totalTasksCount: (json['total_tasks_count'] as num?)?.toInt() ?? 0,
+        completionPercentage: (json['completion_percentage'] as num?)?.toDouble() ?? 0.0,
+        waterIntakeMl: (json['water_intake_ml'] as num?)?.toInt() ?? 0,
+        projectHours: (json['project_hours'] as num?)?.toDouble() ?? 0.0,
+        xpEarned: (json['xp_earned'] as num?)?.toInt() ?? 0,
+        dayName: json['day_name'] as String? ?? '',
+        weekNumber: (json['week_number'] as num?)?.toInt() ?? 0,
+      );
+    } catch (e) {
+      // Return default report if parsing fails
+      return DailyReportModel(
+        date: DateTime.now(),
+        userId: json['user_id'] as String? ?? '',
+        completedTasksCount: 0,
+        totalTasksCount: 0,
+        completionPercentage: 0.0,
+        waterIntakeMl: 0,
+        projectHours: 0.0,
+        xpEarned: 0,
+        dayName: '',
+        weekNumber: 0,
+      );
+    }
   }
 
   WeeklyStats toWeeklyStats() {
@@ -91,16 +107,30 @@ class ProjectReportModel {
       parsedTechStack = [];
     }
 
-    return ProjectReportModel(
-      projectId: json['project_id'] as String? ?? '',
-      projectName: json['project_name'] as String? ?? '',
-      status: json['status'] as String? ?? '',
-      progress: (json['progress'] as num?)?.toDouble() ?? 0.0,
-      totalTimeSpent: (json['total_time_spent'] as num?)?.toDouble() ?? 0.0,
-      techStack: parsedTechStack,
-      createdAt: DateTime.parse(json['created_at'] as String? ?? DateTime.now().toIso8601String()),
-      lastUpdated: DateTime.parse(json['last_updated'] as String? ?? DateTime.now().toIso8601String()),
-    );
+    try {
+      return ProjectReportModel(
+        projectId: json['project_id'] as String? ?? '',
+        projectName: json['project_name'] as String? ?? '',
+        status: json['status'] as String? ?? '',
+        progress: (json['progress'] as num?)?.toDouble() ?? 0.0,
+        totalTimeSpent: (json['total_time_spent'] as num?)?.toDouble() ?? 0.0,
+        techStack: parsedTechStack,
+        createdAt: DateTime.parse(json['created_at'] as String? ?? DateTime.now().toIso8601String()),
+        lastUpdated: DateTime.parse(json['last_updated'] as String? ?? DateTime.now().toIso8601String()),
+      );
+    } catch (e) {
+      // Return default project report if parsing fails
+      return ProjectReportModel(
+        projectId: json['project_id'] as String? ?? '',
+        projectName: json['project_name'] as String? ?? '',
+        status: json['status'] as String? ?? '',
+        progress: (json['progress'] as num?)?.toDouble() ?? 0.0,
+        totalTimeSpent: (json['total_time_spent'] as num?)?.toDouble() ?? 0.0,
+        techStack: parsedTechStack,
+        createdAt: DateTime.now(),
+        lastUpdated: DateTime.now(),
+      );
+    }
   }
 
   String formatTimeSpent() {
