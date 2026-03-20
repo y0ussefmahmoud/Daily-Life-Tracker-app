@@ -1,0 +1,53 @@
+# Flutter/Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+/ios/Flutter/Flutter.podspec
+/ios/Flutter/Generated.xcconfig
+/ios/Flutter/app.flx
+/ios/Flutter/app.zip
+/ios/Flutter/flutter_assets/
+/ios/ServiceDefinitions.json
+/ios/Runner/GeneratedPluginRegistrant.*
+
+# Android
+/android/app/.cxx/
+/android/app/build/
+/android/.gradle/
+/android/local.properties
+/android/.idea/
+/android/.project
+/android/*.iml
+
+# macOS
+/macos/Flutter/Flutter.podspec
+/macos/Flutter/Generated.xcconfig
+/macos/Flutter/ephemeral/
+/macos/Flutter/flutter_export_environment.sh
+/macos/Runner.xcodeproj/project.xcworkspace/xcuserdata/
+/macos/Runner.xcworkspace/xcuserdata/
+
+# Windows
+/windows/flutter/
+/windows/runner/Debug/
+/windows/runner/Release/
+
+# IDE
+/.idea/
+*.iml
+*.swp
+*.swo
+.DS_Store
+
+# Other
+*.lock
+*.log
+*.apk
+*.aab
+*.keystore
+
+Daily Life Tracker app/build/
