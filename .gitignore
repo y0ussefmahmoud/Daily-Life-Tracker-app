@@ -50,4 +50,5 @@
 *.aab
 *.keystore
 
-Daily Life Tracker app/build/
+Daily Life Tracker app/build/ 
+.gitignore
