@@ -1,264 +1,379 @@
-# متتبع الحياة اليومية v2.3.3 🏆
+# Daily Life Tracker v2.4.0
 
-تطبيق Flutter شامل لتتبع الحياة اليومية مع إدارة المهام، المشاريع، والإحصائيات.
+A comprehensive Flutter application for daily life tracking with task management, projects, and statistics.
 
-[![Version](https://img.shields.io/badge/version-2.3.3-blue.svg)](https://github.com/youssefmahmoud/daily-life-tracker)
-[![Developer](https://img.shields.io/badge/developer-Youssef%20Mahmoud-green.svg)](https://github.com/youssefmahmoud)
-[![Last Updated](https://img.shields.io/badge/last%20updated-March%202026-orange.svg)](https://github.com/youssefmahmoud/daily-life-tracker)
+## Overview
 
-## نظرة عامة
+Daily Life Tracker is a comprehensive application designed to help users organize their daily lives through:
+- Task and Project Management - Advanced tracking and management system
+- Level System - Experience points (XP), levels, and progression roadmap
+- Integrated Profile - Edit name, avatar, and settings
+- Statistics and Achievements Tracking - Detailed performance analysis
+- Badge and Motivation System - Rewards and achievements
+- Advanced Settings - Dark mode, language, notifications
+- Professional Arabic User Interface - Modern and easy-to-use design
 
-متتبع الحياة اليومية هو تطبيق شامل يساعد المستخدمين على تنظيم حياتهم اليومية من خلال:
-- ✅ **إدارة المهام والمشاريع** - نظام متقدم للتتبع والإدارة
-- ✅ **نظام مستويات متطور** - نقاط خبرة (XP) ومستويات وخارطة طريق
-- ✅ **الملف الشخصي المتكامل** - تعديل الاسم، الصورة، والإعدادات
-- ✅ **تتبع الإحصائيات والإنجازات** - تحليل مفصل للأداء
-- ✅ **نظام الشارات والتحفيز** - مكافآت وإنجازات
-- ✅ **الإعدادات المتقدمة** - الوضع الليلي، اللغة، التنبيهات
-- ✅ **واجهة مستخدم عربية احترافية** - تصميم حديث وسهل الاستخدام
+## Application Goals
 
-## 🆕 ما الجديد في الإصدار 2.3.3
+The primary goals of Daily Life Tracker are:
 
-### ✨ الميزات الجديدة:
-- � **نظام مستويات (Gamification)** - إضافة نظام نقاط الخبرة (XP) والمستويات لتحفيز المستخدم.
-- 🗺️ **خارطة طريق التقدم** - عرض مسار التقدم والأهداف المستقبلية.
-- � **بطاقة المستوى البطولية** - واجهة جديدة لعرض مستوى المستخدم ونقاط الخبرة الحالية بشكل جذاب.
-- �️ **تحسينات الشاشات** - تحسين شاشة الملف الشخصي لتعرض المستوى والنقاط بشكل ديناميكي.
+1. Productivity Enhancement - Help users manage their daily tasks and projects efficiently through organized tracking and categorization
+2. Gamification - Motivate users through experience points, levels, badges, and achievement systems to maintain consistency
+3. Data Organization - Provide structured storage for tasks, projects, habits, water intake, prayers, and other daily activities
+4. Progress Tracking - Enable users to monitor their progress through detailed statistics, charts, and performance metrics
+5. User Engagement - Maintain user interest through interactive features, rewards, and personalized experiences
+6. Data Portability - Allow users to backup and restore their data for seamless transitions between devices
+7. Offline Capability - Ensure core functionality works without internet connection using local storage
 
-### 🐛 الإصلاحات والتحسينات:
-- � **تحديث الاعتماديات** - تحديث المكتبات إلى أحدث الإصدارات المستقرة.
-- 🎨 **تحسين الألوان** - استخدام نظام الألوان الجديد (withValues) المتوافق مع إصدارات Flutter الحديثة.
-- 📱 **دعم الأجهزة الحديثة** - معالجة توافق بعض الميزات مع أجهزة Samsung A55 وغيرها.
-- ✅ **تحسين الأداء** - تحسين سرعة استجابة الواجهات وإدارة الحالة باستخدام Provider.
+## Tech Stack
 
-## التقنيات المستخدمة
+### Core Framework
+- Flutter SDK (3.10.0+)
+- Dart programming language
 
-- **Flutter**: إطار العمل الرئيسي لواجهة المستخدم
-- **Supabase**: قاعدة البيانات والخدمات الخلفية
-- **Provider**: إدارة الحالة
-- **Google Fonts**: الخطوط العربية
-- **Material Design**: تصميم الواجهة
+### State Management
+- Provider (6.1.1+) - State management solution
 
-## المتطلبات
+### Local Storage
+- Hive (2.2.3+) - Local NoSQL database
+- Hive Flutter (1.1.0+) - Flutter integration for Hive
+- Path Provider (2.1.3+) - File system access
+- Shared Preferences (2.5.4+) - Key-value storage
 
-- Flutter SDK (3.10.0 أو أحدث)
-- Android SDK (minSdk 21, targetSdk 34)
-- حساب Supabase مع إعداد المشروع
-- جهاز Android أو محاكي للاختبار
+### UI Components
+- Google Fonts (8.0.2+) - Custom typography
+- Cupertino Icons (1.0.8+) - iOS-style icons
+- Material Design - Built-in Flutter UI components
+- Percent Indicator (4.2.3+) - Progress indicators
+- Flutter SVG (2.0.9+) - SVG rendering
 
-## المتطلبات الجديدة في الإصدار 2.3.1
+### Utilities
+- UUID (4.5.1+) - Unique identifier generation
+- Intl (0.20.2+) - Internationalization and date formatting
+- Connectivity Plus (7.0.0+) - Network connectivity monitoring
+- Share Plus (12.0.1+) - File sharing functionality
 
-### 📋 التصاريح المطلوبة:
-```xml
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+### Code Generation
+- Build Runner (2.4.13+) - Code generation tool
+- Hive Generator (2.0.1+) - Hive adapter code generation
+- JSON Annotation (4.10.0+) - JSON serialization annotations
+
+### Development Tools
+- Flutter Test - Built-in testing framework
+- Mockito (5.4.4+) - Mocking framework for unit tests
+- Flutter Lints (6.0.0+) - Code quality and style analysis
+
+### App Configuration
+- Flutter Launcher Icons (0.14.1+) - App icon generation
+- Flutter Native Splash (2.4.1+) - Splash screen configuration
+
+### Localization
+- Flutter Localizations - Built-in localization support
+
+## Features
+
+### Task Management
+- Create, edit, and delete tasks
+- Task categorization with icons
+- Priority levels (low, medium, high, urgent)
+- Time categories (today, tomorrow, this week, later)
+- Due date and reminder settings
+- Task completion tracking
+- Subtask support for complex tasks
+
+### Project Management
+- Create and manage projects
+- Project status tracking (active, paused, completed, in progress)
+- Project progress visualization
+- Project-specific task organization
+- Time tracking for projects
+
+### Habit Tracking
+- Daily habit logging
+- Streak tracking
+- Break habit support (quit tracking)
+- Habit categories
+- Completion history
+
+### Water Intake Tracking
+- Daily water logging
+- Customizable daily goals
+- Progress visualization
+- Intake history
+
+### Prayer Tracking
+- Five daily prayers (Fajr, Dhuhr, Asr, Maghrib, Isha)
+- Prayer completion logging
+- Prayer history tracking
+
+### Gamification System
+- Experience points (XP) for completing tasks
+- Level progression system
+- Level roadmap with milestones
+- Badge system for achievements
+- Leaderboard functionality
+- User profile with stats
+
+### Statistics and Analytics
+- Weekly progress charts
+- Task completion rates
+- Time distribution analysis
+- Daily summary cards
+- Monthly progress tracking
+
+### Profile Management
+- User profile customization
+- Avatar management
+- Profile statistics display
+- Level and XP visualization
+- Achievement showcase
+
+### Settings
+- Dark mode toggle
+- Theme color customization
+- Language settings
+- Notification preferences
+- Sound settings
+- Backup and restore functionality
+
+## Project Structure
+
+```
+lib/
+├── main.dart                 # Application entry point
+├── constants/
+│   └── app_colors.dart      # Application color constants
+├── core/
+│   └── database/
+│       ├── db_tables.dart   # Database table definitions
+│       └── db_versions.dart # Database version management
+├── models/                   # Data models
+│   ├── task_model.dart
+│   ├── project_model.dart
+│   ├── subtask_model.dart
+│   ├── habit_model.dart
+│   ├── habit_log_model.dart
+│   ├── water_log_model.dart
+│   ├── prayer_log.dart
+│   ├── user_profile_model.dart
+│   ├── user_level_model.dart
+│   ├── badge_model.dart
+│   ├── stats_model.dart
+│   ├── report_model.dart
+│   ├── activity_log_model.dart
+│   ├── leaderboard_user_model.dart
+│   └── settings_model.dart
+├── providers/                # State management
+│   ├── task_provider.dart
+│   ├── project_provider.dart
+│   ├── projects_provider.dart
+│   ├── subtask_provider.dart
+│   ├── habit_provider.dart
+│   ├── water_provider.dart
+│   ├── prayer_provider.dart
+│   ├── profile_provider.dart
+│   ├── achievements_provider.dart
+│   ├── stats_provider.dart
+│   ├── settings_provider.dart
+│   └── backup_provider.dart
+├── repositories/             # Data access layer
+│   ├── base_repository.dart
+│   └── habit_repository.dart
+├── services/                 # Business logic
+│   ├── local_database_service.dart
+│   ├── hive_adapters.dart
+│   ├── backup_service.dart
+│   ├── backup_json_converters.dart
+│   ├── backup_validators.dart
+│   └── water_service.dart
+├── screens/                  # UI screens
+│   ├── home_screen.dart
+│   ├── tasks_screen.dart
+│   ├── projects_screen.dart
+│   ├── projects_manager_screen.dart
+│   ├── water_screen.dart
+│   ├── prayer_screen.dart
+│   ├── profile_screen.dart
+│   ├── achievements_screen.dart
+│   ├── dhikr_screen.dart
+│   ├── food_screen.dart
+│   ├── gym_screen.dart
+│   └── simple_home_screen.dart
+├── widgets/                  # Reusable UI components
+│   ├── widgets.dart          # Widget exports
+│   ├── backup_restore_card.dart
+│   ├── category_chip.dart
+│   ├── project_card.dart
+│   ├── task_item.dart
+│   ├── water_tracker.dart
+│   ├── custom_checkbox.dart
+│   ├── custom_circular_progress.dart
+│   ├── custom_bottom_navigation.dart
+│   ├── section_header.dart
+│   ├── profile_header.dart
+│   ├── progress_bar_widget.dart
+│   ├── task_section.dart
+│   ├── daily_summary_card.dart
+│   ├── skeleton_loader.dart
+│   ├── achievement_item.dart
+│   ├── add_subtask_dialog.dart
+│   ├── conic_progress_indicator.dart
+│   ├── date_picker_field.dart
+│   ├── ios_toggle.dart
+│   ├── level_hero_card.dart
+│   ├── monthly_progress_widget.dart
+│   ├── paused_project_card.dart
+│   ├── profile_stats_card.dart
+│   ├── settings_list_item.dart
+│   ├── tech_stack_input.dart
+│   ├── time_distribution_item.dart
+│   ├── time_picker_field.dart
+│   └── weekly_chart.dart
+└── utils/                    # Utility functions
+    ├── constants.dart
+    ├── error_handler.dart
+    └── app_exception.dart
+
+android/
+├── app/
+│   ├── build.gradle.kts       # Build configuration
+│   ├── proguard-rules.pro     # ProGuard rules
+│   └── src/main/
+│       ├── AndroidManifest.xml
+│       └── res/
+└── ...
+
+assets/
+├── fonts/                     # Custom fonts
+│   └── MaterialSymbolsOutlined.ttf
+└── images/                    # Image assets
 ```
 
-### 🔧 إعدادات التطبيق:
-- **الحد الأدنى للـ Android**: API 21 (Android 5.0)
-- **الحد الأقصى للـ Android**: API 34 (Android 14)
-- **حجم التطبيق**: ~50MB (Release APK)
-- **دعم اللغات**: العربية والإنجليزية
-- **وضع الشاشة**: Portrait & Landscape
+## Installation
 
-## خطوات الإعداد
+### Prerequisites
+- Flutter SDK (3.10.0 or higher)
+- Android SDK (minSdk 21, targetSdk 34)
+- Android device or emulator for testing
 
-1. **استنساخ المشروع**
+### Setup Steps
+
+1. Clone the repository
    ```bash
    git clone <repository-url>
    cd daily-life-tracker
    ```
 
-2. **تثبيت الاعتماديات**
+2. Install dependencies
    ```bash
    flutter pub get
    ```
 
-3. **إعداد Supabase**
-   - إنشاء مشروع جديد في Supabase
-   - تحديث ملف `lib/config/supabase_config.dart` مع بيانات المشروع:
-   ```dart
-   const supabaseUrl = 'YOUR_SUPABASE_URL';
-   const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY';
-   ```
-
-4. **تشغيل التطبيق**
+3. Run the application
    ```bash
    flutter run
    ```
 
-## بناء APK للتجربة
+## Building APK
 
 ### Debug APK
 ```bash
 flutter build apk --debug
 ```
-- **الموقع**: `build/app/outputs/flutter-apk/app-debug.apk`
-- **الحجم**: أكبر، يحتوي على debugging symbols
-- **الاستخدام**: للتطوير والاختبار فقط
+- Location: `build/app/outputs/flutter-apk/app-debug.apk`
+- Size: Larger, includes debugging symbols
+- Usage: Development and testing only
 
 ### Release APK
 ```bash
 flutter build apk --release
 ```
-- **الموقع**: `build/app/outputs/flutter-apk/app-release.apk`
-- **الحجم**: أصغر، محسّن للأداء
-- **المميزات**: يستخدم ProGuard لتقليل الحجم وتحسين الأداء
+- Location: `build/app/outputs/flutter-apk/app-release.apk`
+- Size: Smaller, optimized for performance
+- Features: Uses ProGuard for size reduction and performance optimization
 
-### Split APKs (حسب Architecture)
+### Split APKs (by Architecture)
 ```bash
 flutter build apk --split-per-abi
 ```
-- **النتائج**: ملفات منفصلة لكل معمارية:
+- Results: Separate files for each architecture:
   - `app-arm64-v8a-release.apk`
   - `app-armeabi-v7a-release.apk`
   - `app-x86_64-release.apk`
-- **الميزة**: حجم أصغر لكل ملف (~20-30 MB بدلاً من ~50-60 MB)
+- Benefit: Smaller size per file (~20-30 MB instead of ~50-60 MB)
 
-## تثبيت APK على الهاتف
+## App Configuration
 
-### الطريقة 1: عبر USB
-1. تفعيل "Unknown Sources" في إعدادات الهاتف
-2. نسخ ملف APK إلى الهاتف
-3. فتح الملف والموافقة على التثبيت
+### Android Requirements
+- Minimum Android: API 21 (Android 5.0)
+- Target Android: API 34 (Android 14)
+- App Size: ~50MB (Release APK)
+- Language Support: Arabic and English
+- Screen Orientation: Portrait & Landscape
 
-### الطريقة 2: عبر ADB
-```bash
-adb install build/app/outputs/flutter-apk/app-release.apk
-```
-لإعادة التثبيت:
-```bash
-adb install -r build/app/outputs/flutter-apk/app-release.apk
-```
-
-### الطريقة 3: عبر Cloud Services
-1. رفع ملف APK على Google Drive أو أي خدمة تخزين
-2. مشاركة الرابط وتحميله على الهاتف
-3. تثبيت الملف من المتصفح
-
-## اختبار التطبيق
-
-### قبل الاختبار
-- التأكد من اتصال الإنترنت
-- التحقق من إعدادات Supabase
-- تفعيل التصاريح المطلوبة (Internet, Network State)
-
-### قائمة الاختبار
-- [ ] تسجيل الدخول/التسجيل
-- [ ] إضافة المهام والمشاريع
-- [ ] تحديث وحذف المهام
-- [ ] عرض الإحصائيات
-- [ ] فتح الشارات والإنجازات
-- [ ] تغيير إعدادات الملف الشخصي
-- [ ] العمل بدون اتصال (إذا مدعوم)
-
-## استكشاف الأخطاء
-
-### مشاكل الاتصال بـ Supabase
-```bash
-# التحقق من credentials
-flutter run --debug
-# عرض logs
-adb logcat | grep flutter
+### Permissions
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
 
-### أخطاء ProGuard
-- مراجعة ملف `android/app/proguard-rules.pro`
-- التحقق من قواعد الحفظ للكلاسات المهمة
-- إعادة البناء: `flutter clean && flutter build apk --release`
+## Testing
 
-### مشاكل البناء
+### Pre-Testing Checklist
+- Verify internet connection
+- Check local database initialization
+- Enable required permissions (Internet, Network State)
+
+### Test List
+- Task creation, editing, and deletion
+- Project management
+- Habit tracking
+- Water intake logging
+- Prayer tracking
+- Profile customization
+- Statistics viewing
+- Settings modifications
+- Backup and restore functionality
+
+## Troubleshooting
+
+### Database Issues
 ```bash
-# تنظيف وإعادة البناء
+# Clear and rebuild
+flutter clean
+flutter pub get
+flutter run
+```
+
+### Build Issues
+```bash
+# Clean and rebuild
 flutter clean
 flutter pub get
 flutter doctor
 ```
 
-### حجم APK كبير
-- استخدام `--split-per-abi` للبناء
-- مراجعة الـ assets غير المستخدمة
-- تحليل الحجم: `flutter build apk --release --analyze-size`
+### APK Size Optimization
+- Use `--split-per-abi` for building
+- Review unused assets
+- Analyze size: `flutter build apk --release --analyze-size`
 
-## مخطط عملية البناء
+## Developer Information
 
-```mermaid
-sequenceDiagram
-    participant Dev as المطور
-    participant Flutter as Flutter CLI
-    participant Gradle as Gradle Build
-    participant ProGuard as ProGuard
-    participant Output as APK Output
+### Developer
+- Arabic: م / يوسف محمود عبد الجواد
+- English: Eng / Youssef Mahmoud Abdelgawad
+- Business Website: https://y0ussef.com/
+- Whatsapp: https://wa.me/Y0ussefmahmoud
+- Email: info@Youssef.com
 
-    Dev->>Flutter: flutter build apk --release
-    Flutter->>Flutter: flutter clean & pub get
-    Flutter->>Gradle: تشغيل Gradle build
-    Gradle->>Gradle: compile Kotlin/Java code
-    Gradle->>Gradle: compile Dart code to native
-    Gradle->>ProGuard: minify & shrink code
-    ProGuard->>ProGuard: تطبيق proguard-rules.pro
-    ProGuard->>Gradle: optimized code
-    Gradle->>Output: إنشاء app-release.apk
-    Output->>Dev: build/app/outputs/flutter-apk/app-release.apk
-    Dev->>Dev: نقل APK للهاتف واختباره
-```
+## License
 
-## ملاحظات إضافية
+This project is proprietary software. All rights reserved.
 
-### تحسين حجم APK
-- **Split APKs**: استخدم `--split-per-abi` لتقليل الحجم
-- **Asset Optimization**: ضغط الصور والملفات
-- **Tree Shaking**: إزالة الكود غير المستخدم
+## Support
 
-### Signing للإصدار النهائي
-للنشر على Play Store، ستحتاج لإنشاء keystore:
-```bash
-keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
-```
-
-إنشاء `android/key.properties`:
-```properties
-storePassword=<password>
-keyPassword=<password>
-keyAlias=upload
-storeFile=<path-to-keystore>
-```
-
-### اختبار الأداء
-- تحليل حجم APK: `flutter build apk --release --analyze-size`
-- مراجعة الـ dependencies الكبيرة
-- التأكد من تحسين الصور والـ assets
-
-## هيكل المشروع
-
-```
-lib/
-├── config/           # إعدادات التطبيق
-├── models/           # نماذج البيانات
-├── providers/        # إدارة الحالة
-├── screens/          # شاشات التطبيق
-└── main.dart         # نقطة البداية
-
-android/
-├── app/
-│   ├── build.gradle.kts    # إعدادات البناء
-│   ├── proguard-rules.pro # قواعد ProGuard
-│   └── src/main/
-│       ├── AndroidManifest.xml
-│       └── res/values/strings.xml
-└── ...
-
-assets/
-├── images/           # الصور
-├── icons/            # الأيقونات
-└── fonts/            # الخطوط
-```
-
-## الدعم
-
-لأي استفسارات أو مشاكل، يرجى التواصل عبر:
-- إنشاء Issue في GitHub
-- مراجعة وثائق Flutter الرسمية
-- التحقق من وثائق Supabase
+For any inquiries or issues, please contact:
+- Email: info@Youssef.com
+- Website: https://y0ussef.com/
+- Whatsapp: https://wa.me/Y0ussefmahmoud
