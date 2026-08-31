@@ -1,3 +1,10 @@
+// Developed by:
+// - Arabic: م / يوسف محمود عبد الجواد
+// - English: Eng / Youssef Mahmoud Abdelgawad
+// - Business Website: [https://y0ussef.com/](https://y0ussef.com/)
+// - Whatsapp: [https://wa.me/Y0ussefmahmoud](https://wa.me/Y0ussefmahmoud)
+// - Email: info@Youssef.com
+
 // ignore_for_file: unused_element
 
 import 'package:flutter/material.dart';
@@ -467,7 +474,7 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${userProfile?.points ?? 0} نقطة',
+                      '${userProfile?.totalXp ?? 0} نقطة',
                       style: GoogleFonts.tajawal(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,

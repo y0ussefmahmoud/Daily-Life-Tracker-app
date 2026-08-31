@@ -1,7 +1,16 @@
+// Developed by:
+// - Arabic: م / يوسف محمود عبد الجواد
+// - English: Eng / Youssef Mahmoud Abdelgawad
+// - Business Website: [https://y0ussef.com/](https://y0ussef.com/)
+// - Whatsapp: [https://wa.me/Y0ussefmahmoud](https://wa.me/Y0ussefmahmoud)
+// - Email: info@Youssef.com
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/profile_provider.dart';
 import '../providers/settings_provider.dart';
+import '../providers/backup_provider.dart';
+import '../widgets/backup_restore_card.dart';
 import '../utils/constants.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -81,6 +90,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 
                 // App Settings Section
                 _buildAppSettingsSection(settingsProvider),
+                
+                const SizedBox(height: 24),
+                
+                // Backup & Restore Section
+                _buildBackupRestoreSection(),
                 
                 const SizedBox(height: 24),
                 
@@ -309,6 +323,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildBackupRestoreSection() {
+    return ChangeNotifierProvider(
+      create: (_) => BackupProvider(),
+      child: const BackupRestoreCard(),
     );
   }
 

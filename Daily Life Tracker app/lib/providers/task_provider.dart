@@ -1,3 +1,10 @@
+// Developed by:
+// - Arabic: م / يوسف محمود عبد الجواد
+// - English: Eng / Youssef Mahmoud Abdelgawad
+// - Business Website: [https://y0ussef.com/](https://y0ussef.com/)
+// - Whatsapp: [https://wa.me/Y0ussefmahmoud](https://wa.me/Y0ussefmahmoud)
+// - Email: info@Youssef.com
+
 // ignore_for_file: unnecessary_import, unreachable_switch_default
 
 import 'package:flutter/foundation.dart';
@@ -10,14 +17,14 @@ import '../providers/achievements_provider.dart';
 class TaskProvider extends ChangeNotifier {
   final LocalDatabaseService _db = LocalDatabaseService();
   final Uuid _uuid = const Uuid();
-  List<Task> _tasks = [];
+  List<TaskModel> _tasks = [];
   AchievementsProvider? _achievementsProvider;
 
   bool _isLoading = false;
   String? _error;
 
-  List<Task> get tasks => List.unmodifiable(_tasks);
-  List<Task> get todayTasks => _tasks.where((task) {
+  List<TaskModel> get tasks => List.unmodifiable(_tasks);
+  List<TaskModel> get todayTasks => _tasks.where((task) {
     final today = DateTime.now();
     final taskDate = task.createdAt;
     return taskDate.year == today.year &&
@@ -83,29 +90,29 @@ class TaskProvider extends ChangeNotifier {
     }
   }
 
-  int _calculateXPForTask(Task task) {
+  int _calculateXPForTask(TaskModel task) {
     // Calculate XP based on task priority
     switch (task.priority) {
       case TaskPriority.high:
         return 15;
+      case TaskPriority.urgent:
+        return 20;
       case TaskPriority.medium:
         return 10;
       case TaskPriority.low:
         return 5;
-      default:
-        return 5;
     }
   }
 
-  List<Task> getTasksByCategory(String category) {
+  List<TaskModel> getTasksByCategory(String category) {
     return _tasks.where((task) => task.category == category).toList();
   }
 
-  List<Task> getCompletedTasks() {
+  List<TaskModel> getCompletedTasks() {
     return _tasks.where((task) => task.isCompleted).toList();
   }
 
-  List<Task> getPendingTasks() {
+  List<TaskModel> getPendingTasks() {
     return _tasks.where((task) => !task.isCompleted).toList();
   }
 
@@ -144,26 +151,31 @@ class TaskProvider extends ChangeNotifier {
     notifyListeners();
     
     try {
-      debugPrint('Creating Task object...');
-      final task = Task(
+      debugPrint('Creating TaskModel object...');
+      final task = TaskModel(
         id: _uuid.v4(),
+        userId: 'current_user',
         title: title.trim(),
         iconCodePoint: icon.codePoint,
         category: category.trim(),
         priority: priority,
         isRepeating: isRepeating,
         createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
       );
       
-      debugPrint('Task object created: ${task.id}');
+      debugPrint('TaskModel object created: ${task.id}');
       
       if (reminderTime != null) {
-        task.reminderTime = reminderTime;
+        final reminderString = task.reminderTimeToString(reminderTime);
+        final updatedTask = task.copyWith(reminderTimeString: reminderString);
         debugPrint('Reminder time set: $reminderTime');
+        await _db.addTask(updatedTask);
+      } else {
+        await _db.addTask(task);
       }
 
       debugPrint('Calling database addTask...');
-      await _db.addTask(task);
       debugPrint('Database addTask completed');
       
       debugPrint('Loading tasks from database...');
@@ -198,7 +210,7 @@ class TaskProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updateTask(Task task) async {
+  Future<void> updateTask(TaskModel task) async {
     final taskIndex = _tasks.indexWhere((t) => t.id == task.id);
     if (taskIndex != -1) {
       _tasks[taskIndex] = task;
@@ -229,7 +241,7 @@ class TaskProvider extends ChangeNotifier {
   int get pendingTasksCount => getPendingTasks().length;
 
   // Search functionality
-  List<Task> searchTasks(String query) {
+  List<TaskModel> searchTasks(String query) {
     if (query.isEmpty) return _tasks;
     
     final lowerQuery = query.toLowerCase();

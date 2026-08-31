@@ -1,3 +1,10 @@
+// Developed by:
+// - Arabic: م / يوسف محمود عبد الجواد
+// - English: Eng / Youssef Mahmoud Abdelgawad
+// - Business Website: [https://y0ussef.com/](https://y0ussef.com/)
+// - Whatsapp: [https://wa.me/Y0ussefmahmoud](https://wa.me/Y0ussefmahmoud)
+// - Email: info@Youssef.com
+
 // ignore_for_file: await_only_futures, unused_local_variable, unused_import, constant_identifier_names
 
 import 'dart:convert';
@@ -20,9 +27,9 @@ class LocalDatabaseService {
   factory LocalDatabaseService() => _instance;
   LocalDatabaseService._internal();
 
-  late Box<Task> taskBox;
-  late Box<Project> projectBox;
-  late Box<Subtask> subtaskBox;
+  late Box<String> taskBox; // Store as JSON strings
+  late Box<String> projectBox; // Store as JSON strings
+  late Box<String> subtaskBox; // Store as JSON strings
   late Box<WaterLog> waterLogBox;
   late Box<Map<String, dynamic>> settingsBox;
 
@@ -45,42 +52,34 @@ class LocalDatabaseService {
     final appDocumentDir = await getApplicationDocumentsDirectory();
     Hive.init(appDocumentDir.path);
     
+    // During refactoring, delete entire Hive database to avoid type ID conflicts
+    // This ensures clean state with new model structure
+    debugPrint('Deleting entire Hive database for clean migration...');
+    try {
+      await Hive.deleteFromDisk();
+      debugPrint('Hive database deleted successfully');
+    } catch (e) {
+      debugPrint('Error deleting Hive database (may not exist yet): $e');
+    }
+    
     // Register adapters
     await registerHiveAdapters();
     
-    // Try to open boxes, if fails, clear database and retry
-    try {
-      taskBox = await Hive.openBox<Task>(TASK_BOX_NAME);
-      projectBox = await Hive.openBox<Project>(PROJECT_BOX_NAME);
-      subtaskBox = await Hive.openBox<Subtask>(SUBTASK_BOX_NAME);
-      waterLogBox = await Hive.openBox<WaterLog>(WATER_LOG_BOX_NAME);
-      settingsBox = await Hive.openBox<Map<String, dynamic>>(SETTINGS_BOX_NAME);
-    } catch (e) {
-      debugPrint('Error opening boxes: $e');
-      debugPrint('Clearing database and retrying...');
-      
-      // Clear the entire database
-      try {
-        await clearDatabase();
-        debugPrint('Database cleared successfully');
-        
-        // Retry opening boxes
-        taskBox = await Hive.openBox<Task>(TASK_BOX_NAME);
-        projectBox = await Hive.openBox<Project>(PROJECT_BOX_NAME);
-        subtaskBox = await Hive.openBox<Subtask>(SUBTASK_BOX_NAME);
-        waterLogBox = await Hive.openBox<WaterLog>(WATER_LOG_BOX_NAME);
-        settingsBox = await Hive.openBox<Map<String, dynamic>>(SETTINGS_BOX_NAME);
-        debugPrint('Boxes opened successfully after clearing database');
-      } catch (retryError) {
-        debugPrint('Failed to open boxes even after clearing database: $retryError');
-        // Continue with empty boxes - this will allow the app to start
-        taskBox = await Hive.openBox<Task>(TASK_BOX_NAME);
-        projectBox = await Hive.openBox<Project>(PROJECT_BOX_NAME);
-        subtaskBox = await Hive.openBox<Subtask>(SUBTASK_BOX_NAME);
-        waterLogBox = await Hive.openBox<WaterLog>(WATER_LOG_BOX_NAME);
-        settingsBox = await Hive.openBox<Map<String, dynamic>>(SETTINGS_BOX_NAME);
-      }
-    }
+    // Open boxes with fresh database
+    taskBox = await Hive.openBox<String>(TASK_BOX_NAME);
+    projectBox = await Hive.openBox<String>(PROJECT_BOX_NAME);
+    subtaskBox = await Hive.openBox<String>(SUBTASK_BOX_NAME);
+    waterLogBox = await Hive.openBox<WaterLog>(WATER_LOG_BOX_NAME);
+    settingsBox = await Hive.openBox<Map<String, dynamic>>(SETTINGS_BOX_NAME);
+    
+    // Set current version
+    const String DB_VERSION_KEY = 'db_version';
+    const String CURRENT_DB_VERSION = '2.4.0';
+    final settings = settingsBox.get('settings', defaultValue: <String, dynamic>{}) ?? <String, dynamic>{};
+    settings[DB_VERSION_KEY] = CURRENT_DB_VERSION;
+    await settingsBox.put('settings', settings);
+    
+    debugPrint('Database initialized successfully with version $CURRENT_DB_VERSION');
   }
 
   Future<void> initialize() async {
@@ -96,53 +95,56 @@ class LocalDatabaseService {
   }
 
   // Task operations
-  Future<void> addTask(Task task) async {
-    await taskBox.put(task.id, task);
+  Future<void> addTask(TaskModel task) async {
+    await taskBox.put(task.id, jsonEncode(task.toMap()));
   }
 
-  Future<void> updateTask(Task task) async {
-    await taskBox.put(task.id, task);
+  Future<void> updateTask(TaskModel task) async {
+    await taskBox.put(task.id, jsonEncode(task.toMap()));
   }
 
   Future<void> deleteTask(String id) async {
     await taskBox.delete(id);
   }
 
-  Future<List<Task>> getAllTasks() async {
-    return taskBox.values.toList();
+  Future<List<TaskModel>> getAllTasks() async {
+    return taskBox.values.map((jsonStr) => TaskModel.fromMap(jsonDecode(jsonStr))).toList();
   }
 
-  List<Task> getCompletedTasks() {
-    return taskBox.values.where((task) => task.isCompleted).toList();
+  List<TaskModel> getCompletedTasks() {
+    return taskBox.values.map((jsonStr) => TaskModel.fromMap(jsonDecode(jsonStr))).where((task) => task.isCompleted).toList();
   }
 
-  List<Task> getPendingTasks() {
-    return taskBox.values.where((task) => !task.isCompleted).toList();
+  List<TaskModel> getPendingTasks() {
+    return taskBox.values.map((jsonStr) => TaskModel.fromMap(jsonDecode(jsonStr))).where((task) => !task.isCompleted).toList();
   }
 
-  // Project operations
+  // Project operations - using JSON serialization
   Future<Project?> getProject(String id) async {
-    return projectBox.get(id);
+    final jsonStr = projectBox.get(id);
+    if (jsonStr == null) return null;
+    return _projectFromJson(jsonDecode(jsonStr));
   }
 
   Future<List<Project>> getAllProjects() async {
-    return projectBox.values.toList();
+    return projectBox.values.map((jsonStr) => _projectFromJson(jsonDecode(jsonStr))).toList();
   }
 
   Future<List<Project>> getActiveProjects() async {
-    return projectBox.values.where((p) => p.status == ProjectStatus.active).toList();
+    return projectBox.values.map((jsonStr) => _projectFromJson(jsonDecode(jsonStr))).where((p) => p.status == ProjectStatus.active).toList();
   }
 
   Future<List<Project>> getCompletedProjects() async {
-    return projectBox.values.where((p) => p.status == ProjectStatus.completed).toList();
+    return projectBox.values.map((jsonStr) => _projectFromJson(jsonDecode(jsonStr))).where((p) => p.status == ProjectStatus.completed).toList();
   }
 
   Future<void> updateProjectProgress(String projectId, double progress) async {
     try {
-      final project = projectBox.get(projectId);
-      if (project != null) {
+      final jsonStr = projectBox.get(projectId);
+      if (jsonStr != null) {
+        final project = _projectFromJson(jsonDecode(jsonStr));
         final updatedProject = project.copyWith(progress: progress);
-        await projectBox.put(projectId, updatedProject);
+        await projectBox.put(projectId, jsonEncode(_projectToJson(updatedProject)));
       }
     } catch (e) {
       rethrow;
@@ -158,49 +160,50 @@ class LocalDatabaseService {
   }
 
   Future<void> updateProject(Project project) async {
-    await projectBox.put(project.id, project);
+    await projectBox.put(project.id, jsonEncode(_projectToJson(project)));
   }
 
   Future<void> addProject(Project project) async {
-    await projectBox.put(project.id, project);
+    await projectBox.put(project.id, jsonEncode(_projectToJson(project)));
   }
 
   Future<void> deleteProject(String id) async {
     await projectBox.delete(id);
     // Also delete related subtasks
-    final subtasksToDelete = subtaskBox.values.where((subtask) => subtask.projectId == id);
+    final subtasksToDelete = subtaskBox.values
+        .map((jsonStr) => SubtaskModel.fromMap(jsonDecode(jsonStr)))
+        .where((subtask) => subtask.taskId == id);
     for (final subtask in subtasksToDelete) {
       await subtaskBox.delete(subtask.id);
     }
   }
 
   // Subtask operations
-  Future<void> addSubtask(Subtask subtask) async {
-    await subtaskBox.put(subtask.id, subtask);
+  Future<void> addSubtask(SubtaskModel subtask) async {
+    await subtaskBox.put(subtask.id, jsonEncode(subtask.toMap()));
   }
 
-  Future<void> updateSubtask(Subtask subtask) async {
-    await subtaskBox.put(subtask.id, subtask);
+  Future<void> updateSubtask(SubtaskModel subtask) async {
+    await subtaskBox.put(subtask.id, jsonEncode(subtask.toMap()));
   }
 
   Future<void> deleteSubtask(String id) async {
     await subtaskBox.delete(id);
   }
 
-  Subtask? getSubtask(String id) {
-    return subtaskBox.get(id);
+  Future<List<SubtaskModel>> getAllSubtasks() async {
+    return subtaskBox.values.map((jsonStr) => SubtaskModel.fromMap(jsonDecode(jsonStr))).toList();
   }
 
-  List<Subtask> getSubtasksByProject(String projectId) {
-    return subtaskBox.values.where((subtask) => subtask.projectId == projectId).toList();
+  Future<List<SubtaskModel>> getSubtasksByTaskId(String taskId) async {
+    return subtaskBox.values
+        .map((jsonStr) => SubtaskModel.fromMap(jsonDecode(jsonStr)))
+        .where((subtask) => subtask.taskId == taskId)
+        .toList();
   }
 
-  List<Subtask> getAllSubtasks() {
-    return subtaskBox.values.toList();
-  }
-
-  List<Subtask> getCompletedSubtasks() {
-    return subtaskBox.values.where((subtask) => subtask.isCompleted).toList();
+  List<SubtaskModel> getCompletedSubtasks() {
+    return subtaskBox.values.map((jsonStr) => SubtaskModel.fromMap(jsonDecode(jsonStr))).where((subtask) => subtask.isCompleted).toList();
   }
 
   // Settings operations
@@ -263,9 +266,9 @@ class LocalDatabaseService {
   // Backup and Restore
   Future<Map<String, dynamic>> exportData() async {
     final backup = {
-      'tasks': taskBox.values.map((task) => _taskToJson(task)).toList(),
-      'projects': projectBox.values.map((project) => _projectToJson(project)).toList(),
-      'subtasks': subtaskBox.values.map((subtask) => _subtaskToJson(subtask)).toList(),
+      'tasks': taskBox.values.map((jsonStr) => _taskFromJson(jsonDecode(jsonStr))).map((task) => _taskToJson(task)).toList(),
+      'projects': projectBox.values.map((jsonStr) => _projectFromJson(jsonDecode(jsonStr))).map((project) => _projectToJson(project)).toList(),
+      'subtasks': subtaskBox.values.map((jsonStr) => _subtaskFromJson(jsonDecode(jsonStr))).map((subtask) => _subtaskToJson(subtask)).toList(),
       'settings': settingsBox.toMap(),
     };
 
@@ -286,21 +289,21 @@ class LocalDatabaseService {
       final tasksData = backup['tasks'] as List<dynamic>;
       for (final taskData in tasksData) {
         final task = _taskFromJson(taskData as Map<String, dynamic>);
-        await taskBox.put(task.id, task);
+        await taskBox.put(task.id, jsonEncode(_taskToJson(task)));
       }
       
       // Import projects
       final projectsData = backup['projects'] as List<dynamic>;
       for (final projectData in projectsData) {
         final project = _projectFromJson(projectData as Map<String, dynamic>);
-        await projectBox.put(project.id, project);
+        await projectBox.put(project.id, jsonEncode(_projectToJson(project)));
       }
       
       // Import subtasks
       final subtasksData = backup['subtasks'] as List<dynamic>;
       for (final subtaskData in subtasksData) {
         final subtask = _subtaskFromJson(subtaskData as Map<String, dynamic>);
-        await subtaskBox.put(subtask.id, subtask);
+        await subtaskBox.put(subtask.id, jsonEncode(_subtaskToJson(subtask)));
       }
       
       // Import settings
@@ -372,37 +375,12 @@ class LocalDatabaseService {
   }
 
   // JSON conversion methods
-  Map<String, dynamic> _taskToJson(Task task) {
-    return {
-      'id': task.id,
-      'title': task.title,
-      'category': task.category,
-      'iconCodePoint': task.iconCodePoint,
-      'isCompleted': task.isCompleted,
-      'reminderTimeString': task.reminderTimeString,
-      'isRepeating': task.isRepeating,
-      'priority': task.priority.name,
-      'createdAt': task.createdAt.toIso8601String(),
-    };
+  Map<String, dynamic> _taskToJson(TaskModel task) {
+    return task.toMap();
   }
 
-  Task _taskFromJson(Map<String, dynamic> json) {
-    return Task(
-      id: json['id'] as String? ?? '',
-      title: json['title'] as String? ?? 'مهمة بدون عنوان',
-      category: json['category'] as String? ?? 'عام',
-      iconCodePoint: json['iconCodePoint'] as int? ?? 0xE87C,
-      isCompleted: json['isCompleted'] as bool? ?? false,
-      reminderTimeString: json['reminderTimeString'] as String?,
-      isRepeating: json['isRepeating'] as bool? ?? false,
-      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt'] as String) : DateTime.now(),
-      priority: json['priority'] != null
-          ? TaskPriority.values.firstWhere(
-              (p) => p.name == json['priority'],
-              orElse: () => TaskPriority.medium,
-            )
-          : TaskPriority.medium,
-    );
+  TaskModel _taskFromJson(Map<String, dynamic> json) {
+    return TaskModel.fromMap(json);
   }
 
   Map<String, dynamic> _projectToJson(Project project) {
@@ -420,6 +398,10 @@ class LocalDatabaseService {
       'endDate': project.endDate?.toIso8601String(),
       'subtasks': project.subtasks.map((subtask) => _subtaskToJson(subtask)).toList(),
       'createdAt': project.createdAt.toIso8601String(),
+      'category': project.category,
+      'totalHoursSpent': project.totalHoursSpent,
+      'priority': project.priority,
+      'description': project.description,
     };
   }
 
@@ -452,34 +434,11 @@ class LocalDatabaseService {
     );
   }
 
-  Map<String, dynamic> _subtaskToJson(Subtask subtask) {
-    return {
-      'id': subtask.id,
-      'title': subtask.title,
-      'isCompleted': subtask.isCompleted,
-      'priority': subtask.priority.name,
-      'projectId': subtask.projectId,
-      'createdAt': subtask.createdAt.toIso8601String(),
-      'completedAt': subtask.completedAt?.toIso8601String(),
-      'timeSpentMinutes': subtask.timeSpentMinutes,
-    };
+  Map<String, dynamic> _subtaskToJson(SubtaskModel subtask) {
+    return subtask.toMap();
   }
 
-  Subtask _subtaskFromJson(Map<String, dynamic> json) {
-    return Subtask(
-      id: json['id'] as String? ?? '',
-      title: json['title'] as String? ?? 'مهمة فرعية بدون عنوان',
-      isCompleted: json['isCompleted'] as bool? ?? false,
-      priority: json['priority'] != null
-          ? SubtaskPriority.values.firstWhere(
-              (p) => p.name == json['priority'],
-              orElse: () => SubtaskPriority.medium,
-            )
-          : SubtaskPriority.medium,
-      projectId: json['projectId'] as String? ?? '',
-      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt'] as String) : DateTime.now(),
-      completedAt: json['completedAt'] != null ? DateTime.parse(json['completedAt'] as String) : null,
-      timeSpentMinutes: json['timeSpentMinutes'] as int?,
-    );
+  SubtaskModel _subtaskFromJson(Map<String, dynamic> json) {
+    return SubtaskModel.fromMap(json);
   }
 }

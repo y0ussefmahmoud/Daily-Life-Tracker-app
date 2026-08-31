@@ -1,3 +1,10 @@
+// Developed by:
+// - Arabic: م / يوسف محمود عبد الجواد
+// - English: Eng / Youssef Mahmoud Abdelgawad
+// - Business Website: [https://y0ussef.com/](https://y0ussef.com/)
+// - Whatsapp: [https://wa.me/Y0ussefmahmoud](https://wa.me/Y0ussefmahmoud)
+// - Email: info@Youssef.com
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/subtask_model.dart';
@@ -5,7 +12,7 @@ import '../utils/constants.dart';
 import 'custom_checkbox.dart';
 
 class TaskItem extends StatelessWidget {
-  final Subtask task;
+  final SubtaskModel task;
   final VoidCallback onToggle;
   final VoidCallback? onLongPress;
 
@@ -19,7 +26,7 @@ class TaskItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final priorityColor = task.priority.getPriorityColor();
+    final priorityColor = task.priorityColor;
     final isDark = theme.brightness == Brightness.dark;
     
     return GestureDetector(

@@ -1,3 +1,10 @@
+// Developed by:
+// - Arabic: م / يوسف محمود عبد الجواد
+// - English: Eng / Youssef Mahmoud Abdelgawad
+// - Business Website: [https://y0ussef.com/](https://y0ussef.com/)
+// - Whatsapp: [https://wa.me/Y0ussefmahmoud](https://wa.me/Y0ussefmahmoud)
+// - Email: info@Youssef.com
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -268,12 +275,13 @@ class _AddSubTaskDialogState extends State<AddSubTaskDialog> {
     setState(() => _isSaving = true);
 
     try {
-      final subTask = Subtask(
+      final subTask = SubtaskModel(
         id: _uuid.v4(),
+        taskId: widget.projectId,
         title: _titleController.text.trim(),
         isCompleted: false,
         priority: _priority,
-        projectId: widget.projectId,
+        createdAt: DateTime.now(),
       );
 
       await context.read<SubTaskProvider>().addSubTask(subTask);

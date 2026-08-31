@@ -1,3 +1,10 @@
+// Developed by:
+// - Arabic: م / يوسف محمود عبد الجواد
+// - English: Eng / Youssef Mahmoud Abdelgawad
+// - Business Website: [https://y0ussef.com/](https://y0ussef.com/)
+// - Whatsapp: [https://wa.me/Y0ussefmahmoud](https://wa.me/Y0ussefmahmoud)
+// - Email: info@Youssef.com
+
 // ignore_for_file: unused_import, unnecessary_non_null_assertion
 
 import 'package:flutter/material.dart';
@@ -8,23 +15,25 @@ import '../utils/constants.dart';
 
 class SubTaskProvider extends ChangeNotifier {
   final LocalDatabaseService _db = LocalDatabaseService();
-  List<Subtask> _subTasks = [];
+  List<SubtaskModel> _subTasks = [];
   bool _isLoading = false;
 
   SubTaskProvider();
 
   // Getters for synchronous access to cached data
   bool get isLoading => _isLoading;
-  List<Subtask> get subTasks => List.unmodifiable(_subTasks);
+  List<SubtaskModel> get subTasks => List.unmodifiable(_subTasks);
   double get completionPercentage => _subTasks.isEmpty ? 0.0 : _subTasks.where((t) => t.isCompleted).length / _subTasks.length;
-  List<Subtask> get inProgressTasks => _subTasks.where((t) => !t.isCompleted).toList();
-  List<Subtask> get completedTasks => _subTasks.where((t) => t.isCompleted).toList();
+  List<SubtaskModel> get inProgressTasks => _subTasks.where((t) => !t.isCompleted).toList();
+  List<SubtaskModel> get completedTasks => _subTasks.where((t) => t.isCompleted).toList();
 
-  Future<List<Subtask>> getSubTasksByProject(String projectId) async {
+  Future<List<SubtaskModel>> getSubTasksByProject(String projectId) async {
     try {
-      final subTasks = _db.getSubtasksByProject(projectId);
-      _subTasks = subTasks;
-      return subTasks;
+      // SubtaskModel doesn't have projectId, so we can't filter by project
+      // Return empty list for now - this feature needs to be re-implemented
+      // Projects should track their subtasks differently
+      _subTasks = [];
+      return _subTasks;
     } catch (e) {
       return [];
     }
@@ -49,7 +58,7 @@ class SubTaskProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> addSubTask(Subtask task) async {
+  Future<void> addSubTask(SubtaskModel task) async {
     try {
       await _db.addSubtask(task);
       _subTasks.add(task);
@@ -71,7 +80,7 @@ class SubTaskProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updateSubTask(Subtask task) async {
+  Future<void> updateSubTask(SubtaskModel task) async {
     try {
       await _db.updateSubtask(task);
       final taskIndex = _subTasks.indexWhere((t) => t.id == task.id);
@@ -97,17 +106,18 @@ class SubTaskProvider extends ChangeNotifier {
 
   void duplicateSubTask(String taskId) {
     final task = _subTasks.firstWhere((t) => t.id == taskId);
-    final newTask = Subtask(
+    final newTask = SubtaskModel(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
+      taskId: task.taskId,
       title: task.title,
       isCompleted: false,
       priority: task.priority,
-      projectId: task.projectId,
+      createdAt: DateTime.now(),
     );
     addSubTask(newTask);
   }
 
-  Subtask? getSubTaskById(String taskId) {
+  SubtaskModel? getSubTaskById(String taskId) {
     try {
       return _subTasks.firstWhere((task) => task.id == taskId);
     } catch (e) {
@@ -120,7 +130,9 @@ class SubTaskProvider extends ChangeNotifier {
     notifyListeners();
     
     try {
-      _subTasks = _db.getSubtasksByProject(projectId);
+      // SubtaskModel doesn't have projectId, so we can't filter by project
+      // Return empty list for now - this feature needs to be re-implemented
+      _subTasks = [];
     } catch (e) {
       _subTasks = [];
     } finally {

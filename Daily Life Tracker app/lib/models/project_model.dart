@@ -1,72 +1,38 @@
+// Developed by:
+// - Arabic: م / يوسف محمود عبد الجواد
+// - English: Eng / Youssef Mahmoud Abdelgawad
+// - Business Website: [https://y0ussef.com/](https://y0ussef.com/)
+// - Whatsapp: [https://wa.me/Y0ussefmahmoud](https://wa.me/Y0ussefmahmoud)
+// - Email: info@Youssef.com
+
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import '../utils/constants.dart';
 import 'subtask_model.dart';
 
-part 'project_model.g.dart';
-
 enum ProjectStatus {
-  @HiveField(0)
   active,
-  @HiveField(1)
   paused,
-  @HiveField(2)
   completed,
-  @HiveField(3)
   inProgress,
 }
 
-@HiveType(typeId: 1)
 class Project {
-  @HiveField(0)
   String id;
-  
-  @HiveField(1)
   String name;
-  
-  @HiveField(2)
   double progress;
-  
-  @HiveField(3)
   List<String> techStack;
-  
-  @HiveField(4)
   int weeklyHours;
-  
-  @HiveField(5)
   ProjectStatus status;
-  
-  @HiveField(6)
   DateTime? deadline;
-  
-  @HiveField(7)
   String? statusMessage;
-  
-  @HiveField(8)
   String? weeklyFocus;
-  
-  @HiveField(9)
   DateTime? startDate;
-  
-  @HiveField(10)
   DateTime? endDate;
-  
-  @HiveField(11)
-  List<Subtask> subtasks;
-  
-  @HiveField(12)
+  List<SubtaskModel> subtasks;
   DateTime createdAt;
-
-  @HiveField(13)
   final String category;
-
-  @HiveField(14)
   final int totalHoursSpent;
-
-  @HiveField(15)
   final int priority;
-
-  @HiveField(16)
   final String? description;
 
   Project({
@@ -101,7 +67,7 @@ class Project {
     String? weeklyFocus,
     DateTime? startDate,
     DateTime? endDate,
-    List<Subtask>? subtasks,
+    List<SubtaskModel>? subtasks,
     DateTime? createdAt,
     String? category,
     int? totalHoursSpent,

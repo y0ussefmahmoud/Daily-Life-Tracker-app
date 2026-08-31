@@ -1,3 +1,10 @@
+// Developed by:
+// - Arabic: م / يوسف محمود عبد الجواد
+// - English: Eng / Youssef Mahmoud Abdelgawad
+// - Business Website: [https://y0ussef.com/](https://y0ussef.com/)
+// - Whatsapp: [https://wa.me/Y0ussefmahmoud](https://wa.me/Y0ussefmahmoud)
+// - Email: info@Youssef.com
+
 // ignore_for_file: strict_top_level_inference
 
 import 'package:flutter/material.dart';
@@ -321,7 +328,7 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
     );
   }
 
-  void _showDeleteConfirmation(Task task) {
+  void _showDeleteConfirmation(TaskModel task) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -399,7 +406,7 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
 }
 
 class _AddTaskDialog extends StatefulWidget {
-  final Task? task;
+  final TaskModel? task;
 
   const _AddTaskDialog({required this.task});
 
@@ -612,14 +619,16 @@ class _AddTaskDialogState extends State<_AddTaskDialog> {
       try {
         if (widget.task == null) {
           debugPrint('Creating new task...');
-          final newTask = Task(
+          final newTask = TaskModel(
             id: const Uuid().v4(),
+            userId: 'current_user',
             title: _titleController.text.trim(),
             category: _categoryController.text.trim(),
             iconCodePoint: _selectedIcon.codePoint,
             priority: _getPriorityFromString(_selectedPriority),
             isRepeating: _isRepeating,
             createdAt: DateTime.now(),
+            updatedAt: DateTime.now(),
           );
           debugPrint('Task created: ${newTask.title}');
           debugPrint('Calling taskProvider.addTask...');

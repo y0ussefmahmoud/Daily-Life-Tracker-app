@@ -1,3 +1,10 @@
+// Developed by:
+// - Arabic: م / يوسف محمود عبد الجواد
+// - English: Eng / Youssef Mahmoud Abdelgawad
+// - Business Website: [https://y0ussef.com/](https://y0ussef.com/)
+// - Whatsapp: [https://wa.me/Y0ussefmahmoud](https://wa.me/Y0ussefmahmoud)
+// - Email: info@Youssef.com
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
@@ -116,8 +123,13 @@ class ProfileProvider extends ChangeNotifier {
       // Create a simple profile without authentication
       _profile = UserProfileModel(
         id: 'user_001',
+        userId: 'current_user',
         name: _userName.isEmpty ? 'مستخدم التطبيق' : _userName,
         email: 'user@tracker.app',
+        totalXp: _points,
+        currentLevel: _level,
+        createdAt: _joinDate,
+        updatedAt: DateTime.now(),
       );
       
       // Load user level from achievements provider

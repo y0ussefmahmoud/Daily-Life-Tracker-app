@@ -1,3 +1,10 @@
+// Developed by:
+// - Arabic: م / يوسف محمود عبد الجواد
+// - English: Eng / Youssef Mahmoud Abdelgawad
+// - Business Website: [https://y0ussef.com/](https://y0ussef.com/)
+// - Whatsapp: [https://wa.me/Y0ussefmahmoud](https://wa.me/Y0ussefmahmoud)
+// - Email: info@Youssef.com
+
 // ignore_for_file: unused_import
 
 import 'package:flutter/material.dart';
@@ -174,7 +181,7 @@ class AppSizes {
 class AppStrings {
   // App Info
   static const String appName = 'Daily Life Tracker app';
-  static const String appVersion = '2.3.2';
+  static const String appVersion = '2.3.4';
   static const String developerName = 'Youssef Mahmoud';
   static const String buildNumber = '1';
   static const String lastUpdate = '2026-03-20';
@@ -577,6 +584,15 @@ class AppThemeHelper {
           'textColor': isDark 
               ? Colors.blue.shade300 
               : Colors.blue.shade700,
+        };
+      case TaskPriority.urgent:
+        return {
+          'backgroundColor': isDark 
+              ? Colors.purple.withValues(alpha: 0.2) 
+              : Colors.purple.shade100,
+          'textColor': isDark 
+              ? Colors.purple.shade300 
+              : Colors.purple.shade700,
         };
     }
   }
