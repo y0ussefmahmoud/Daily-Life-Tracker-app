@@ -15,13 +15,8 @@ class WaterService {
   final Uuid _uuid = const Uuid();
 
   Future<void> logWaterIntake(int amountMl) async {
-    debugPrint('=== LOG WATER INTAKE START ===');
-    debugPrint('Amount: $amountMl');
-    
     try {
-      // Check if waterLogBox is initialized
       if (!_db.isWaterLogBoxInitialized()) {
-        debugPrint('Water log box not initialized, initializing...');
         await _db.initialize();
       }
       
@@ -31,10 +26,7 @@ class WaterService {
         date: DateTime.now(),
       );
       
-      debugPrint('Creating water log: ${waterLog.id}');
       await _db.waterLogBox.put(waterLog.id, waterLog);
-      debugPrint('Water log saved successfully');
-      debugPrint('=== LOG WATER INTAKE COMPLETE ===');
     } catch (e, stackTrace) {
       debugPrint('LOG WATER INTAKE ERROR: $e');
       debugPrint('STACK: $stackTrace');
@@ -43,12 +35,8 @@ class WaterService {
   }
 
   Future<List<WaterLog>> fetchTodayWaterLogs() async {
-    debugPrint('=== FETCH TODAY WATER LOGS START ===');
-    
     try {
-      // Check if waterLogBox is initialized
       if (!_db.isWaterLogBoxInitialized()) {
-        debugPrint('Water log box not initialized, initializing...');
         await _db.initialize();
       }
       
@@ -59,8 +47,6 @@ class WaterService {
         log.date.day == today.day
       ).toList();
       
-      debugPrint('Found ${logs.length} logs for today');
-      debugPrint('=== FETCH TODAY WATER LOGS COMPLETE ===');
       return logs;
     } catch (e, stackTrace) {
       debugPrint('FETCH TODAY WATER LOGS ERROR: $e');
@@ -86,7 +72,6 @@ class WaterService {
     try {
       final todayLogs = await fetchTodayWaterLogs();
       final total = todayLogs.fold<int>(0, (sum, log) => sum + log.amount);
-      debugPrint('Today total water intake: $total');
       return total;
     } catch (e, stackTrace) {
       debugPrint('GET TODAY TOTAL ERROR: $e');
@@ -96,13 +81,9 @@ class WaterService {
   }
 
   Future<int> getTodayWaterIntake() async {
-    debugPrint('=== GET TODAY WATER INTAKE START ===');
-    
     try {
       final logs = await fetchTodayWaterLogs();
       final total = logs.fold<int>(0, (sum, log) => sum + log.amount);
-      debugPrint('Today water intake calculated: $total');
-      debugPrint('=== GET TODAY WATER INTAKE COMPLETE ===');
       return total;
     } catch (e, stackTrace) {
       debugPrint('GET TODAY WATER INTAKE ERROR: $e');
@@ -112,14 +93,8 @@ class WaterService {
   }
 
   Future<int> getWaterGoal() async {
-    debugPrint('=== GET WATER GOAL START ===');
-    
     try {
-      // Default goal for now
-      final goal = 2000;
-      debugPrint('Water goal: $goal');
-      debugPrint('=== GET WATER GOAL COMPLETE ===');
-      return goal;
+      return 2000;
     } catch (e, stackTrace) {
       debugPrint('GET WATER GOAL ERROR: $e');
       debugPrint('STACK: $stackTrace');
@@ -128,13 +103,8 @@ class WaterService {
   }
 
   Future<void> deleteWaterLog(String id) async {
-    debugPrint('=== DELETE WATER LOG START ===');
-    debugPrint('ID: $id');
-    
     try {
       await _db.waterLogBox.delete(id);
-      debugPrint('Water log deleted successfully');
-      debugPrint('=== DELETE WATER LOG COMPLETE ===');
     } catch (e, stackTrace) {
       debugPrint('DELETE WATER LOG ERROR: $e');
       debugPrint('STACK: $stackTrace');

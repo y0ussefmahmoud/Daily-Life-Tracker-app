@@ -85,12 +85,17 @@ class SettingsProvider extends ChangeNotifier {
         const Duration(seconds: 3),
         onTimeout: () => null,
       );
+      final languageResult = await _db.getSetting('language').timeout(
+        const Duration(seconds: 3),
+        onTimeout: () => null,
+      );
       
       final prayerNotifications = prayerNotificationsResult ?? true;
       final projectReminders = projectRemindersResult ?? true;
       final waterNotifications = waterNotificationsResult ?? true;
       final darkMode = darkModeResult ?? false;
       final themeColor = themeColorResult ?? 'blue';
+      final language = languageResult ?? 'ar';
       
       _settings = SettingsModel(
         prayerNotificationsEnabled: prayerNotifications as bool,
@@ -98,6 +103,7 @@ class SettingsProvider extends ChangeNotifier {
         waterTrackerNotificationsEnabled: waterNotifications as bool,
         darkModeEnabled: darkMode as bool,
         themeColor: themeColor as String,
+        language: language as String,
       );
     } catch (e) {
       _error = 'Failed to load settings: $e';

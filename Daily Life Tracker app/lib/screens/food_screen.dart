@@ -6,6 +6,7 @@
 // - Email: info@Youssef.com
 
 import 'package:flutter/material.dart';
+import '../services/localization_service.dart';
 import '../constants/app_colors.dart';
 
 class FoodScreen extends StatefulWidget {
@@ -16,24 +17,31 @@ class FoodScreen extends StatefulWidget {
 }
 
 class _FoodScreenState extends State<FoodScreen> {
-  final List<Map<String, dynamic>> _meals = [
-    {'name': 'الفطار', 'icon': Icons.breakfast_dining, 'completed': false, 'time': '7:00 ص'},
-    {'name': 'الغداء', 'icon': Icons.lunch_dining, 'completed': false, 'time': '1:00 م'},
-    {'name': 'العشاء', 'icon': Icons.dinner_dining, 'completed': false, 'time': '7:00 م'},
-    {'name': 'وجبة خفيفة', 'icon': Icons.cookie, 'completed': false, 'time': '4:00 م'},
-    {'name': 'شرب ماء', 'icon': Icons.water_drop, 'completed': false, 'time': 'طوال اليوم'},
-  ];
+  late List<Map<String, dynamic>> _meals;
+  late List<Map<String, dynamic>> _waterIntake;
 
-  final List<Map<String, dynamic>> _waterIntake = [
-    {'time': '7:00 ص', 'amount': 250, 'completed': false},
-    {'time': '9:00 ص', 'amount': 250, 'completed': false},
-    {'time': '11:00 ص', 'amount': 250, 'completed': false},
-    {'time': '1:00 م', 'amount': 250, 'completed': false},
-    {'time': '3:00 م', 'amount': 250, 'completed': false},
-    {'time': '5:00 م', 'amount': 250, 'completed': false},
-    {'time': '7:00 م', 'amount': 250, 'completed': false},
-    {'time': '9:00 م', 'amount': 250, 'completed': false},
-  ];
+  @override
+  void initState() {
+    super.initState();
+    final l10n = AppLocalizations.of(context);
+    _meals = [
+      {'name': l10n.mealBreakfast, 'icon': Icons.breakfast_dining, 'completed': false, 'time': '7:00 ص'},
+      {'name': l10n.mealLunch, 'icon': Icons.lunch_dining, 'completed': false, 'time': '1:00 م'},
+      {'name': l10n.mealDinner, 'icon': Icons.dinner_dining, 'completed': false, 'time': '7:00 م'},
+      {'name': l10n.mealSnack, 'icon': Icons.cookie, 'completed': false, 'time': '4:00 م'},
+      {'name': l10n.drinkWater, 'icon': Icons.water_drop, 'completed': false, 'time': l10n.allDay},
+    ];
+    _waterIntake = [
+      {'time': '7:00 ص', 'amount': 250, 'completed': false},
+      {'time': '9:00 ص', 'amount': 250, 'completed': false},
+      {'time': '11:00 ص', 'amount': 250, 'completed': false},
+      {'time': '1:00 م', 'amount': 250, 'completed': false},
+      {'time': '3:00 م', 'amount': 250, 'completed': false},
+      {'time': '5:00 م', 'amount': 250, 'completed': false},
+      {'time': '7:00 م', 'amount': 250, 'completed': false},
+      {'time': '9:00 م', 'amount': 250, 'completed': false},
+    ];
+  }
 
   void _toggleMeal(int index) {
     setState(() {
@@ -74,10 +82,11 @@ class _FoodScreenState extends State<FoodScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        title: const Text('تتبع الأكل'),
+        title: Text(l10n.foodTitle),
         backgroundColor: AppColors.primaryColor,
         foregroundColor: Colors.white,
         elevation: 0,
@@ -85,7 +94,7 @@ class _FoodScreenState extends State<FoodScreen> {
           IconButton(
             onPressed: _resetAll,
             icon: const Icon(Icons.refresh),
-            tooltip: 'إعادة تعيين الكل',
+            tooltip: l10n.resetAll,
           ),
         ],
       ),

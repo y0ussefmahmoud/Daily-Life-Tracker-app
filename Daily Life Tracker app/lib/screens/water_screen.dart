@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/water_provider.dart';
 import '../models/water_log_model.dart';
+import '../services/localization_service.dart';
 import '../constants/app_colors.dart';
 
 class WaterScreen extends StatefulWidget {
@@ -43,7 +44,7 @@ class _WaterScreenState extends State<WaterScreen> with TickerProviderStateMixin
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        title: const Text('تتبع الماء'),
+        title: Text(AppLocalizations.of(context).waterTitle),
         backgroundColor: AppColors.primaryColor,
         foregroundColor: Colors.white,
         elevation: 0,
@@ -52,10 +53,10 @@ class _WaterScreenState extends State<WaterScreen> with TickerProviderStateMixin
           indicatorColor: Colors.white,
           labelColor: Colors.white,
           unselectedLabelColor: Colors.white70,
-          tabs: const [
-            Tab(text: 'اليوم'),
-            Tab(text: 'الإحصائيات'),
-            Tab(text: 'الإعدادات'),
+          tabs: [
+            Tab(text: AppLocalizations.of(context).today),
+            Tab(text: AppLocalizations.of(context).statisticsTitle),
+            Tab(text: AppLocalizations.of(context).settingsTitle),
           ],
         ),
       ),
@@ -73,6 +74,7 @@ class _WaterScreenState extends State<WaterScreen> with TickerProviderStateMixin
   Widget _buildTodayTab() {
     return Consumer<WaterProvider>(
       builder: (context, waterProvider, child) {
+        final l10n = AppLocalizations.of(context);
         debugPrint('=== WATER SCREEN BUILD ===');
         debugPrint('isLoading: ${waterProvider.isLoading}');
         debugPrint('error: ${waterProvider.error}');
@@ -83,13 +85,13 @@ class _WaterScreenState extends State<WaterScreen> with TickerProviderStateMixin
         // Handle loading state
         if (waterProvider.isLoading) {
           debugPrint('SHOWING LOADING STATE');
-          return const Center(
+          return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircularProgressIndicator(),
-                SizedBox(height: 16),
-                Text('جاري تحميل بيانات الماء...'),
+                const CircularProgressIndicator(),
+                const SizedBox(height: 16),
+                Text(l10n.loading),
               ],
             ),
           );

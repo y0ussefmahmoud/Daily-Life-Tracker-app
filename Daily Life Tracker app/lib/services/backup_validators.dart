@@ -28,8 +28,8 @@ class BackupValidators {
       return false;
     }
 
-    final data = backup['data'] as Map<String, dynamic>?;
-    if (data == null) {
+    final rawData = backup['data'];
+    if (rawData == null || rawData is! Map) {
       return false;
     }
 

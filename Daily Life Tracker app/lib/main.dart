@@ -23,6 +23,7 @@ import 'providers/stats_provider.dart';
 import 'providers/profile_provider.dart';
 import 'providers/settings_provider.dart';
 import 'services/local_database_service.dart';
+import 'services/localization_service.dart';
 import 'utils/constants.dart';
 
 Future<void> main() async {
@@ -59,141 +60,147 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<SettingsProvider>(
         builder: (context, settings, child) {
-          return MaterialApp(
-            title: 'Daily Life Tracker',
-            theme: ThemeData(
-              useMaterial3: true,
-              colorScheme: ColorScheme.light(
-                primary: AppColors.primaryColor,
-                secondary: AppColors.secondaryColor,
-                surface: AppColors.cardLight,
-                error: AppColors.warningColor,
-                onPrimary: AppColors.textLight,
-                onSecondary: AppColors.textLight,
-                onSurface: AppColors.textPrimary,
-              ),
-              scaffoldBackgroundColor: AppColors.backgroundLight,
-              cardColor: AppColors.cardLight,
-              dividerColor: AppColors.borderLight,
-              textTheme: GoogleFonts.tajawalTextTheme(
-                ThemeData.light().textTheme,
-              ).apply(
-                bodyColor: AppColors.textPrimary,
-                displayColor: AppColors.textPrimary,
-              ),
-              iconTheme: IconThemeData(
-                color: AppColors.textPrimary,
-              ),
-              appBarTheme: AppBarTheme(
-                backgroundColor: AppColors.primaryColor,
-                foregroundColor: Colors.white,
-                elevation: 0,
-                titleTextStyle: GoogleFonts.tajawal(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+          return Directionality(
+            textDirection: settings.locale.languageCode == 'ar' 
+                ? TextDirection.rtl 
+                : TextDirection.ltr,
+            child: MaterialApp(
+              title: 'Daily Life Tracker',
+              theme: ThemeData(
+                useMaterial3: true,
+                colorScheme: ColorScheme.light(
+                  primary: AppColors.primaryColor,
+                  secondary: AppColors.secondaryColor,
+                  surface: AppColors.cardLight,
+                  error: AppColors.warningColor,
+                  onPrimary: AppColors.textLight,
+                  onSecondary: AppColors.textLight,
+                  onSurface: AppColors.textPrimary,
+                ),
+                scaffoldBackgroundColor: AppColors.backgroundLight,
+                cardColor: AppColors.cardLight,
+                dividerColor: AppColors.borderLight,
+                textTheme: GoogleFonts.tajawalTextTheme(
+                  ThemeData.light().textTheme,
+                ).apply(
+                  bodyColor: AppColors.textPrimary,
+                  displayColor: AppColors.textPrimary,
+                ),
+                iconTheme: IconThemeData(
+                  color: AppColors.textPrimary,
+                ),
+                appBarTheme: AppBarTheme(
+                  backgroundColor: AppColors.primaryColor,
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                  titleTextStyle: GoogleFonts.tajawal(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                  backgroundColor: AppColors.cardLight,
+                  selectedItemColor: AppColors.primaryColor,
+                  unselectedItemColor: AppColors.gray500,
+                  type: BottomNavigationBarType.fixed,
+                  selectedLabelStyle: GoogleFonts.tajawal(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  unselectedLabelStyle: GoogleFonts.tajawal(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                cardTheme: CardThemeData(
+                  color: AppColors.cardLight,
+                  elevation: 2,
+                  shadowColor: Colors.black.withValues(alpha: 0.1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
               ),
-              bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                backgroundColor: AppColors.cardLight,
-                selectedItemColor: AppColors.primaryColor,
-                unselectedItemColor: AppColors.gray500,
-                type: BottomNavigationBarType.fixed,
-                selectedLabelStyle: GoogleFonts.tajawal(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
+              darkTheme: ThemeData(
+                useMaterial3: true,
+                colorScheme: ColorScheme.dark(
+                  primary: AppColors.primaryColor,
+                  secondary: AppColors.secondaryColor,
+                  surface: AppColors.cardDark,
+                  error: AppColors.warningColor,
+                  onPrimary: AppColors.textLight,
+                  onSecondary: AppColors.textLight,
+                  onSurface: AppColors.textLight,
                 ),
-                unselectedLabelStyle: GoogleFonts.tajawal(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
+                scaffoldBackgroundColor: AppColors.backgroundDark,
+                cardColor: AppColors.cardDark,
+                dividerColor: AppColors.borderDark,
+                textTheme: GoogleFonts.tajawalTextTheme(
+                  ThemeData.dark().textTheme,
+                ).apply(
+                  bodyColor: AppColors.textLight,
+                  displayColor: AppColors.textLight,
+                ),
+                iconTheme: IconThemeData(
+                  color: AppColors.textLight,
+                ),
+                appBarTheme: AppBarTheme(
+                  backgroundColor: AppColors.primaryColor,
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                  titleTextStyle: GoogleFonts.tajawal(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                  backgroundColor: AppColors.cardDark,
+                  selectedItemColor: AppColors.primaryColor,
+                  unselectedItemColor: AppColors.darkTextSecondary,
+                  type: BottomNavigationBarType.fixed,
+                  selectedLabelStyle: GoogleFonts.tajawal(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.primaryColor,
+                  ),
+                  unselectedLabelStyle: GoogleFonts.tajawal(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.darkTextSecondary,
+                  ),
+                ),
+                cardTheme: CardThemeData(
+                  color: AppColors.cardDark,
+                  elevation: 4,
+                  shadowColor: Colors.black.withValues(alpha: 0.3),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
               ),
-              cardTheme: CardThemeData(
-                color: AppColors.cardLight,
-                elevation: 2,
-                shadowColor: Colors.black.withValues(alpha: 0.1),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
+              themeMode: settings.darkModeEnabled ? ThemeMode.dark : ThemeMode.light,
+              debugShowCheckedModeBanner: false,
+              home: const HomeScreen(),
+              routes: {
+                '/tasks': (context) => const TasksScreen(),
+                '/projects': (context) => const ProjectsScreen(),
+                '/achievements': (context) => const AchievementsScreen(),
+              },
+              // Localization setup
+              localizationsDelegates: const [
+                AppLocalizationsDelegate(),
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: const [
+                Locale('en', 'US'), // English
+                Locale('ar', 'SA'), // Arabic
+              ],
+              locale: settings.locale,
             ),
-            darkTheme: ThemeData(
-              useMaterial3: true,
-              colorScheme: ColorScheme.dark(
-                primary: AppColors.primaryColor,
-                secondary: AppColors.secondaryColor,
-                surface: AppColors.cardDark,
-                error: AppColors.warningColor,
-                onPrimary: AppColors.textLight,
-                onSecondary: AppColors.textLight,
-                onSurface: AppColors.textLight,
-              ),
-              scaffoldBackgroundColor: AppColors.backgroundDark,
-              cardColor: AppColors.cardDark,
-              dividerColor: AppColors.borderDark,
-              textTheme: GoogleFonts.tajawalTextTheme(
-                ThemeData.dark().textTheme,
-              ).apply(
-                bodyColor: AppColors.textLight,
-                displayColor: AppColors.textLight,
-              ),
-              iconTheme: IconThemeData(
-                color: AppColors.textLight,
-              ),
-              appBarTheme: AppBarTheme(
-                backgroundColor: AppColors.primaryColor,
-                foregroundColor: Colors.white,
-                elevation: 0,
-                titleTextStyle: GoogleFonts.tajawal(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                backgroundColor: AppColors.cardDark,
-                selectedItemColor: AppColors.primaryColor,
-                unselectedItemColor: AppColors.darkTextSecondary,
-                type: BottomNavigationBarType.fixed,
-                selectedLabelStyle: GoogleFonts.tajawal(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.primaryColor,
-                ),
-                unselectedLabelStyle: GoogleFonts.tajawal(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.darkTextSecondary,
-                ),
-              ),
-              cardTheme: CardThemeData(
-                color: AppColors.cardDark,
-                elevation: 4,
-                shadowColor: Colors.black.withValues(alpha: 0.3),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-            ),
-            themeMode: settings.darkModeEnabled ? ThemeMode.dark : ThemeMode.light,
-            debugShowCheckedModeBanner: false,
-            home: const HomeScreen(),
-            routes: {
-              '/tasks': (context) => const TasksScreen(),
-              '/projects': (context) => const ProjectsScreen(),
-              '/achievements': (context) => const AchievementsScreen(),
-            },
-            // Localization setup
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [
-              Locale('en', 'US'), // English
-              Locale('ar', 'SA'), // Arabic
-            ],
-            locale: const Locale('ar', 'SA'), // Default to Arabic
           );
         },
       ),

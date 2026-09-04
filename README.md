@@ -1,379 +1,270 @@
-# Daily Life Tracker v2.4.0
+# Daily Life Tracker v2.4.2
 
-A comprehensive Flutter application for daily life tracking with task management, projects, and statistics.
+A modern, comprehensive Flutter productivity and lifestyle tracking application built with a high-performance offline-first architecture, rich gamification system, and responsive bilingual UI (Arabic & English).
 
-## Overview
+---
 
-Daily Life Tracker is a comprehensive application designed to help users organize their daily lives through:
-- Task and Project Management - Advanced tracking and management system
-- Level System - Experience points (XP), levels, and progression roadmap
-- Integrated Profile - Edit name, avatar, and settings
-- Statistics and Achievements Tracking - Detailed performance analysis
-- Badge and Motivation System - Rewards and achievements
-- Advanced Settings - Dark mode, language, notifications
-- Professional Arabic User Interface - Modern and easy-to-use design
+## Project Vision & Goals
 
-## Application Goals
+**Daily Life Tracker** is designed to transform daily routine management into an engaging, structured, and consistent lifestyle. Rather than treating productivity as dry checklists, the application blends holistic personal tracking (tasks, software projects, religious commitments, physical workouts, nutrition, and hydration) with RPG-inspired gamification.
 
-The primary goals of Daily Life Tracker are:
+### Primary Objectives:
+1. **Holistic Daily Organization**: Unify disparate aspects of daily life into one coherent dashboard:
+   - Actionable time-categorized tasks and subtasks.
+   - Long-term engineering/study projects with progress metrics and tech-stack management.
+   - Spiritual routines (5 daily prayers with logging, daily Dhikr counters).
+   - Health and fitness (hydration tracking, workout tracking, nutrition logging).
+2. **Behavioral Gamification & Motivation**: Keep users consistent and engaged over the long term through:
+   - Experience points (XP) awarded for task and habit completions.
+   - Progressive user levels with dynamic titles and milestone roadmaps.
+   - Badges and achievements commemorating streaks and productivity milestones.
+3. **High Performance & Offline Reliability**:
+   - Zero cloud dependency for core features using fast local NoSQL storage (Hive).
+   - Single-flight initialization guards and memoized futures to eliminate duplicate database calls and main-thread blocking.
+   - Impeller rendering optimization with widget rebuild minimization.
+4. **Data Privacy & Full Portability**:
+   - Full JSON-based export and import with robust schema versioning (`v2.4.x` compatibility validation) allowing seamless cross-device backups.
+5. **Universal Accessibility**:
+   - Native RTL support (Arabic first) and LTR (English), adaptive responsive layouts for phones and tablets, and system/custom dark mode.
 
-1. Productivity Enhancement - Help users manage their daily tasks and projects efficiently through organized tracking and categorization
-2. Gamification - Motivate users through experience points, levels, badges, and achievement systems to maintain consistency
-3. Data Organization - Provide structured storage for tasks, projects, habits, water intake, prayers, and other daily activities
-4. Progress Tracking - Enable users to monitor their progress through detailed statistics, charts, and performance metrics
-5. User Engagement - Maintain user interest through interactive features, rewards, and personalized experiences
-6. Data Portability - Allow users to backup and restore their data for seamless transitions between devices
-7. Offline Capability - Ensure core functionality works without internet connection using local storage
+---
 
-## Tech Stack
+## Tech Stack & Architecture
 
-### Core Framework
-- Flutter SDK (3.10.0+)
-- Dart programming language
+### Core Platform
+- **Framework**: [Flutter](https://flutter.dev/) (SDK `^3.10.0`)
+- **Language**: [Dart](https://dart.dev/) (Type-safe with sound null-safety)
+- **Rendering Engine**: Impeller (Vulkan / Metal backend support)
 
-### State Management
-- Provider (6.1.1+) - State management solution
+### State Management & Architecture Pattern
+- **State Management**: [Provider](https://pub.dev/packages/provider) (`^6.1.1`)
+  - Decentralized provider pattern with targeted rebuild subscriptions (`Consumer`, `Selector`).
+  - Separation of concerns across Models, Providers, Services, and Views.
+  - Asynchronous single-flight guards (`_initFuture`) preventing redundant data fetching during app lifecycle changes.
 
-### Local Storage
-- Hive (2.2.3+) - Local NoSQL database
-- Hive Flutter (1.1.0+) - Flutter integration for Hive
-- Path Provider (2.1.3+) - File system access
-- Shared Preferences (2.5.4+) - Key-value storage
+### Local Persistence & Storage
+- **Primary Database**: [Hive](https://pub.dev/packages/hive) (`^2.2.3`) & [Hive Flutter](https://pub.dev/packages/hive_flutter) (`^1.1.0`)
+  - Lightweight, high-performance, disk-backed NoSQL key-value/object storage.
+  - Custom Type Adapters (`WaterLogAdapter`) and structured JSON serialization for complex entities (`TaskModel`, `Project`, `SubtaskModel`).
+  - Safe map cast patterns (`Map<String, dynamic>.from(...)`) guarding against Dart runtime map subtype exceptions.
+- **Key-Value Preferences**: [Shared Preferences](https://pub.dev/packages/shared_preferences) (`^2.5.4`) for rapid flags and runtime settings.
+- **File System**: [Path Provider](https://pub.dev/packages/path_provider) (`^2.1.3`) for document and database directory resolution.
 
-### UI Components
-- Google Fonts (8.0.2+) - Custom typography
-- Cupertino Icons (1.0.8+) - iOS-style icons
-- Material Design - Built-in Flutter UI components
-- Percent Indicator (4.2.3+) - Progress indicators
-- Flutter SVG (2.0.9+) - SVG rendering
+### UI, Typography & Design System
+- **Design System**: Material Design 3 (Material You) with custom adaptive styling.
+- **Typography**: [Google Fonts](https://pub.dev/packages/google_fonts) (`^8.0.2`) featuring **Tajawal** for Arabic/English typography.
+- **Vector Graphics & Icons**:
+  - Material Symbols Outlined & Cupertino Icons (`^1.0.8`).
+  - [Flutter SVG](https://pub.dev/packages/flutter_svg) (`^2.0.9`) for resolution-independent vector rendering.
+- **Progress Visualizations**: [Percent Indicator](https://pub.dev/packages/percent_indicator) (`^4.2.3`) for linear, circular, and custom progress tracking.
+- **Responsive Layout**: Custom responsive breakpoints adapting grid columns, padding, and font sizes across device classes.
 
-### Utilities
-- UUID (4.5.1+) - Unique identifier generation
-- Intl (0.20.2+) - Internationalization and date formatting
-- Connectivity Plus (7.0.0+) - Network connectivity monitoring
-- Share Plus (12.0.1+) - File sharing functionality
+### Utilities & Native Integration
+- **ID Generation**: [UUID](https://pub.dev/packages/uuid) (`^4.5.1`) for RFC4122 v4 unique identifier generation.
+- **Internationalization**: [Intl](https://pub.dev/packages/intl) (`^0.20.2`) & `flutter_localizations` with full AR/EN localization dictionaries.
+- **Network State**: [Connectivity Plus](https://pub.dev/packages/connectivity_plus) (`^7.0.0`).
+- **Data Sharing**: [Share Plus](https://pub.dev/packages/share_plus) (`^12.0.1`) for exporting backups and reports.
 
-### Code Generation
-- Build Runner (2.4.13+) - Code generation tool
-- Hive Generator (2.0.1+) - Hive adapter code generation
-- JSON Annotation (4.10.0+) - JSON serialization annotations
+### Build & Code Generation Tooling
+- **Build Runner**: `build_runner` (`^2.4.13`)
+- **Hive Generator**: `hive_generator` (`^2.0.1`)
+- **JSON Serialization**: `json_annotation` (`^4.10.0`)
+- **Code Quality**: `flutter_lints` (`^6.0.0`)
 
-### Development Tools
-- Flutter Test - Built-in testing framework
-- Mockito (5.4.4+) - Mocking framework for unit tests
-- Flutter Lints (6.0.0+) - Code quality and style analysis
+---
 
-### App Configuration
-- Flutter Launcher Icons (0.14.1+) - App icon generation
-- Flutter Native Splash (2.4.1+) - Splash screen configuration
+## Release Notes — v2.4.2 Highlights
 
-### Localization
-- Flutter Localizations - Built-in localization support
+- **Map Type Casting Hardening**: Resolved runtime subtype cast exceptions (`_Map<dynamic, dynamic>` to `Map<String, dynamic>`) across database initialization, version migration, and JSON backup/restore modules.
+- **Performance & Rebuild Minimization**:
+  - Added memoized Future guards across `LocalDatabaseService`, `TaskProvider`, `ProjectProvider`, and `WaterProvider` to prevent duplicated disk I/O.
+  - Converted home feature cards (`الصلوات`, `الأذكار`, `الجيم`, `الأكل`) into standalone `StatelessWidget` instances with `const` constructors to decouple them from frequent provider notification cycles.
+  - Refactored cold-start provider loading to execute concurrently via `Future.wait`.
+- **Samsung A55 Compatibility**: Cleaned up heavy main-thread I/O logging and updated ProGuard rules for modern Android 14 (API 34) Vulkan / Impeller rendering.
 
-## Features
+---
 
-### Task Management
-- Create, edit, and delete tasks
-- Task categorization with icons
-- Priority levels (low, medium, high, urgent)
-- Time categories (today, tomorrow, this week, later)
-- Due date and reminder settings
-- Task completion tracking
-- Subtask support for complex tasks
+## Features Breakdown
 
-### Project Management
-- Create and manage projects
-- Project status tracking (active, paused, completed, in progress)
-- Project progress visualization
-- Project-specific task organization
-- Time tracking for projects
+### 1. Task Management
+- Hierarchical task structuring with subtasks.
+- Time categorization: *Today*, *Next Week*, *Someday*.
+- Priority categorization: *Low*, *Medium*, *High*, *Urgent*.
+- Due date, reminder timestamps, and repeating task intervals.
+- Automatic XP rewards upon task completion.
 
-### Habit Tracking
-- Daily habit logging
-- Streak tracking
-- Break habit support (quit tracking)
-- Habit categories
-- Completion history
+### 2. Software & Study Projects
+- Comprehensive project tracking (Active, Paused, Completed).
+- Tech-stack tagging and weekly hour allocations.
+- Real-time overall productivity progress percentage.
+- Task association with individual project milestones.
 
-### Water Intake Tracking
-- Daily water logging
-- Customizable daily goals
-- Progress visualization
-- Intake history
+### 3. Spiritual & Lifestyle Modules
+- **Prayers Tracker**: Interactive daily prayer check (Fajr, Dhuhr, Asr, Maghrib, Isha) with historical logging.
+- **Dhikr Counter**: Digital tasbih counters with customizable targets and reset options.
+- **Hydration Tracker**: Quick-add water intake (in ml), custom daily goals, target cups calculation, and history.
+- **Gym & Workouts**: Exercise tracking with weight, sets, and reps logs.
+- **Nutrition**: Meal tracking and dietary logs.
 
-### Prayer Tracking
-- Five daily prayers (Fajr, Dhuhr, Asr, Maghrib, Isha)
-- Prayer completion logging
-- Prayer history tracking
+### 4. Gamification & Progression
+- **Experience Points (XP)**: Earned through verified accomplishments.
+- **User Levels & Ranks**: Level progression calculation with titles ranging from beginner to master.
+- **Milestone Badges**: Unlocked based on sustained streaks and volume of completed projects and habits.
 
-### Gamification System
-- Experience points (XP) for completing tasks
-- Level progression system
-- Level roadmap with milestones
-- Badge system for achievements
-- Leaderboard functionality
-- User profile with stats
+### 5. Data Backup & Restore
+- Full offline export of user profiles, tasks, subtasks, projects, and settings to an indented, portable JSON file.
+- Automatic schema validation ensuring backward and forward compatibility for `2.x.x` versions.
+- Safe transactional import routine clearing existing tables and rebuilding the store cleanly.
 
-### Statistics and Analytics
-- Weekly progress charts
-- Task completion rates
-- Time distribution analysis
-- Daily summary cards
-- Monthly progress tracking
-
-### Profile Management
-- User profile customization
-- Avatar management
-- Profile statistics display
-- Level and XP visualization
-- Achievement showcase
-
-### Settings
-- Dark mode toggle
-- Theme color customization
-- Language settings
-- Notification preferences
-- Sound settings
-- Backup and restore functionality
+---
 
 ## Project Structure
 
 ```
 lib/
-├── main.dart                 # Application entry point
+├── main.dart                          # App entry point, MultiProvider configuration, and theme initialization
 ├── constants/
-│   └── app_colors.dart      # Application color constants
+│   └── app_colors.dart               # Theme color palette (primary, background, accents)
 ├── core/
 │   └── database/
-│       ├── db_tables.dart   # Database table definitions
-│       └── db_versions.dart # Database version management
-├── models/                   # Data models
-│   ├── task_model.dart
-│   ├── project_model.dart
-│   ├── subtask_model.dart
-│   ├── habit_model.dart
-│   ├── habit_log_model.dart
-│   ├── water_log_model.dart
-│   ├── prayer_log.dart
-│   ├── user_profile_model.dart
-│   ├── user_level_model.dart
-│   ├── badge_model.dart
-│   ├── stats_model.dart
-│   ├── report_model.dart
-│   ├── activity_log_model.dart
-│   ├── leaderboard_user_model.dart
-│   └── settings_model.dart
-├── providers/                # State management
-│   ├── task_provider.dart
-│   ├── project_provider.dart
-│   ├── projects_provider.dart
-│   ├── subtask_provider.dart
-│   ├── habit_provider.dart
-│   ├── water_provider.dart
-│   ├── prayer_provider.dart
-│   ├── profile_provider.dart
-│   ├── achievements_provider.dart
-│   ├── stats_provider.dart
-│   ├── settings_provider.dart
-│   └── backup_provider.dart
-├── repositories/             # Data access layer
+│       ├── db_tables.dart            # Database table and column constants
+│       └── db_versions.dart          # Database schema versioning & migration logic
+├── models/                            # Data models with fromMap/toMap serialization
+│   ├── task_model.dart               # Task entity with priority and time categories
+│   ├── project_model.dart            # Project entity with tech stack and status
+│   ├── subtask_model.dart            # Subtask breakdown entity
+│   ├── habit_model.dart              # Habit tracking model
+│   ├── habit_log_model.dart          # Daily habit logs
+│   ├── water_log_model.dart          # Water intake log model (Hive Adapter)
+│   ├── prayer_log.dart               # Prayer status model
+│   ├── user_profile_model.dart       # User profile details
+│   ├── user_level_model.dart         # Level and XP calculation model
+│   ├── badge_model.dart              # Achievement badges
+│   ├── stats_model.dart              # Summary metrics
+│   ├── report_model.dart             # Productivity reports
+│   ├── activity_log_model.dart       # Chronological activity timeline
+│   ├── leaderboard_user_model.dart   # Leaderboard rank representation
+│   └── settings_model.dart           # App configuration state model
+├── providers/                         # State management (ChangeNotifiers)
+│   ├── task_provider.dart            # Task state, filtering, and XP triggering
+│   ├── project_provider.dart         # Project lifecycle & progress state
+│   ├── subtask_provider.dart         # Subtask manipulation
+│   ├── habit_provider.dart           # Habit streak calculations
+│   ├── water_provider.dart           # Water intake & goal calculations
+│   ├── prayer_provider.dart          # Daily prayer logging
+│   ├── profile_provider.dart         # User profile and stats state
+│   ├── achievements_provider.dart    # XP distribution and badge unlocking
+│   ├── stats_provider.dart           # Weekly analytics calculations
+│   ├── settings_provider.dart        # Theme, locale, and notification options
+│   └── backup_provider.dart          # Export and import state handler
+├── repositories/                      # Repository pattern interfaces
 │   ├── base_repository.dart
-│   └── habit_repository.dart
-├── services/                 # Business logic
-│   ├── local_database_service.dart
-│   ├── hive_adapters.dart
-│   ├── backup_service.dart
-│   ├── backup_json_converters.dart
-│   ├── backup_validators.dart
-│   └── water_service.dart
-├── screens/                  # UI screens
-│   ├── home_screen.dart
-│   ├── tasks_screen.dart
-│   ├── projects_screen.dart
-│   ├── projects_manager_screen.dart
-│   ├── water_screen.dart
-│   ├── prayer_screen.dart
-│   ├── profile_screen.dart
-│   ├── achievements_screen.dart
-│   ├── dhikr_screen.dart
-│   ├── food_screen.dart
-│   ├── gym_screen.dart
-│   └── simple_home_screen.dart
-├── widgets/                  # Reusable UI components
-│   ├── widgets.dart          # Widget exports
-│   ├── backup_restore_card.dart
-│   ├── category_chip.dart
-│   ├── project_card.dart
-│   ├── task_item.dart
-│   ├── water_tracker.dart
-│   ├── custom_checkbox.dart
-│   ├── custom_circular_progress.dart
-│   ├── custom_bottom_navigation.dart
-│   ├── section_header.dart
-│   ├── profile_header.dart
-│   ├── progress_bar_widget.dart
-│   ├── task_section.dart
-│   ├── daily_summary_card.dart
-│   ├── skeleton_loader.dart
-│   ├── achievement_item.dart
-│   ├── add_subtask_dialog.dart
-│   ├── conic_progress_indicator.dart
-│   ├── date_picker_field.dart
-│   ├── ios_toggle.dart
-│   ├── level_hero_card.dart
-│   ├── monthly_progress_widget.dart
-│   ├── paused_project_card.dart
-│   ├── profile_stats_card.dart
-│   ├── settings_list_item.dart
-│   ├── tech_stack_input.dart
-│   ├── time_distribution_item.dart
-│   ├── time_picker_field.dart
-│   └── weekly_chart.dart
-└── utils/                    # Utility functions
-    ├── constants.dart
-    ├── error_handler.dart
-    └── app_exception.dart
-
-android/
-├── app/
-│   ├── build.gradle.kts       # Build configuration
-│   ├── proguard-rules.pro     # ProGuard rules
-│   └── src/main/
-│       ├── AndroidManifest.xml
-│       └── res/
-└── ...
-
-assets/
-├── fonts/                     # Custom fonts
-│   └── MaterialSymbolsOutlined.ttf
-└── images/                    # Image assets
+│   ├── habit_repository.dart
+│   ├── task_repository.dart
+│   └── activity_repository.dart
+├── services/                          # Low-level service and database abstraction
+│   ├── local_database_service.dart   # Central Hive storage and single-flight init guard
+│   ├── hive_adapters.dart            # Hive type adapter registry
+│   ├── backup_service.dart           # JSON export/import data processor
+│   ├── backup_json_converters.dart   # Entity-to-backup JSON converters
+│   ├── backup_validators.dart        # Backup schema validator
+│   ├── water_service.dart            # Local water intake data access
+│   └── localization_service.dart     # Dynamic string translations helper
+├── screens/                           # Top-level UI views
+│   ├── home_screen.dart              # Primary dashboard with summary & feature cards
+│   ├── tasks_screen.dart             # Complete task management screen
+│   ├── projects_screen.dart          # Project portfolio screen
+│   ├── water_screen.dart             # Dedicated hydration tracker
+│   ├── prayer_screen.dart            # Prayer tracking & schedule
+│   ├── profile_screen.dart           # Profile, stats, and leveling overview
+│   ├── achievements_screen.dart      # Badges and achievement roadmap
+│   ├── dhikr_screen.dart             # Digital tasbih & dhikr counter
+│   ├── food_screen.dart              # Nutrition & meal tracking
+│   └── gym_screen.dart               # Workout and physical exercise tracker
+├── widgets/                           # Modular reusable components
+│   ├── backup_restore_card.dart      # Backup controls card
+│   ├── category_chip.dart            # Category filter chips
+│   ├── project_card.dart             # Project item card with progress bar
+│   ├── task_item.dart                # Interactive task checkbox tile
+│   ├── water_tracker.dart            # Quick water increment widget
+│   └── ...                           # Progress indicators, charts, pickers
+└── utils/                             # Helpers and cross-cutting concerns
+    ├── constants.dart                # App-wide global constants
+    ├── responsive_breakpoints.dart   # Screen dimension & grid adaptation
+    ├── error_handler.dart            # Centralized exception logging
+    └── app_exception.dart            # Domain-specific application errors
 ```
 
-## Installation
+---
+
+## Getting Started
 
 ### Prerequisites
-- Flutter SDK (3.10.0 or higher)
-- Android SDK (minSdk 21, targetSdk 34)
-- Android device or emulator for testing
+- **Flutter SDK**: `>= 3.10.0`
+- **Dart SDK**: `>= 3.0.0`
+- **Android SDK**: `compileSdkVersion 34`, `minSdkVersion 21`, `targetSdkVersion 34`
+- **Java**: JDK 17 recommended for Gradle 8+
 
-### Setup Steps
+### Installation & Run
 
-1. Clone the repository
+1. **Clone the repository**:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/your-username/daily-life-tracker.git
    cd daily-life-tracker
    ```
 
-2. Install dependencies
+2. **Install dependencies**:
    ```bash
    flutter pub get
    ```
 
-3. Run the application
+3. **Run code generator** (if rebuilding adapters or models):
+   ```bash
+   flutter pub run build_runner build --delete-conflicting-outputs
+   ```
+
+4. **Run the app in debug mode**:
    ```bash
    flutter run
    ```
 
-## Building APK
+---
 
-### Debug APK
-```bash
-flutter build apk --debug
-```
-- Location: `build/app/outputs/flutter-apk/app-debug.apk`
-- Size: Larger, includes debugging symbols
-- Usage: Development and testing only
+## Build & Deployment
 
 ### Release APK
 ```bash
 flutter build apk --release
 ```
-- Location: `build/app/outputs/flutter-apk/app-release.apk`
-- Size: Smaller, optimized for performance
-- Features: Uses ProGuard for size reduction and performance optimization
+Output: `build/app/outputs/flutter-apk/app-release.apk`
 
-### Split APKs (by Architecture)
+### Split-per-ABI APK (Recommended for Distribution)
+Significantly reduces binary download size (~20–30 MB per architecture instead of ~60 MB universal):
 ```bash
-flutter build apk --split-per-abi
+flutter build apk --split-per-abi --release
 ```
-- Results: Separate files for each architecture:
-  - `app-arm64-v8a-release.apk`
-  - `app-armeabi-v7a-release.apk`
-  - `app-x86_64-release.apk`
-- Benefit: Smaller size per file (~20-30 MB instead of ~50-60 MB)
+Outputs:
+- `app-arm64-v8a-release.apk` (Most modern Android phones)
+- `app-armeabi-v7a-release.apk` (Older 32-bit devices)
+- `app-x86_64-release.apk` (Emulators & Intel Chromebooks)
 
-## App Configuration
-
-### Android Requirements
-- Minimum Android: API 21 (Android 5.0)
-- Target Android: API 34 (Android 14)
-- App Size: ~50MB (Release APK)
-- Language Support: Arabic and English
-- Screen Orientation: Portrait & Landscape
-
-### Permissions
-```xml
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-```
-
-## Testing
-
-### Pre-Testing Checklist
-- Verify internet connection
-- Check local database initialization
-- Enable required permissions (Internet, Network State)
-
-### Test List
-- Task creation, editing, and deletion
-- Project management
-- Habit tracking
-- Water intake logging
-- Prayer tracking
-- Profile customization
-- Statistics viewing
-- Settings modifications
-- Backup and restore functionality
-
-## Troubleshooting
-
-### Database Issues
+### Android App Bundle (Google Play Store)
 ```bash
-# Clear and rebuild
-flutter clean
-flutter pub get
-flutter run
+flutter build appbundle --release
 ```
+Output: `build/app/outputs/bundle/release/app-release.aab`
 
-### Build Issues
-```bash
-# Clean and rebuild
-flutter clean
-flutter pub get
-flutter doctor
-```
+---
 
-### APK Size Optimization
-- Use `--split-per-abi` for building
-- Review unused assets
-- Analyze size: `flutter build apk --release --analyze-size`
+## Developer & Copyright
 
-## Developer Information
+- **Lead Engineer**: Eng. Youssef Mahmoud Abdelgawad (م / يوسف محمود عبد الجواد)
+- **Official Website**: [https://y0ussef.com/](https://y0ussef.com/)
+- **WhatsApp Support**: [+201017646543](https://wa.me/Y0ussefmahmoud)
+- **Direct Email**: [info@Youssef.com](mailto:info@Youssef.com)
 
-### Developer
-- Arabic: م / يوسف محمود عبد الجواد
-- English: Eng / Youssef Mahmoud Abdelgawad
-- Business Website: https://y0ussef.com/
-- Whatsapp: https://wa.me/Y0ussefmahmoud
-- Email: info@Youssef.com
+---
 
 ## License
 
-This project is proprietary software. All rights reserved.
-
-## Support
-
-For any inquiries or issues, please contact:
-- Email: info@Youssef.com
-- Website: https://y0ussef.com/
-- Whatsapp: https://wa.me/Y0ussefmahmoud
+This project is proprietary software developed by Eng. Youssef Mahmoud Abdelgawad. All rights reserved. Unauthorized reproduction, modification, distribution, or commercial exploitation is strictly prohibited without explicit written consent.

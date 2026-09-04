@@ -1,0 +1,139 @@
+# =====================================================================
+# Daily Life Tracker - .gitignore
+# Purpose: Track core source files only & ignore large generated/build files
+# =====================================================================
+
+# ---------------------------------------------------------------------
+# 1. Flutter & Dart Compilation & Cache Artifacts
+# ---------------------------------------------------------------------
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+
+# Flutter build output directory (Contains APKs, AABs, intermediate objects)
+build/
+/build/
+
+# Dart documentation
+doc/api/
+
+# Flutter symbol files and snapshots
+*.symbols
+*.snapshot
+
+# ---------------------------------------------------------------------
+# 2. Android Build Artifacts, SDK & Gradle Caches
+# ---------------------------------------------------------------------
+.gradle/
+android/.gradle/
+android/.kotlin/
+android/captures/
+android/app/build/
+android/local.properties
+GeneratedPluginRegistrant.java
+.cxx/
+
+# Android Keystores & Signing credentials (never commit secrets)
+key.properties
+**/*.keystore
+**/*.jks
+
+# ---------------------------------------------------------------------
+# 3. iOS & macOS Build & CocoaPods Artifacts
+# ---------------------------------------------------------------------
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/macos/Flutter/ephemeral/
+**/macos/Pods/
+
+# ---------------------------------------------------------------------
+# 4. Windows & Linux Ephemeral Build Artifacts
+# ---------------------------------------------------------------------
+windows/flutter/ephemeral/
+windows/x64/
+windows/x86/
+linux/flutter/ephemeral/
+linux/flutter/ephemeral/*
+
+# Visual Studio user and build cache files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.[Cc]ache
+!*.[Cc]ache/
+
+# ---------------------------------------------------------------------
+# 5. Compiled Binaries, Installers & Large Archives
+# ---------------------------------------------------------------------
+*.apk
+*.aab
+*.app
+*.ipa
+*.exe
+*.dll
+*.so
+*.dylib
+*.iso
+*.tar.gz
+*.zip
+*.rar
+*.7z
+
+# ---------------------------------------------------------------------
+# 6. IDEs, Editors & Tooling Settings
+# ---------------------------------------------------------------------
+# IntelliJ / Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# ---------------------------------------------------------------------
+# 7. Operating System & Local Environment Files
+# ---------------------------------------------------------------------
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ---------------------------------------------------------------------
+# 8. Temporary Files, Logs & Local DB Storage
+# ---------------------------------------------------------------------
+*.log
+*.tmp
+*.temp
+*.swp
+*.bak
+*.crash
+*.stackdump
+
+# Local runtime SQLite/Hive storage dumps (if created during local testing)
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Ensure lockfile for app dependencies is tracked for reproducible builds
+!pubspec.lock

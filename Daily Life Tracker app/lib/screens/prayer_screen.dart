@@ -10,7 +10,9 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import '../providers/prayer_provider.dart';
 import '../models/prayer_log.dart';
+import '../services/localization_service.dart';
 import '../constants/app_colors.dart';
+import '../utils/responsive_breakpoints.dart';
 
 class PrayerScreen extends StatefulWidget {
   const PrayerScreen({super.key});
@@ -39,7 +41,7 @@ class _PrayerScreenState extends State<PrayerScreen> with TickerProviderStateMix
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        title: const Text('تتبع الصلوات'),
+        title: Text(AppLocalizations.of(context).prayersTitle),
         backgroundColor: AppColors.primaryColor,
         foregroundColor: Colors.white,
         elevation: 0,
@@ -48,9 +50,9 @@ class _PrayerScreenState extends State<PrayerScreen> with TickerProviderStateMix
           indicatorColor: Colors.white,
           labelColor: Colors.white,
           unselectedLabelColor: Colors.white70,
-          tabs: const [
-            Tab(text: 'اليوم'),
-            Tab(text: 'الإحصائيات'),
+          tabs: [
+            Tab(text: AppLocalizations.of(context).today),
+            Tab(text: AppLocalizations.of(context).statisticsTitle),
           ],
         ),
       ),
@@ -69,9 +71,10 @@ class _PrayerScreenState extends State<PrayerScreen> with TickerProviderStateMix
       builder: (context, prayerProvider, child) {
         final todayPrayers = prayerProvider.getTodayPrayers();
         final completedCount = todayPrayers.where((p) => p.isCompleted).length;
+        final padding = ResponsiveBreakpoints.getScreenPadding(context);
 
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: padding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

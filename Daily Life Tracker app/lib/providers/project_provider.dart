@@ -17,6 +17,8 @@ class ProjectProvider extends ChangeNotifier {
 
   bool _isLoading = false;
   String? _error;
+  bool _initialized = false;
+  Future<void>? _initFuture;
 
   List<Project> get projects => List.unmodifiable(_projects);
   List<Project> get activeProjects => _projects.where((project) => project.status == ProjectStatus.active).toList();
@@ -24,20 +26,28 @@ class ProjectProvider extends ChangeNotifier {
   List<Project> get completedProjects => _projects.where((project) => project.status == ProjectStatus.completed).toList();
   bool get isLoading => _isLoading;
   String? get error => _error;
-  bool get isInitialized => _projects.isNotEmpty || _error != null;
+  bool get isInitialized => _initialized;
 
   Future<void> initialize() async {
+    if (_initialized) return;
+    _initFuture ??= _loadProjectsInternal();
+    await _initFuture;
+  }
+
+  Future<void> _loadProjectsInternal() async {
     _isLoading = true;
     _error = null;
     notifyListeners();
 
     try {
-      await loadProjects();
+      _projects = await _db.getAllProjects();
+      _initialized = true;
     } catch (e) {
       _projects = [];
       _error = 'Failed to load projects: $e';
     } finally {
       _isLoading = false;
+      _initFuture = null;
       notifyListeners();
     }
   }
@@ -76,7 +86,7 @@ class ProjectProvider extends ChangeNotifier {
       );
 
       await _db.addProject(project);
-      _projects = _db.getAllProjects() as List<Project>;
+      _projects = await _db.getAllProjects();
     } catch (e) {
       _error = 'Failed to add project: $e';
       rethrow;

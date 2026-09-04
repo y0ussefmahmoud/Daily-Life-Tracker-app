@@ -14,7 +14,8 @@ import '../providers/achievements_provider.dart';
 import '../providers/profile_provider.dart';
 import '../models/user_level_model.dart';
 import '../models/badge_model.dart';
-import '../utils/constants.dart';
+import '../services/localization_service.dart';
+import '../constants/app_colors.dart';
 
 class AchievementsScreen extends StatefulWidget {
   const AchievementsScreen({super.key});
@@ -38,7 +39,7 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(
-          'الإنجازات',
+          AppLocalizations.of(context).achievementsTitle,
           style: GoogleFonts.tajawal(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -57,6 +58,7 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
           }
 
           if (provider.error != null) {
+            final l10n = AppLocalizations.of(context);
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -64,14 +66,14 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
                   Icon(Icons.error, size: 64, color: AppColors.errorColor),
                   const SizedBox(height: 16),
                   Text(
-                    'حدث خطأ: ${provider.error}',
+                    '${l10n.errorOccurred} ${provider.error}',
                     style: TextStyle(color: AppColors.errorColor),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => provider.initialize(),
-                    child: const Text('إعادة المحاولة'),
+                    child: Text(l10n.retryButton),
                   ),
                 ],
               ),

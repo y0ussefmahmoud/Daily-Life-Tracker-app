@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/project_provider.dart';
 import '../models/project_model.dart';
+import '../services/localization_service.dart';
 import '../utils/constants.dart';
+import '../utils/responsive_breakpoints.dart';
 import '../widgets/project_card.dart';
 
 class ProjectsScreen extends StatefulWidget {
@@ -52,7 +54,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> with TickerProviderStat
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        title: const Text('المشاريع'),
+        title: Text(AppLocalizations.of(context).projects),
         backgroundColor: AppColors.primaryColor,
         foregroundColor: Colors.white,
         elevation: 0,
@@ -61,36 +63,41 @@ class _ProjectsScreenState extends State<ProjectsScreen> with TickerProviderStat
           indicatorColor: Colors.white,
           labelColor: Colors.white,
           unselectedLabelColor: Colors.white70,
-          tabs: const [
-            Tab(text: 'الكل'),
-            Tab(text: 'نشط'),
-            Tab(text: 'مكتملة'),
+          tabs: [
+            Tab(text: AppLocalizations.of(context).all),
+            Tab(text: AppLocalizations.of(context).active),
+            Tab(text: AppLocalizations.of(context).completed),
           ],
         ),
       ),
-      body: Column(
-        children: [
-          // Search Section
-          Container(
-            padding: const EdgeInsets.all(16),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'بحث في المشاريع...',
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: IconButton(
-                  onPressed: _showFilterDialog,
-                  icon: const Icon(Icons.filter_list),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final l10n = AppLocalizations.of(context);
+          final padding = ResponsiveBreakpoints.getScreenPadding(context);
+          
+          return Column(
+            children: [
+              // Search Section
+              Container(
+                padding: padding,
+                child: TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: l10n.searchProjects,
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: IconButton(
+                      onPressed: _showFilterDialog,
+                      icon: const Icon(Icons.filter_list),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    setState(() {});
+                  },
                 ),
               ),
-              onChanged: (value) {
-                setState(() {});
-              },
-            ),
-          ),
           
           // Projects List
           Expanded(
@@ -104,6 +111,8 @@ class _ProjectsScreenState extends State<ProjectsScreen> with TickerProviderStat
             ),
           ),
         ],
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddProjectDialog,

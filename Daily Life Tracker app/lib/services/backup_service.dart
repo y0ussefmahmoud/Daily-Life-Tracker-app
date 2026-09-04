@@ -65,15 +65,15 @@ class BackupService {
   /// - Data import fails
   Future<void> importData(String jsonString) async {
     try {
-      final backup = jsonDecode(jsonString) as Map<String, dynamic>;
+      final backup = Map<String, dynamic>.from(jsonDecode(jsonString) as Map);
       
       if (!_validators.validateBackupFormat(backup)) {
         throw Exception('Invalid backup format');
       }
 
-      final data = backup['data'] as Map<String, dynamic>;
+      final data = Map<String, dynamic>.from(backup['data'] as Map);
       
-      await _importSettings(data['settings'] as Map<String, dynamic>?);
+      await _importSettings(data['settings'] != null ? Map<String, dynamic>.from(data['settings'] as Map) : null);
       await _importTasks(data['tasks'] as List<dynamic>?);
       await _importProjects(data['projects'] as List<dynamic>?);
       await _importSubtasks(data['subtasks'] as List<dynamic>?);
@@ -129,7 +129,7 @@ class BackupService {
     if (tasksData == null) return;
     
     for (final taskData in tasksData) {
-      final task = _converters.taskFromJson(taskData as Map<String, dynamic>);
+      final task = _converters.taskFromJson(Map<String, dynamic>.from(taskData as Map));
       await _db.updateTask(task);
     }
   }
@@ -139,7 +139,7 @@ class BackupService {
     if (projectsData == null) return;
     
     for (final projectData in projectsData) {
-      final project = _converters.projectFromJson(projectData as Map<String, dynamic>);
+      final project = _converters.projectFromJson(Map<String, dynamic>.from(projectData as Map));
       await _db.updateProject(project);
     }
   }
@@ -149,7 +149,7 @@ class BackupService {
     if (subtasksData == null) return;
     
     for (final subtaskData in subtasksData) {
-      final subtask = _converters.subtaskFromJson(subtaskData as Map<String, dynamic>);
+      final subtask = _converters.subtaskFromJson(Map<String, dynamic>.from(subtaskData as Map));
       await _db.updateSubtask(subtask);
     }
   }

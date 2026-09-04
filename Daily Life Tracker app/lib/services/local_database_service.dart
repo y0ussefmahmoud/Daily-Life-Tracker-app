@@ -31,7 +31,7 @@ class LocalDatabaseService {
   late Box<String> projectBox; // Store as JSON strings
   late Box<String> subtaskBox; // Store as JSON strings
   late Box<WaterLog> waterLogBox;
-  late Box<Map<String, dynamic>> settingsBox;
+  late Box settingsBox;
 
   static const String TASK_BOX_NAME = 'tasks';
   static const String PROJECT_BOX_NAME = 'projects';
@@ -39,51 +39,89 @@ class LocalDatabaseService {
   static const String WATER_LOG_BOX_NAME = 'water_logs';
   static const String SETTINGS_BOX_NAME = 'settings';
 
+  Future<void>? _initFuture;
+  bool _isInitialized = false;
+
+  bool get isInitialized => _isInitialized;
+
   Future<void> init() async {
-    await _initializeInternal().timeout(
+    if (_isInitialized) return;
+    _initFuture ??= _initializeInternal().timeout(
       const Duration(seconds: 10),
       onTimeout: () {
+        _initFuture = null;
         throw Exception('Database initialization timeout');
       },
     );
+    try {
+      await _initFuture!;
+    } catch (e) {
+      _initFuture = null;
+      rethrow;
+    }
   }
   
   Future<void> _initializeInternal() async {
+    if (_isInitialized) return;
     final appDocumentDir = await getApplicationDocumentsDirectory();
     Hive.init(appDocumentDir.path);
-    
-    // During refactoring, delete entire Hive database to avoid type ID conflicts
-    // This ensures clean state with new model structure
-    debugPrint('Deleting entire Hive database for clean migration...');
-    try {
-      await Hive.deleteFromDisk();
-      debugPrint('Hive database deleted successfully');
-    } catch (e) {
-      debugPrint('Error deleting Hive database (may not exist yet): $e');
-    }
     
     // Register adapters
     await registerHiveAdapters();
     
-    // Open boxes with fresh database
+    // Open boxes
     taskBox = await Hive.openBox<String>(TASK_BOX_NAME);
     projectBox = await Hive.openBox<String>(PROJECT_BOX_NAME);
     subtaskBox = await Hive.openBox<String>(SUBTASK_BOX_NAME);
     waterLogBox = await Hive.openBox<WaterLog>(WATER_LOG_BOX_NAME);
-    settingsBox = await Hive.openBox<Map<String, dynamic>>(SETTINGS_BOX_NAME);
+    settingsBox = await Hive.openBox(SETTINGS_BOX_NAME);
     
-    // Set current version
+    // Check database version and migrate if needed
+    await _migrateDatabaseIfNeeded();
+    
+    _isInitialized = true;
+    debugPrint('Database initialized successfully');
+  }
+
+  Future<void> _migrateDatabaseIfNeeded() async {
     const String DB_VERSION_KEY = 'db_version';
-    const String CURRENT_DB_VERSION = '2.4.0';
-    final settings = settingsBox.get('settings', defaultValue: <String, dynamic>{}) ?? <String, dynamic>{};
-    settings[DB_VERSION_KEY] = CURRENT_DB_VERSION;
-    await settingsBox.put('settings', settings);
+    const String CURRENT_DB_VERSION = '2.4.2';
     
-    debugPrint('Database initialized successfully with version $CURRENT_DB_VERSION');
+    final rawSettings = settingsBox.get('settings');
+    final settings = _safeMapCast(rawSettings) ?? <String, dynamic>{};
+    final currentVersion = settings[DB_VERSION_KEY] as String?;
+    
+    if (currentVersion == null) {
+      // First time installation
+      settings[DB_VERSION_KEY] = CURRENT_DB_VERSION;
+      await settingsBox.put('settings', settings);
+      debugPrint('First time installation, set database version to $CURRENT_DB_VERSION');
+    } else if (currentVersion != CURRENT_DB_VERSION) {
+      // Migration needed
+      debugPrint('Migrating database from version $currentVersion to $CURRENT_DB_VERSION');
+      await _migrateFromVersion(currentVersion);
+      settings[DB_VERSION_KEY] = CURRENT_DB_VERSION;
+      await settingsBox.put('settings', settings);
+      debugPrint('Database migration completed to version $CURRENT_DB_VERSION');
+    } else {
+      debugPrint('Database is already at version $CURRENT_DB_VERSION');
+    }
+  }
+
+  Future<void> _migrateFromVersion(String? fromVersion) async {
+    // Add migration logic here for future versions
+    // For now, just update the version as the data structure is compatible
+    
+    // Example migration for future versions:
+    // if (fromVersion == '2.3.0') {
+    //   await _migrateFrom230To240();
+    // }
+    
+    debugPrint('Migration from $fromVersion completed (no structural changes needed)');
   }
 
   Future<void> initialize() async {
-    await _initializeInternal();
+    await init();
   }
 
   bool isWaterLogBoxInitialized() {
@@ -227,7 +265,7 @@ class LocalDatabaseService {
     }
   }
 
-  Future<Map<String, dynamic>?> getSetting(String key) async {
+  Future<dynamic> getSetting(String key) async {
     try {
       final settings = await getSettings();
       return settings[key];
@@ -238,8 +276,8 @@ class LocalDatabaseService {
 
   Future<Map<String, dynamic>> getSettings() async {
     try {
-      final settings = await settingsBox.get('settings');
-      return settings ?? <String, dynamic>{};
+      final rawSettings = settingsBox.get('settings');
+      return _safeMapCast(rawSettings) ?? <String, dynamic>{};
     } catch (e) {
       throw Exception('Failed to get settings: $e');
     }
@@ -288,26 +326,26 @@ class LocalDatabaseService {
       // Import tasks
       final tasksData = backup['tasks'] as List<dynamic>;
       for (final taskData in tasksData) {
-        final task = _taskFromJson(taskData as Map<String, dynamic>);
+        final task = _taskFromJson(Map<String, dynamic>.from(taskData as Map));
         await taskBox.put(task.id, jsonEncode(_taskToJson(task)));
       }
       
       // Import projects
       final projectsData = backup['projects'] as List<dynamic>;
       for (final projectData in projectsData) {
-        final project = _projectFromJson(projectData as Map<String, dynamic>);
+        final project = _projectFromJson(Map<String, dynamic>.from(projectData as Map));
         await projectBox.put(project.id, jsonEncode(_projectToJson(project)));
       }
       
       // Import subtasks
       final subtasksData = backup['subtasks'] as List<dynamic>;
       for (final subtaskData in subtasksData) {
-        final subtask = _subtaskFromJson(subtaskData as Map<String, dynamic>);
+        final subtask = _subtaskFromJson(Map<String, dynamic>.from(subtaskData as Map));
         await subtaskBox.put(subtask.id, jsonEncode(_subtaskToJson(subtask)));
       }
       
       // Import settings
-      final settingsData = backup['settings'] as Map<String, dynamic>;
+      final settingsData = Map<String, dynamic>.from(backup['settings'] as Map);
       for (final entry in settingsData.entries) {
         await settingsBox.put(entry.key, entry.value);
       }
@@ -322,6 +360,8 @@ class LocalDatabaseService {
     await subtaskBox.close();
     await waterLogBox.close();
     await settingsBox.close();
+    _isInitialized = false;
+    _initFuture = null;
   }
 
   Future<void> clearDatabase() async {
@@ -362,7 +402,8 @@ class LocalDatabaseService {
       final levelData = settings['user_level'];
       if (levelData == null) return null;
       
-      final data = levelData as Map<String, dynamic>;
+      final data = _safeMapCast(levelData);
+      if (data == null) return null;
       return UserLevelModel(
         level: data['level'] as int,
         title: data['title'] as String,
@@ -423,7 +464,7 @@ class LocalDatabaseService {
       endDate: json['endDate'] != null ? DateTime.parse(json['endDate'] as String) : null,
       subtasks: json['subtasks'] != null
           ? (json['subtasks'] as List<dynamic>)
-              .map((subtask) => _subtaskFromJson(subtask as Map<String, dynamic>))
+              .map((subtask) => _subtaskFromJson(Map<String, dynamic>.from(subtask as Map)))
               .toList()
           : [],
       createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt'] as String) : DateTime.now(),
@@ -440,5 +481,16 @@ class LocalDatabaseService {
 
   SubtaskModel _subtaskFromJson(Map<String, dynamic> json) {
     return SubtaskModel.fromMap(json);
+  }
+
+  /// Safely converts a dynamic value (typically `Map<dynamic, dynamic>` from Hive)
+  /// to `Map<String, dynamic>`. Returns null if the input is null or not a Map.
+  static Map<String, dynamic>? _safeMapCast(dynamic rawData) {
+    if (rawData == null) return null;
+    if (rawData is Map<String, dynamic>) return rawData;
+    if (rawData is Map) {
+      return Map<String, dynamic>.from(rawData);
+    }
+    return null;
   }
 }

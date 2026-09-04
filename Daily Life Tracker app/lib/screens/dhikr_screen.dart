@@ -6,6 +6,7 @@
 // - Email: info@Youssef.com
 
 import 'package:flutter/material.dart';
+import '../services/localization_service.dart';
 import '../constants/app_colors.dart';
 
 class DhikrScreen extends StatefulWidget {
@@ -49,10 +50,11 @@ class _DhikrScreenState extends State<DhikrScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        title: const Text('الأذكار'),
+        title: Text(l10n.dhikrTitle),
         backgroundColor: AppColors.primaryColor,
         foregroundColor: Colors.white,
         elevation: 0,
@@ -60,7 +62,7 @@ class _DhikrScreenState extends State<DhikrScreen> {
           IconButton(
             onPressed: _resetAll,
             icon: const Icon(Icons.refresh),
-            tooltip: 'إعادة تعيين الكل',
+            tooltip: l10n.resetAll,
           ),
         ],
       ),
@@ -79,18 +81,18 @@ class _DhikrScreenState extends State<DhikrScreen> {
                 ),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.auto_stories,
                     color: Colors.white,
                     size: 32,
                   ),
-                  SizedBox(width: 12),
+                  const SizedBox(width: 12),
                   Text(
-                    'أذكار اليوم',
-                    style: TextStyle(
+                    l10n.dailyDhikr,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,

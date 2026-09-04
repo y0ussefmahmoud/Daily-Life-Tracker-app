@@ -6,6 +6,7 @@
 // - Email: info@Youssef.com
 
 import 'package:flutter/material.dart';
+import '../services/localization_service.dart';
 import '../constants/app_colors.dart';
 
 class GymScreen extends StatefulWidget {
@@ -16,13 +17,20 @@ class GymScreen extends StatefulWidget {
 }
 
 class _GymScreenState extends State<GymScreen> {
-  final List<Map<String, dynamic>> _exercises = [
-    {'name': 'ضغط', 'icon': Icons.fitness_center, 'sets': 0, 'target': 4},
-    {'name': 'سكوات', 'icon': Icons.accessibility_new, 'sets': 0, 'target': 4},
-    {'name': 'بلانك', 'icon': Icons.accessibility, 'sets': 0, 'target': 3},
-    {'name': 'قفز', 'icon': Icons.directions_run, 'sets': 0, 'target': 3},
-    {'name': 'تمارين بطن', 'icon': Icons.sports_gymnastics, 'sets': 0, 'target': 3},
-  ];
+  late List<Map<String, dynamic>> _exercises;
+
+  @override
+  void initState() {
+    super.initState();
+    final l10n = AppLocalizations.of(context);
+    _exercises = [
+      {'name': l10n.exercisePushup, 'icon': Icons.fitness_center, 'sets': 0, 'target': 4},
+      {'name': l10n.exerciseSquat, 'icon': Icons.accessibility_new, 'sets': 0, 'target': 4},
+      {'name': l10n.exercisePlank, 'icon': Icons.accessibility, 'sets': 0, 'target': 3},
+      {'name': l10n.exerciseJump, 'icon': Icons.directions_run, 'sets': 0, 'target': 3},
+      {'name': l10n.exerciseAbs, 'icon': Icons.sports_gymnastics, 'sets': 0, 'target': 3},
+    ];
+  }
 
   void _incrementSets(int index) {
     setState(() {
@@ -56,10 +64,11 @@ class _GymScreenState extends State<GymScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        title: const Text('الجيم والرياضة'),
+        title: Text(l10n.gymTitle),
         backgroundColor: AppColors.primaryColor,
         foregroundColor: Colors.white,
         elevation: 0,
@@ -67,7 +76,7 @@ class _GymScreenState extends State<GymScreen> {
           IconButton(
             onPressed: _resetAll,
             icon: const Icon(Icons.refresh),
-            tooltip: 'إعادة تعيين الكل',
+            tooltip: l10n.resetAll,
           ),
         ],
       ),

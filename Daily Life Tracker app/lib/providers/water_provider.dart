@@ -19,6 +19,7 @@ class WaterProvider extends ChangeNotifier {
   bool _isLoading = false;
   String? _error;
   bool _initialized = false;
+  Future<void>? _initFuture;
 
   int get currentCups => (_currentIntakeMl / 250).floor();
   int get targetCups => (_goalMl / 250.0).ceil().toInt();
@@ -33,35 +34,28 @@ class WaterProvider extends ChangeNotifier {
   int get waterGoal => goalMl;
 
   Future<void> initialize() async {
-    debugPrint('=== WATER PROVIDER INIT START ===');
-    if (_initialized) {
-      debugPrint('Already initialized');
-      return;
-    }
-    
+    if (_initialized) return;
+    _initFuture ??= _initializeInternal();
+    await _initFuture;
+  }
+
+  Future<void> _initializeInternal() async {
     _isLoading = true;
     _error = null;
     notifyListeners();
 
     try {
-      debugPrint('Getting water goal...');
       _goalMl = await _waterService.getWaterGoal();
-      debugPrint('Water goal: $_goalMl');
-      
-      debugPrint('Getting today water intake...');
       _currentIntakeMl = await _waterService.getTodayWaterIntake();
-      debugPrint('Today water intake: $_currentIntakeMl');
-      
       _initialized = true;
-      debugPrint('=== WATER PROVIDER INIT COMPLETE ===');
     } catch (e, stackTrace) {
       debugPrint('WATER PROVIDER INIT ERROR: $e');
       debugPrint('STACK: $stackTrace');
       _error = e.toString();
-      // Still mark as initialized to prevent infinite retries
       _initialized = true;
     } finally {
       _isLoading = false;
+      _initFuture = null;
       notifyListeners();
     }
   }

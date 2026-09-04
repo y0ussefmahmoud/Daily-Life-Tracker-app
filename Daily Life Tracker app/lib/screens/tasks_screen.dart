@@ -12,7 +12,9 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import '../providers/task_provider.dart';
 import '../models/task_model.dart';
+import '../services/localization_service.dart';
 import '../utils/constants.dart';
+import '../utils/responsive_breakpoints.dart';
 import '../widgets/category_chip.dart';
 
 class TasksScreen extends StatefulWidget {
@@ -24,7 +26,7 @@ class TasksScreen extends StatefulWidget {
 
 class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin {
   late TabController _tabController;
-  String _selectedCategory = 'الكل';
+  String _selectedCategory = 'all';
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -54,7 +56,7 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        title: const Text('المهام'),
+        title: Text(AppLocalizations.of(context).tasks),
         backgroundColor: AppColors.primaryColor,
         foregroundColor: Colors.white,
         elevation: 0,
@@ -63,38 +65,43 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
           indicatorColor: Colors.white,
           labelColor: Colors.white,
           unselectedLabelColor: Colors.white70,
-          tabs: const [
-            Tab(text: 'الكل'),
-            Tab(text: 'قيد التنفيذ'),
-            Tab(text: 'مكتملة'),
+          tabs: [
+            Tab(text: AppLocalizations.of(context).all),
+            Tab(text: AppLocalizations.of(context).inProgress),
+            Tab(text: AppLocalizations.of(context).done),
           ],
         ),
       ),
-      body: Column(
-        children: [
-          // Search and Filter Section
-          Container(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                // Search Bar
-                TextField(
-                  controller: _searchController,
-                  decoration: InputDecoration(
-                    hintText: 'بحث في المهام...',
-                    prefixIcon: const Icon(Icons.search),
-                    suffixIcon: IconButton(
-                      onPressed: () => _showFilterDialog(),
-                      icon: const Icon(Icons.filter_list),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final l10n = AppLocalizations.of(context);
+          final padding = ResponsiveBreakpoints.getScreenPadding(context);
+          
+          return Column(
+            children: [
+              // Search and Filter Section
+              Container(
+                padding: padding,
+                child: Column(
+                  children: [
+                    // Search Bar
+                    TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        hintText: l10n.searchTasks,
+                        prefixIcon: const Icon(Icons.search),
+                        suffixIcon: IconButton(
+                          onPressed: () => _showFilterDialog(),
+                          icon: const Icon(Icons.filter_list),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        setState(() {});
+                      },
                     ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onChanged: (value) {
-                    setState(() {});
-                  },
-                ),
                 
                 const SizedBox(height: 12),
                 
@@ -116,6 +123,8 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
             ),
           ),
         ],
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddTaskDialog,
@@ -130,14 +139,15 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
   }
 
   Widget _buildCategoryChips() {
+    final l10n = AppLocalizations.of(context);
     final categories = ['all', 'work', 'personal', 'study', 'sport', 'health'];
     final categoryLabels = {
-      'all': 'الكل',
-      'work': 'عمل', 
-      'personal': 'شخصي',
-      'study': 'دراسة',
-      'sport': 'رياضة',
-      'health': 'صحة',
+      'all': l10n.all,
+      'work': l10n.work, 
+      'personal': l10n.personal,
+      'study': l10n.study,
+      'sport': l10n.sport,
+      'health': l10n.health,
     };
     
     return SizedBox(
@@ -174,19 +184,20 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
           filteredTasks = taskProvider.searchTasks(_searchController.text);
         }
         
-        if (_selectedCategory != 'الكل') {
+        if (_selectedCategory != 'all') {
           filteredTasks = filteredTasks.where((task) => task.category == _selectedCategory).toList();
         }
         
         if (filteredTasks.isEmpty) {
-          return const Center(
+          final l10n = AppLocalizations.of(context);
+          return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.task, size: 64, color: Colors.grey),
                 SizedBox(height: 16),
                 Text(
-                  'لا توجد مهام',
+                  l10n.noData,
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.grey,
@@ -194,7 +205,7 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
                 ),
                 SizedBox(height: 8),
                 Text(
-                  'اضغط على + لإضافة مهمة جديدة',
+                  l10n.addTask,
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey,
@@ -206,7 +217,7 @@ class _TasksScreenState extends State<TasksScreen> with TickerProviderStateMixin
         }
         
         return ListView.builder(
-          padding: const EdgeInsets.all(16),
+          padding: ResponsiveBreakpoints.getScreenPadding(context),
           itemCount: filteredTasks.length,
           itemBuilder: (context, index) {
             final task = filteredTasks[index];

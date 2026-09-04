@@ -181,10 +181,10 @@ class AppSizes {
 class AppStrings {
   // App Info
   static const String appName = 'Daily Life Tracker app';
-  static const String appVersion = '2.3.4';
+  static const String appVersion = '2.4.2';
   static const String developerName = 'Youssef Mahmoud';
-  static const String buildNumber = '1';
-  static const String lastUpdate = '2026-03-20';
+  //static const String buildNumber = '1';
+  static const String lastUpdate = '2026-09-4';
   
   // Navigation
   static const String home = 'الرئيسية';

@@ -11,7 +11,9 @@ import '../providers/profile_provider.dart';
 import '../providers/settings_provider.dart';
 import '../providers/backup_provider.dart';
 import '../widgets/backup_restore_card.dart';
+import '../services/localization_service.dart';
 import '../utils/constants.dart';
+import '../utils/responsive_breakpoints.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -50,7 +52,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('الملف الشخصي'),
+            Text(AppLocalizations.of(context).profile),
             Text(
               'v${AppStrings.appVersion}',
               style: const TextStyle(
@@ -73,44 +75,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Consumer2<ProfileProvider, SettingsProvider>(
         builder: (context, profileProvider, settingsProvider, child) {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Profile Header Section
-                _buildProfileHeader(profileProvider),
-                
-                const SizedBox(height: 24),
-                
-                // User Info Section
-                _buildUserInfoSection(profileProvider),
-                
-                const SizedBox(height: 24),
-                
-                // App Settings Section
-                _buildAppSettingsSection(settingsProvider),
-                
-                const SizedBox(height: 24),
-                
-                // Backup & Restore Section
-                _buildBackupRestoreSection(),
-                
-                const SizedBox(height: 24),
-                
-                // About Section
-                _buildAboutSection(),
-              ],
-            ),
-          );
+          final l10n = AppLocalizations.of(context);
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              final padding = ResponsiveBreakpoints.getScreenPadding(context);
+              final isMobile = ResponsiveBreakpoints.isMobile(context);
+              
+              return SingleChildScrollView(
+                padding: padding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                  // Profile Header Section
+                  _buildProfileHeader(profileProvider, l10n, isMobile),
+                  
+                  SizedBox(height: isMobile ? 24 : 32),
+                  
+                  // User Info Section
+                  _buildUserInfoSection(profileProvider, l10n),
+                  
+                  SizedBox(height: isMobile ? 24 : 32),
+                  
+                  // App Settings Section
+                  _buildAppSettingsSection(settingsProvider, l10n),
+                  
+                  SizedBox(height: isMobile ? 24 : 32),
+                  
+                  // Backup & Restore Section
+                  _buildBackupRestoreSection(),
+                  
+                  SizedBox(height: isMobile ? 24 : 32),
+                  
+                  // About Section
+                  _buildAboutSection(l10n),
+                ],
+              ),
+            );
+          },
+        );
         },
       ),
     );
   }
 
-  Widget _buildProfileHeader(ProfileProvider profileProvider) {
+  Widget _buildProfileHeader(ProfileProvider profileProvider, AppLocalizations l10n, bool isMobile) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(isMobile ? 24 : 32),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [AppColors.primaryColor, AppColors.primaryColor.withAlpha(204)],
@@ -134,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Stack(
               children: [
                 CircleAvatar(
-                  radius: 60,
+                  radius: isMobile ? 60 : 80,
                   backgroundColor: Colors.white,
                   backgroundImage: profileProvider.userImage != null
                       ? FileImage(profileProvider.userImage!)
@@ -142,7 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: profileProvider.userImage == null
                       ? Icon(
                           Icons.person,
-                          size: 60,
+                          size: isMobile ? 60 : 80,
                           color: AppColors.primaryColor,
                         )
                       : null,
@@ -174,20 +184,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           
-          const SizedBox(height: 16),
+          SizedBox(height: isMobile ? 16 : 24),
           
           // User Name
           if (_isEditing)
             TextField(
               controller: _nameController,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 24,
+              style: TextStyle(
+                fontSize: ResponsiveBreakpoints.getFontSize(context, 24),
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
               decoration: InputDecoration(
-                hintText: 'اكتب اسمك',
+                hintText: l10n.locale.languageCode == 'ar' ? 'اكتب اسمك' : 'Enter your name',
                 hintStyle: const TextStyle(color: Colors.white70),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -205,9 +215,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             )
           else
             Text(
-              profileProvider.userName.isEmpty ? 'مستخدم جديد' : profileProvider.userName,
-              style: const TextStyle(
-                fontSize: 24,
+              profileProvider.userName.isEmpty 
+                  ? (l10n.locale.languageCode == 'ar' ? 'مستخدم جديد' : 'New User') 
+                  : profileProvider.userName,
+              style: TextStyle(
+                fontSize: ResponsiveBreakpoints.getFontSize(context, 24),
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -217,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildUserInfoSection(ProfileProvider profileProvider) {
+  Widget _buildUserInfoSection(ProfileProvider profileProvider, AppLocalizations l10n) {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -227,7 +239,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'معلومات المستخدم',
+              l10n.locale.languageCode == 'ar' ? 'معلومات المستخدم' : 'User Information',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -235,11 +247,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            _buildInfoRow('الاسم', profileProvider.userName.isEmpty ? 'غير محدد' : profileProvider.userName),
-            _buildInfoRow('البريد الإلكتروني', 'user@example.com'),
-            _buildInfoRow('تاريخ الانضمام', _formatDate(profileProvider.joinDate)),
-            _buildInfoRow('المستوى', 'المستوى ${profileProvider.level}'),
-            _buildInfoRow('النقاط', '${profileProvider.points} نقطة'),
+            _buildInfoRow(l10n.userName, profileProvider.userName.isEmpty 
+                ? (l10n.locale.languageCode == 'ar' ? 'غير محدد' : 'Not set') 
+                : profileProvider.userName),
+            _buildInfoRow(l10n.locale.languageCode == 'ar' ? 'البريد الإلكتروني' : 'Email', 'user@example.com'),
+            _buildInfoRow(l10n.locale.languageCode == 'ar' ? 'تاريخ الانضمام' : 'Join Date', _formatDate(profileProvider.joinDate)),
+            _buildInfoRow(l10n.level, '${l10n.level} ${profileProvider.level}'),
+            _buildInfoRow(l10n.points, '${profileProvider.points} ${l10n.points}'),
           ],
         ),
       ),
@@ -272,7 +286,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildAppSettingsSection(SettingsProvider settingsProvider) {
+  Widget _buildAppSettingsSection(SettingsProvider settingsProvider, AppLocalizations l10n) {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -282,7 +296,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'إعدادات التطبيق',
+              l10n.settingsTitle,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -293,20 +307,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
             
             // Theme Toggle
             _buildSettingTile(
-              'الوضع الليلي',
-              'تغيير مظهر التطبيق',
+              l10n.darkMode,
+              l10n.locale.languageCode == 'ar' ? 'تغيير مظهر التطبيق' : 'Change app theme',
               settingsProvider.isDarkMode,
               (value) => settingsProvider.toggleDarkMode(),
               Icons.dark_mode,
             ),
             
             // Language Settings
-            _buildLanguageTile(settingsProvider),
+            _buildLanguageTile(settingsProvider, l10n),
             
             // Notifications
             _buildSettingTile(
-              'الإشعارات',
-              'تفعيل الإشعارات',
+              l10n.notifications,
+              l10n.locale.languageCode == 'ar' ? 'تفعيل الإشعارات' : 'Enable notifications',
               settingsProvider.profileNotificationsEnabled,
               (value) => settingsProvider.toggleNotifications(),
               Icons.notifications,
@@ -314,8 +328,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             
             // Sound Effects
             _buildSettingTile(
-              'المؤثرات الصوتية',
-              'تفعيل الأصوات',
+              l10n.sound,
+              l10n.locale.languageCode == 'ar' ? 'تفعيل الأصوات' : 'Enable sounds',
               settingsProvider.soundEnabled,
               (value) => settingsProvider.toggleSound(),
               Icons.volume_up,
@@ -346,11 +360,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildLanguageTile(SettingsProvider settingsProvider) {
+  Widget _buildLanguageTile(SettingsProvider settingsProvider, AppLocalizations l10n) {
     return ListTile(
       leading: const Icon(Icons.language, color: AppColors.primaryColor),
-      title: const Text('اللغة'),
-      subtitle: Text(settingsProvider.currentLanguage == 'ar' ? 'العربية' : 'English'),
+      title: Text(l10n.language),
+      subtitle: Text(settingsProvider.currentLanguage == 'ar' ? l10n.arabic : l10n.english),
       trailing: DropdownButton<String>(
         value: settingsProvider.currentLanguage,
         onChanged: (String? newValue) {
@@ -358,15 +372,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             settingsProvider.changeLanguage(newValue);
           }
         },
-        items: const [
-          DropdownMenuItem(value: 'ar', child: Text('العربية')),
-          DropdownMenuItem(value: 'en', child: Text('English')),
+        items: [
+          DropdownMenuItem(value: 'ar', child: Text(l10n.arabic)),
+          DropdownMenuItem(value: 'en', child: Text(l10n.english)),
         ],
       ),
     );
   }
 
-  Widget _buildAboutSection() {
+  Widget _buildAboutSection(AppLocalizations l10n) {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -376,7 +390,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'عن التطبيق',
+              l10n.about,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -384,10 +398,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            _buildInfoRow('الإصدار', '${AppStrings.appVersion} (${AppStrings.buildNumber})'),
-            _buildInfoRow('المطور', AppStrings.developerName),
-            _buildInfoRow('التحديث الأخير', AppStrings.lastUpdate),
-            _buildInfoRow('حالة البناء', '🟢 مستقر'),
+            _buildInfoRow(l10n.version, AppStrings.appVersion),
+            _buildInfoRow(l10n.developer, AppStrings.developerName),
+            _buildInfoRow(l10n.lastUpdate, AppStrings.lastUpdate),
+            _buildInfoRow(l10n.locale.languageCode == 'ar' ? 'حالة البناء' : 'Build Status', '🟢 ${l10n.locale.languageCode == 'ar' ? 'مستقر' : 'Stable'}'),
             
             const SizedBox(height: 16),
             
@@ -412,7 +426,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'معلومات الإصدار',
+                        l10n.version,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColors.primaryColor,
@@ -422,7 +436,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'تم تطوير هذا التطبيق بواسطة ${AppStrings.developerName}\nالإصدار الحالي: ${AppStrings.appVersion}\nآخر تحديث: ${AppStrings.lastUpdate}',
+                    l10n.locale.languageCode == 'ar'
+                        ? 'تم تطوير هذا التطبيق بواسطة ${AppStrings.developerName}\nالإصدار الحالي: ${AppStrings.appVersion}\nآخر تحديث: ${AppStrings.lastUpdate}'
+                        : 'This app was developed by ${AppStrings.developerName}\nCurrent version: ${AppStrings.appVersion}\nLast update: ${AppStrings.lastUpdate}',
                     style: const TextStyle(
                       fontSize: 14,
                       color: AppColors.textSecondary,
@@ -442,7 +458,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: ElevatedButton.icon(
                     onPressed: _showUpdateDialog,
                     icon: const Icon(Icons.update),
-                    label: const Text('التحقق من التحديثات'),
+                    label: Text(l10n.locale.languageCode == 'ar' ? 'التحقق من التحديثات' : 'Check for updates'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primaryColor,
                       foregroundColor: Colors.white,

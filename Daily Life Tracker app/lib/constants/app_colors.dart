@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   // Primary Colors
   static const Color primaryColor = Color(0xFF2E7D32); // Green
+  static const Color primaryDark = Color(0xFF1B5E20); // Dark Green
   static const Color secondaryColor = Color(0xFF4CAF50); // Light Green
 
   // Background Colors
@@ -25,10 +26,13 @@ class AppColors {
   // Text Colors
   static const Color textPrimary = Color(0xFF212121);
   static const Color textSecondary = Color(0xFF757575);
+  static const Color darkTextSecondary = Color(0xFFB0B0B0);
 
   // Gray Colors
+  static const Color gray50 = Color(0xFFFAFAFA);
   static const Color gray200 = Color(0xFFEEEEEE);
   static const Color gray300 = Color(0xFFE0E0E0);
+  static const Color gray400 = Color(0xFFBDBDBD);
   static const Color gray600 = Color(0xFF757575);
 
   // Water tracking specific

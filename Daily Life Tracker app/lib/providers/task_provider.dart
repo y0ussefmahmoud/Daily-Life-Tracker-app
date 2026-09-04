@@ -22,6 +22,8 @@ class TaskProvider extends ChangeNotifier {
 
   bool _isLoading = false;
   String? _error;
+  bool _initialized = false;
+  Future<void>? _initFuture;
 
   List<TaskModel> get tasks => List.unmodifiable(_tasks);
   List<TaskModel> get todayTasks => _tasks.where((task) {
@@ -38,26 +40,34 @@ class TaskProvider extends ChangeNotifier {
     notifyListeners();
   }
   String? get error => _error;
-  bool get isInitialized => _tasks.isNotEmpty || _error != null;
+  bool get isInitialized => _initialized;
 
   void setAchievementsProvider(AchievementsProvider achievementsProvider) {
     _achievementsProvider = achievementsProvider;
   }
 
   Future<void> initialize() async {
-    await loadTasks();
+    if (_initialized) return;
+    _initFuture ??= _loadTasksInternal();
+    await _initFuture;
   }
 
   Future<void> loadTasks() async {
+    await _loadTasksInternal();
+  }
+
+  Future<void> _loadTasksInternal() async {
     _isLoading = true;
     _error = null;
     
     try {
       _tasks = await _db.getAllTasks();
+      _initialized = true;
     } catch (e) {
       _error = 'Failed to load tasks: $e';
     } finally {
       _isLoading = false;
+      _initFuture = null;
       notifyListeners();
     }
   }
